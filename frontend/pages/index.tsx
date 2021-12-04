@@ -1,7 +1,12 @@
 import { Button } from "@mui/material";
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 
 const Index: NextPage = () => {
+  const router = useRouter();
+  const handleMeet = (): void => {
+    void router.push("/meet");
+  };
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center">
       <div className="flex flex-col items-center">
@@ -10,7 +15,9 @@ const Index: NextPage = () => {
           Simple, fast, and open source online booking system
         </h4>
         <div className="mt-8">
-          <Button variant="contained">Create a meet</Button>
+          <Button variant="contained" onClick={handleMeet}>
+            Create a meet
+          </Button>
         </div>
       </div>
     </div>
