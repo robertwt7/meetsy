@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
+import CopyRight from "src/Copyright";
 
 const Index: NextPage = () => {
   const router = useRouter();
@@ -19,6 +20,9 @@ const Index: NextPage = () => {
             Create a meet
           </Button>
         </div>
+      </div>
+      <div className="my-8">
+        <CopyRight />
       </div>
     </div>
   );
