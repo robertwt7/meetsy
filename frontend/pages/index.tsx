@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import CopyRight from "src/Copyright";
+import { Copyright } from "src";
 
 const Index: NextPage = () => {
   const router = useRouter();
@@ -22,7 +22,7 @@ const Index: NextPage = () => {
         </div>
       </div>
       <div className="my-8">
-        <CopyRight />
+        <Copyright />
       </div>
     </div>
   );

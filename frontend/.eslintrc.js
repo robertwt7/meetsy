@@ -39,6 +39,7 @@ module.exports = {
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
     "unused-imports/no-unused-imports": "error",
+    "import/extensions": "never",
   },
   overrides: [
     {
