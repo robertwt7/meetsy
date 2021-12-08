@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { withStyles, makeStyles } from "@mui/styles";
+import { styled } from "@mui/material/styles";
 import type { TextFieldProps } from "@mui/material";
 import {
-  InputBase,
   FormControl,
   Select,
   MenuItem,
@@ -34,36 +33,60 @@ import * as dayjs from "dayjs";
 import axios from "axios";
 import clsx from "clsx";
 
-// Style used locally
-export const useStyles = makeStyles((theme) => ({
-  root: {
+const PREFIX = "FormikFileUpload";
+
+const classes = {
+  root: `${PREFIX}-root`,
+  input: `${PREFIX}-input`,
+  root2: `${PREFIX}-root2`,
+  media: `${PREFIX}-media`,
+  button: `${PREFIX}-button`,
+  instructions: `${PREFIX}-instructions`,
+  margin: `${PREFIX}-margin`,
+  p8: `${PREFIX}-p8`,
+  full: `${PREFIX}-full`,
+  flex: `${PREFIX}-flex`,
+  formControl: `${PREFIX}-formControl`,
+};
+
+// TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
+const Root = styled("div")(({ theme }) => ({
+  [`& .${classes.root2}`]: {
     width: "100%",
   },
-  media: {
+
+  [`& .${classes.media}`]: {
     height: 0,
     paddingTop: "56.25%", // 16:9
   },
-  button: {
+
+  [`& .${classes.button}`]: {
     marginRight: theme.spacing(1),
   },
-  instructions: {
+
+  [`& .${classes.instructions}`]: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(1),
   },
-  margin: {
+
+  [`& .${classes.margin}`]: {
     margin: theme.spacing(1),
   },
-  p8: {
+
+  [`& .${classes.p8}`]: {
     padding: theme.spacing(1),
   },
-  full: {
+
+  [`& .${classes.full}`]: {
     width: "100%",
     height: "100%",
   },
-  flex: {
+
+  [`& .${classes.flex}`]: {
     display: "flex",
   },
-  formControl: {
+
+  [`& .${classes.formControl}`]: {
     margin: `${theme.spacing(3)} 0px`,
   },
 }));
@@ -81,7 +104,6 @@ export function FormikCheckbox({
   options,
   customHandleChange = undefined,
 }) {
-  const classes = useStyles();
   const [field, meta] = useField(name);
   const { setFieldValue } = useFormikContext();
   const handleChange = useCallback(
@@ -210,7 +232,7 @@ function AutoCompleteTextField({
 export const FormikFileUpload = ({ name, label, uploadUrl, ...props }) => {
   const [field, meta] = useField(name);
   const { setFieldValue } = useFormikContext();
-  const classes = useStyles();
+
   const handleChange = useCallback(
     async (e) => {
       const files = [];
@@ -237,7 +259,7 @@ export const FormikFileUpload = ({ name, label, uploadUrl, ...props }) => {
   );
 
   return (
-    <>
+    <Root>
       <Button
         variant="contained"
         component="label"
@@ -263,7 +285,7 @@ export const FormikFileUpload = ({ name, label, uploadUrl, ...props }) => {
             />
           </Card>
         ))}
-    </>
+    </Root>
   );
 };
 
@@ -335,7 +357,6 @@ export const FormikSwitch = ({
 }) => {
   const [field, meta] = useField(name);
   const { setFieldValue } = useFormikContext();
-  const classes = useStyles();
 
   const handleChange = useCallback(
     (e) => {
@@ -386,7 +407,7 @@ export const FormikSelect = React.memo(
     ...props
   }) => {
     const [field, meta] = useField(name);
-    const classes = useStyles();
+
     const { setFieldValue } = useFormikContext();
     const handleChange = useCallback(
       (e) => {
@@ -504,7 +525,7 @@ export const FormikPicker = ({
   ...props
 }) => {
   const [field, meta] = useField(name);
-  const classes = useStyles();
+
   const { setFieldValue } = useFormikContext();
 
   const handlePickerChange = useCallback(
@@ -576,7 +597,6 @@ export const FormikTime = ({
 }) => {
   const [field, meta] = useField(name);
   const { setFieldValue } = useFormikContext();
-  const classes = useStyles();
 
   const handleTimeChange = useCallback(
     (value) => {
@@ -585,7 +605,7 @@ export const FormikTime = ({
     [name, setFieldValue]
   );
   return (
-    <MuiPickersUtilsProvider utils={DayjsUtils}>
+    <>
       <TimePicker
         className={className || classes.margin}
         autoOk
@@ -600,7 +620,7 @@ export const FormikTime = ({
       {meta.error ? (
         <p className="text-red-600 text-xs m-8">{String(meta.error)}</p>
       ) : null}
-    </MuiPickersUtilsProvider>
+    </>
   );
 };
 
@@ -613,41 +633,6 @@ FormikTime.propTypes = {
   ampm: PropTypes.bool,
 };
 
-export const BootstrapInput = withStyles((theme) => ({
-  root: {
-    "label + &": {
-      marginTop: theme.spacing(3),
-    },
-  },
-  input: {
-    borderRadius: 4,
-    position: "relative",
-    backgroundColor: theme.palette.background.paper,
-    border: "1px solid #ced4da",
-    fontSize: "1.4rem",
-    padding: "10px 26px 10px 12px",
-    transition: theme.transitions.create(["border-color", "box-shadow"]),
-    // Use the system font instead of the default Roboto font.
-    fontFamily: [
-      "-apple-system",
-      "BlinkMacSystemFont",
-      '"Segoe UI"',
-      "Roboto",
-      '"Helvetica Neue"',
-      "Arial",
-      "sans-serif",
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(","),
-    "&:focus": {
-      borderRadius: 4,
-      borderColor: "#80bdff",
-      boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
-    },
-  },
-}))(InputBase);
-
 const ArrayContext = React.createContext({});
 
 /**
@@ -658,7 +643,7 @@ const ArrayContext = React.createContext({});
  */
 export function FormikArray({ name, defaultValue, children }) {
   const [field] = useField(name);
-  const classes = useStyles();
+
   return (
     <FieldArray
       name={name}
