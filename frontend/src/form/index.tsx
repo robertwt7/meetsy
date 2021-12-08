@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { withStyles, makeStyles } from "@mui/material/styles";
+import { withStyles, makeStyles } from "@mui/styles";
 import type { TextFieldProps } from "@mui/material";
 import {
   InputBase,
@@ -23,7 +23,12 @@ import {
   Slide,
 } from "@mui/material";
 import { DatePicker, DateTimePicker, TimePicker } from "@mui/lab";
-import { useField, useFormikContext, FieldArray } from "formik";
+import {
+  useField,
+  useFormikContext,
+  FieldArray,
+  FieldHookConfig,
+} from "formik";
 import PropTypes from "prop-types";
 import * as dayjs from "dayjs";
 import axios from "axios";
@@ -278,29 +283,24 @@ function areEqual(prevProps, nextProps): boolean {
   return false;
 }
 
-export const FormikTextField = React.memo<TextFieldProps>(
-  ({ className, ...props }) => {
-    const [field, meta] = useField(props);
+export const FormikTextField = React.memo<
+  TextFieldProps & FieldHookConfig<string>
+>(({ className, ...props }) => {
+  const [field, meta] = useField(props);
 
-    return (
-      <>
-        <TextField
-          className={className}
-          {...field}
-          {...props}
-          FormHelperTextProps={{ error: true }}
-          helperText={meta.error ? String(meta.error) : null}
-          aria-invalid={Boolean(meta.error)}
-        />
-      </>
-    );
-  },
-  areEqual
-);
-
-FormikTextField.propTypes = {
-  className: PropTypes.string,
-};
+  return (
+    <>
+      <TextField
+        className={className}
+        {...field}
+        {...props}
+        FormHelperTextProps={{ error: true }}
+        helperText={meta.error ? String(meta.error) : null}
+        aria-invalid={Boolean(meta.error)}
+      />
+    </>
+  );
+}, areEqual);
 
 export const FormikNativeTime = ({ className, ...props }) => {
   const [field, meta] = useField(props);

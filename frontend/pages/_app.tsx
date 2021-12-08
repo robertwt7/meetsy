@@ -1,5 +1,4 @@
 import type { AppProps } from "next/app";
-import PropTypes from "prop-types";
 import Head from "next/head";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,6 +10,7 @@ import type { ReactNode } from "react";
 import theme from "../src/theme";
 import createEmotionCache from "../src/createEmotionCache";
 import "tailwindcss/tailwind.css";
+
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
@@ -35,9 +35,3 @@ export default function MyApp(
     </CacheProvider>
   );
 }
-
-MyApp.propTypes = {
-  Component: PropTypes.elementType.isRequired,
-  emotionCache: PropTypes.object,
-  pageProps: PropTypes.object.isRequired,
-};
