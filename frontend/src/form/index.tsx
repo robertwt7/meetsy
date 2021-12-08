@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { withStyles, makeStyles } from "@mui/material/styles";
-import DayjsUtils from "@date-io/dayjs";
+import type { TextFieldProps } from "@mui/material";
 import {
   InputBase,
   FormControl,
@@ -22,12 +22,7 @@ import {
   Autocomplete,
   Slide,
 } from "@mui/material";
-import {
-  KeyboardDatePicker,
-  KeyboardDateTimePicker,
-  MuiPickersUtilsProvider,
-  TimePicker,
-} from "@mui/lab";
+import { DatePicker, DateTimePicker, TimePicker } from "@mui/lab";
 import { useField, useFormikContext, FieldArray } from "formik";
 import PropTypes from "prop-types";
 import * as dayjs from "dayjs";
@@ -273,7 +268,7 @@ FormikFileUpload.propTypes = {
   uploadUrl: PropTypes.string.isRequired,
 };
 
-function areEqual(prevProps, nextProps) {
+function areEqual(prevProps, nextProps): boolean {
   if (
     prevProps.value === nextProps.value &&
     prevProps.label === nextProps.label
@@ -283,22 +278,25 @@ function areEqual(prevProps, nextProps) {
   return false;
 }
 
-export const FormikTextField = React.memo(({ className, ...props }) => {
-  const [field, meta] = useField(props);
+export const FormikTextField = React.memo<TextFieldProps>(
+  ({ className, ...props }) => {
+    const [field, meta] = useField(props);
 
-  return (
-    <>
-      <TextField
-        className={className}
-        {...field}
-        {...props}
-        FormHelperTextProps={{ error: true }}
-        helperText={meta.error ? String(meta.error) : null}
-        aria-invalid={Boolean(meta.error)}
-      />
-    </>
-  );
-}, areEqual);
+    return (
+      <>
+        <TextField
+          className={className}
+          {...field}
+          {...props}
+          FormHelperTextProps={{ error: true }}
+          helperText={meta.error ? String(meta.error) : null}
+          aria-invalid={Boolean(meta.error)}
+        />
+      </>
+    );
+  },
+  areEqual
+);
 
 FormikTextField.propTypes = {
   className: PropTypes.string,
@@ -519,44 +517,42 @@ export const FormikPicker = ({
   );
 
   return (
-    <MuiPickersUtilsProvider utils={DayjsUtils}>
-      <div className={className || "m-8"}>
-        {dateTime ? (
-          <KeyboardDateTimePicker
-            ampm
-            mask="__-__-____ __:__"
-            autoOk
-            className="w-full"
-            format={format || "DD-MM-YYYY HH:mm"}
-            onChange={handlePickerChange}
-            name={name}
-            label={label}
-            variant={variant}
-            inputVariant={inputVariant}
-            value={field.value}
-            {...props}
-          />
-        ) : (
-          <KeyboardDatePicker
-            className="w-full"
-            format={format || "DD-MM-YYYY"}
-            mask="__-__-____"
-            autoOk
-            onChange={handlePickerChange}
-            name={name}
-            label={label}
-            variant={variant}
-            inputVariant={inputVariant}
-            value={field.value}
-            {...props}
-          />
-        )}
+    <div className={className || "m-8"}>
+      {dateTime ? (
+        <DateTimePicker
+          ampm
+          mask="__-__-____ __:__"
+          autoOk
+          className="w-full"
+          format={format || "DD-MM-YYYY HH:mm"}
+          onChange={handlePickerChange}
+          name={name}
+          label={label}
+          variant={variant}
+          inputVariant={inputVariant}
+          value={field.value}
+          {...props}
+        />
+      ) : (
+        <DatePicker
+          className="w-full"
+          format={format || "DD-MM-YYYY"}
+          mask="__-__-____"
+          autoOk
+          onChange={handlePickerChange}
+          name={name}
+          label={label}
+          variant={variant}
+          inputVariant={inputVariant}
+          value={field.value}
+          {...props}
+        />
+      )}
 
-        {Boolean(meta.error) && (
-          <p className="text-red-600 text-xs m-8">{String(meta.error)}</p>
-        )}
-      </div>
-    </MuiPickersUtilsProvider>
+      {Boolean(meta.error) && (
+        <p className="text-red-600 text-xs m-8">{String(meta.error)}</p>
+      )}
+    </div>
   );
 };
 
