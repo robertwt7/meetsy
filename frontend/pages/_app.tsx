@@ -6,15 +6,17 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider } from "@emotion/react";
 import DateAdapter from "@mui/lab/AdapterDayjs";
 import { LocalizationProvider } from "@mui/lab";
+import type { EmotionCache } from "@emotion/utils";
 import theme from "../src/theme";
 import createEmotionCache from "../src/createEmotionCache";
 import "tailwindcss/tailwind.css";
-import type { EmotionCache } from "@emotion/utils"
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
-export default function MyApp(props: AppProps & { emotionCache: EmotionCache | undefined }) {
+export default function MyApp(
+  props: AppProps & { emotionCache: EmotionCache | undefined }
+) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
   return (

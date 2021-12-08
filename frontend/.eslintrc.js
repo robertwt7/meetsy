@@ -39,7 +39,7 @@ module.exports = {
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
     "unused-imports/no-unused-imports": "error",
-    "import/extensions": "never",
+    "import/extensions": "off",
   },
   overrides: [
     {
@@ -76,6 +76,7 @@ module.exports = {
     "import/resolver": {
       node: {
         paths: ["./"],
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
       },
     },
   },
