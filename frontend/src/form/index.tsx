@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { ReactNode, useCallback, useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import type { TextFieldProps } from "@mui/material";
 import {
@@ -21,7 +21,13 @@ import {
   Autocomplete,
   Slide,
 } from "@mui/material";
-import { DatePicker, DateTimePicker, TimePicker } from "@mui/lab";
+import {
+  DatePicker,
+  DateTimePicker,
+  TimePicker,
+  DatePickerProps,
+  DateTimePickerProps,
+} from "@mui/lab";
 import {
   useField,
   useFormikContext,
@@ -514,6 +520,15 @@ FormikRadioButton.propTypes = {
   disabled: PropTypes.bool,
 };
 
+interface FormikPickerBaseProps {
+  dateTime?: boolean;
+  className?: string;
+}
+
+type FormikPickerProps =
+  | (FormikPickerBaseProps & DateTimePickerProps)
+  | (FormikPickerBaseProps & DatePickerProps);
+
 export const FormikPicker = ({
   format = null,
   dateTime = "true",
@@ -523,7 +538,7 @@ export const FormikPicker = ({
   inputVariant = "standard",
   className,
   ...props
-}) => {
+}: FormikPickerProps): ReactNode => {
   const [field, meta] = useField(name);
 
   const { setFieldValue } = useFormikContext();
@@ -538,12 +553,11 @@ export const FormikPicker = ({
   );
 
   return (
-    <div className={className || "m-8"}>
+    <div className={className}>
       {dateTime ? (
         <DateTimePicker
           ampm
           mask="__-__-____ __:__"
-          autoOk
           className="w-full"
           format={format || "DD-MM-YYYY HH:mm"}
           onChange={handlePickerChange}

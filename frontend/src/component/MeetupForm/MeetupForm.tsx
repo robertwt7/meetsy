@@ -29,6 +29,10 @@ export const MeetupForm: FunctionComponent = () => {
     >
       <Form>
         <FormikTextField name="name" label="Name" />
+        <FormikTextField name="location" label="Location" />
+        <FormikTextField name="notes" label="Notes" multiline rows={5} />
+        <FormikTextField name="name" label="Name" />
+        <FormikTextField name="name" label="Name" />
       </Form>
     </Formik>
   );
