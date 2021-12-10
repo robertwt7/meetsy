@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { Copyright } from "src";
@@ -11,7 +11,9 @@ const Index: NextPage = () => {
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center">
       <div className="flex flex-col items-center">
-        <h3 className="text-3xl font-bold">Meetsy</h3>
+        <Typography variant="h3" fontWeight="semibold" gutterBottom>
+          Meetsy
+        </Typography>
         <h4 className="text-lg font-semibold">
           Simple, fast, and open source online booking system
         </h4>
