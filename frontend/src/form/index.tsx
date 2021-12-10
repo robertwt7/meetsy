@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import type { TextFieldProps } from "@mui/material";
 import {
@@ -21,13 +21,7 @@ import {
   Autocomplete,
   Slide,
 } from "@mui/material";
-import {
-  DatePicker,
-  DateTimePicker,
-  TimePicker,
-  DatePickerProps,
-  DateTimePickerProps,
-} from "@mui/lab";
+import { DateTimePicker, TimePicker, DateTimePickerProps } from "@mui/lab";
 import {
   useField,
   useFormikContext,
@@ -521,24 +515,20 @@ FormikRadioButton.propTypes = {
 };
 
 interface FormikPickerBaseProps {
-  dateTime?: boolean;
   className?: string;
+  name: string;
 }
 
-type FormikPickerProps =
-  | (FormikPickerBaseProps & DateTimePickerProps)
-  | (FormikPickerBaseProps & DatePickerProps);
+type FormikDateTimePickerProps = FormikPickerBaseProps &
+  Omit<DateTimePickerProps, "onChange" | "value" | "renderInput">;
 
-export const FormikPicker = ({
-  format = null,
-  dateTime = "true",
+export const FormikDateTimePicker = ({
+  inputFormat,
   name,
   label,
-  variant = "dialog",
-  inputVariant = "standard",
   className,
   ...props
-}: FormikPickerProps): ReactNode => {
+}: FormikDateTimePickerProps): ReactElement => {
   const [field, meta] = useField(name);
 
   const { setFieldValue } = useFormikContext();
@@ -554,51 +544,23 @@ export const FormikPicker = ({
 
   return (
     <div className={className}>
-      {dateTime ? (
-        <DateTimePicker
-          ampm
-          mask="__-__-____ __:__"
-          className="w-full"
-          format={format || "DD-MM-YYYY HH:mm"}
-          onChange={handlePickerChange}
-          name={name}
-          label={label}
-          variant={variant}
-          inputVariant={inputVariant}
-          value={field.value}
-          {...props}
-        />
-      ) : (
-        <DatePicker
-          className="w-full"
-          format={format || "DD-MM-YYYY"}
-          mask="__-__-____"
-          autoOk
-          onChange={handlePickerChange}
-          name={name}
-          label={label}
-          variant={variant}
-          inputVariant={inputVariant}
-          value={field.value}
-          {...props}
-        />
-      )}
+      <DateTimePicker
+        {...props}
+        ampm
+        mask="__-__-____ __:__"
+        className="w-full"
+        inputFormat={inputFormat ?? "DD-MM-YYYY HH:mm"}
+        onChange={handlePickerChange}
+        label={label}
+        value={field.value}
+        renderInput={(props) => <TextField {...props} />}
+      />
 
       {Boolean(meta.error) && (
         <p className="text-red-600 text-xs m-8">{String(meta.error)}</p>
       )}
     </div>
   );
-};
-
-FormikPicker.propTypes = {
-  format: PropTypes.string,
-  dateTime: PropTypes.bool,
-  name: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  variant: PropTypes.string,
-  inputVariant: PropTypes.string,
-  className: PropTypes.string,
 };
 
 export const FormikTime = ({

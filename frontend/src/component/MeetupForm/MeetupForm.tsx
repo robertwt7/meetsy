@@ -1,7 +1,7 @@
 import type { FunctionComponent } from "react";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
-import { FormikTextField } from "src/form";
+import { FormikTextField, FormikDateTimePicker } from "src/form";
 
 const validationSchema = yup.object().shape({
   name: yup.string().required("Name is required"),
@@ -31,8 +31,8 @@ export const MeetupForm: FunctionComponent = () => {
         <FormikTextField name="name" label="Name" />
         <FormikTextField name="location" label="Location" />
         <FormikTextField name="notes" label="Notes" multiline rows={5} />
-        <FormikTextField name="name" label="Name" />
-        <FormikTextField name="name" label="Name" />
+        <FormikDateTimePicker name="timeStart" label="Start Time" />
+        <FormikDateTimePicker name="timeEnd" label="End Time" />
       </Form>
     </Formik>
   );
