@@ -316,6 +316,7 @@ export const FormikTextField = React.memo<
         className={className}
         {...field}
         {...props}
+        error={Boolean(meta?.error)}
         FormHelperTextProps={{ error: true }}
         helperText={meta.error ? String(meta.error) : null}
         aria-invalid={Boolean(meta.error)}
@@ -553,11 +554,13 @@ export const FormikDateTimePicker = ({
         onChange={handlePickerChange}
         label={label}
         value={field.value}
-        renderInput={(props) => <TextField {...props} />}
+        renderInput={(params) => (
+          <TextField {...params} sx={{ width: "100%" }} />
+        )}
       />
 
       {Boolean(meta.error) && (
-        <p className="text-red-600 text-xs m-8">{String(meta.error)}</p>
+        <p className="text-red-600 text-xs mt-2">{String(meta.error)}</p>
       )}
     </div>
   );
@@ -685,7 +688,7 @@ export default {
   FormikArray,
   FormikTextField,
   FormikFileUpload,
-  FormikPicker,
+  FormikDateTimePicker,
   FormikSelect,
   AutoCompleteTextField,
   FormikRadioButton,
