@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { checkAccessTokenValidity, refreshTokenRequest } from "src/utils";
 import axios from "axios";
+import { refreshTokenRequest, isJwtExpired, makeUrl } from "src/utils";
 
 export default NextAuth({
   secret: process.env.SESSION_SECRET,
@@ -22,61 +22,54 @@ export default NextAuth({
     // ...add more providers here
   ],
   callbacks: {
-    async signIn(user, account, profile) {
-      // may have to switch it up a bit for other providers
-      if (account.provider === "google") {
-        // extract these two tokens
-        const { accessToken, idToken } = account;
+    async session(session, userOrToken) {
+      session.accessToken = userOrToken.accessToken;
+      return session;
+    },
+    async jwt(token, user, account, profile, isNewUser) {
+      // user just signed in
+      if (user) {
+        // may have to switch it up a bit for other providers
+        if (account.provider === "google") {
+          // extract these two tokens
+          const { accessToken, idToken } = account;
 
-        // make a POST request to the DRF backend
-        try {
-          const response = await axios.post(
-            // tip: use a seperate .ts file or json file to store such URL endpoints, or better, an environment variable
-            "http://localhost:8000/api/social/login/google/",
-            {
-              access_token: accessToken, // note the differences in key and value variable names
-              id_token: idToken,
-            }
-          );
+          // make a POST request to the DRF backend
+          try {
+            const response = await axios.post(
+              // tip: use a seperate .ts file or json file to store such URL endpoints
+              // "http://127.0.0.1:8000/api/social/login/google/",
+              makeUrl(
+                process.env.BACKEND_API_BASE,
+                "social",
+                "login",
+                account.provider
+              ),
+              {
+                access_token: accessToken, // note the differences in key and value variable names
+                id_token: idToken,
+              }
+            );
 
-          // extract the returned token from the DRF backend and add it to the `user` object
-          const { access_token, refresh_token } = response.data;
-          user.accessToken = access_token;
-          user.refreshToken = refresh_token;
+            // extract the returned token from the DRF backend and add it to the `user` object
+            const { access_token, refresh_token } = response.data;
+            // reform the `token` object from the access token we appended to the `user` object
+            token = {
+              ...token,
+              accessToken: access_token,
+              refreshToken: refresh_token,
+            };
 
-          return true; // return true if everything went well
-        } catch (error) {
-          return false;
+            return token;
+          } catch (error) {
+            return null;
+          }
         }
       }
-      return false;
-    },
 
-    async jwt(token, user, account, profile, isNewUser) {
-      if (user) {
-        const { accessToken, refreshToken } = user;
-
-        // reform the `token` object from the access token we appended to the `user` object
-        token = {
-          ...token,
-          accessToken,
-          refreshToken,
-        };
-
-        // remove the tokens from the user objects just so that we don't leak it somehow
-        delete user.accessToken;
-        delete user.refreshToken;
-
-        return token;
-      }
-
-      // cheking session validity, check if the token is still valid
-      const accessTokenValid = await checkAccessTokenValidity(
-        token.accessToken
-      );
-
+      // user was signed in previously, we want to check if the token needs refreshing
       // token has been invalidated, try refreshing it
-      if (!accessTokenValid) {
+      if (isJwtExpired(token.accessToken as string)) {
         const [newAccessToken, newRefreshToken] = await refreshTokenRequest(
           token.refreshToken
         );
