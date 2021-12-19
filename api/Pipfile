@@ -11,6 +11,8 @@ django = "*"
 dj-rest-auth = "*"
 django-allauth = "*"
 black = "*"
+django-cors-headers = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 black = "*"
