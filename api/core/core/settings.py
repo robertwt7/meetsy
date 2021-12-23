@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from .secrets import DJANGO_SECRET_KEY, JWT_SECRET_KEY
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-zdhyqpnx4b+sqb$$*8@#!74o0jk#1jtu)=hlcb^+lsf=16jil0"
+SECRET_KEY = DJANGO_SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,15 +39,43 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
+    # third party
     "rest_framework",
     "rest_framework.authtoken",
+    "corsheaders",
+    # authentication
     "dj_rest_auth",
     "dj_rest_auth.registration",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
+    # local app
+    "auth",
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    }
+}
+
+# we are turning off email verification for now
+SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
+SOCIALACCOUNT_EMAIL_REQUIRED = False
+
+SITE_ID = 1  # https://dj-rest-auth.readthedocs.io/en/latest/installation.html#registration-optional
+REST_USE_JWT = True  # use JSON Web Tokens
+# JWT_AUTH_COOKIE = "nextjsdrf-access-token"
+# JWT_AUTH_REFRESH_COOKIE = "nextjsdrf-refresh-token"
+# JWT_AUTH_SAMESITE = "none"
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -57,6 +86,30 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "UPDATE_LAST_LOGIN": True,
+    "USER_ID_FIELD": "userId",  # for the custom user model
+    "USER_ID_CLAIM": "user_id",
+    "SIGNING_KEY": JWT_SECRET_KEY,
+}
+
+CORS_ORIGIN_ALLOW_ALL = True  # only for dev environment!, this should be changed before you push to production
+
+# custom user model, because we do not want to use the Django provided user model
+AUTH_USER_MODEL = "auth.CustomUserModel"
+
+# We need to specify the exact serializer as well for dj-rest-auth, otherwise it will end up shooting itself
+# in the foot and me in the head
+REST_AUTH_SERIALIZERS = {
+    "USER_DETAILS_SERIALIZER": "auth.serializers.CustomUserModelSerializer"
+}
 
 ROOT_URLCONF = "core.urls"
 
