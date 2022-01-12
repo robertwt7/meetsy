@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
     # local app
-    "auth",
+    "meetsyauth",
 ]
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -103,12 +103,12 @@ SIMPLE_JWT = {
 CORS_ORIGIN_ALLOW_ALL = True  # only for dev environment!, this should be changed before you push to production
 
 # custom user model, because we do not want to use the Django provided user model
-AUTH_USER_MODEL = "auth.CustomUserModel"
+AUTH_USER_MODEL = "meetsyauth.CustomUserModel"
 
 # We need to specify the exact serializer as well for dj-rest-auth, otherwise it will end up shooting itself
 # in the foot and me in the head
 REST_AUTH_SERIALIZERS = {
-    "USER_DETAILS_SERIALIZER": "auth.serializers.CustomUserModelSerializer"
+    "USER_DETAILS_SERIALIZER": "meetsyauth.serializers.CustomUserModelSerializer"
 }
 
 ROOT_URLCONF = "core.urls"
@@ -134,11 +134,15 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
+# TODO: Need to be changed to service for security: https://docs.djangoproject.com/en/4.0/ref/databases/#postgresql-connection-settings
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "meetsy",
+        "USER": "default",
+        "PASSWORD": "secret",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 
