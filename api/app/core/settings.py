@@ -56,10 +56,7 @@ INSTALLED_APPS = [
 
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
-        "SCOPE": [
-            "profile",
-            "email",
-        ],
+        "SCOPE": ["profile", "email", "calendar"],
         "AUTH_PARAMS": {
             "access_type": "online",
         },

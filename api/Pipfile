@@ -14,6 +14,8 @@ black = "*"
 django-cors-headers = "*"
 djangorestframework-simplejwt = "*"
 psycopg2 = "*"
+google-auth = "*"
+google-api-python-client = "*"
 
 [dev-packages]
 black = "*"

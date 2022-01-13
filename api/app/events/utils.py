@@ -1,0 +1,19 @@
+from allauth.socialaccount.models import SocialAccount, SocialToken
+from google.oauth2.credentials import Credentials
+from googleapiclient.discovery import build
+
+# Connect to Google Calendar
+def connect_to_calendar(request):
+    # Fetches the User of the request
+    qs = SocialAccount.objects.filter(user=request.user)
+    print(request.user)
+    # Fetches the Acces token of the User
+    token = SocialToken.objects.filter(account=qs[0]).values("token")
+
+    # The scope of service like if we want readonly etc
+    SCOPES = ["https://www.googleapis.com/auth/calendar.events"]
+
+    # Finally making a connection request
+    creds = Credentials(token[0]["token"], SCOPES)
+    service = build("calendar", "v3", credentials=creds)
+    return service
