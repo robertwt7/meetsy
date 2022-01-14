@@ -1,29 +1,25 @@
-# Next.js example
+# Next.js with MUI
 
 ## How to use
 
-Download the example [or clone the repo](https://github.com/mui-org/material-ui):
-
-<!-- #default-branch-switch -->
-
-```sh
-curl https://codeload.github.com/mui-org/material-ui/tar.gz/master | tar -xz --strip=2  material-ui-master/examples/nextjs
-cd nextjs
-```
+Clone this repo
 
 Install it and run:
 
 ```sh
+cp .env.example .env.local
 npm install
 npm run dev
 ```
 
-or:
 
-<!-- #default-branch-switch -->
+You also need to generate secret for JWT and Session as mentioned in [next-auth](https://next-auth.js.org/configuration/options#secret)
 
-[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/mui-org/material-ui/tree/master/examples/nextjs)
+To get started you can generate a random string
 
+```sh
+openssl rand -base64 32
+```
 ## The idea behind the example
 
 The project uses [Next.js](https://github.com/zeit/next.js), which is a framework for server-rendered React apps.
