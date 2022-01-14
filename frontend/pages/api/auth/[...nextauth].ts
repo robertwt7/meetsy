@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+/* eslint-disable @typescript-eslint/naming-convention */
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import axios from "axios";
@@ -24,9 +26,11 @@ export default NextAuth({
   callbacks: {
     async session({ session, token }) {
       console.log("[SESSION CALLBACK]");
-      // TODO: change behavior here to not do reassignment
-      session.accessToken = token.accessToken;
-      return session;
+
+      return {
+        ...session,
+        accessToken: token.accessToken,
+      };
     },
     async jwt({ token, user, account, profile, isNewUser }) {
       console.log("[JWT CALLBACK]");
