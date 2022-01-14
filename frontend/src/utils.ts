@@ -1,16 +1,14 @@
 import axios from "axios";
 import jwt from "jsonwebtoken";
+import { VERIFY_TOKEN_URL, REFRESH_TOKEN_URL } from "./api";
 
 export const checkAccessTokenValidity = async (
   accessToken: string
 ): Promise<boolean> => {
   try {
-    const response = await axios.post(
-      "http://localhost:8000/api/auth/token/verify/",
-      {
-        token: accessToken,
-      }
-    );
+    const response = await axios.post(VERIFY_TOKEN_URL, {
+      token: accessToken,
+    });
 
     return true;
   } catch {
@@ -23,12 +21,9 @@ export const refreshTokenRequest = async (
   refreshToken: string
 ): Promise<RefreshResponse> => {
   try {
-    const response = await axios.post(
-      "http://localhost:8000/api/auth/token/refresh/",
-      {
-        refresh: refreshToken,
-      }
-    );
+    const response = await axios.post(REFRESH_TOKEN_URL, {
+      refresh: refreshToken,
+    });
 
     const { access, refresh } = response.data;
 
