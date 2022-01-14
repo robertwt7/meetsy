@@ -1,7 +1,8 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import axios from "axios";
-import { refreshTokenRequest, isJwtExpired, makeUrl } from "src/utils";
+import { refreshTokenRequest, isJwtExpired } from "src/utils";
+import { LOGIN_URL } from "src/api";
 
 export default NextAuth({
   secret: process.env.SESSION_SECRET,
@@ -19,34 +20,32 @@ export default NextAuth({
       clientId: process.env.GOOGLE_CLIENT_ID ?? "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
     }),
-    // ...add more providers here
   ],
   callbacks: {
-    async session(session, userOrToken) {
-      session.accessToken = userOrToken.accessToken;
+    async session({ session, token }) {
+      console.log("[SESSION CALLBACK]");
+      // TODO: change behavior here to not do reassignment
+      session.accessToken = token.accessToken;
       return session;
     },
-    async jwt(token, user, account, profile, isNewUser) {
+    async jwt({ token, user, account, profile, isNewUser }) {
+      console.log("[JWT CALLBACK]");
+      let newToken = { ...token };
       // user just signed in
-      if (user) {
+      if (user !== null && user !== undefined) {
         // may have to switch it up a bit for other providers
         if (account.provider === "google") {
           // extract these two tokens
-          const { accessToken, idToken } = account;
+          const { access_token: accessToken, id_token: idToken } = account;
 
           // make a POST request to the DRF backend
           try {
             const response = await axios.post(
               // tip: use a seperate .ts file or json file to store such URL endpoints
               // "http://127.0.0.1:8000/api/social/login/google/",
-              makeUrl(
-                process.env.BACKEND_API_BASE,
-                "social",
-                "login",
-                account.provider
-              ),
+              LOGIN_URL(account.provider),
               {
-                access_token: accessToken, // note the differences in key and value variable names
+                access_token: accessToken,
                 id_token: idToken,
               }
             );
@@ -54,15 +53,15 @@ export default NextAuth({
             // extract the returned token from the DRF backend and add it to the `user` object
             const { access_token, refresh_token } = response.data;
             // reform the `token` object from the access token we appended to the `user` object
-            token = {
-              ...token,
+            newToken = {
+              ...newToken,
               accessToken: access_token,
               refreshToken: refresh_token,
             };
 
-            return token;
+            return newToken;
           } catch (error) {
-            return null;
+            return {};
           }
         }
       }
@@ -75,15 +74,13 @@ export default NextAuth({
         );
 
         if (newAccessToken && newRefreshToken) {
-          token = {
+          return {
             ...token,
             accessToken: newAccessToken,
             refreshToken: newRefreshToken,
             iat: Math.floor(Date.now() / 1000),
             exp: Math.floor(Date.now() / 1000 + 2 * 60 * 60),
           };
-
-          return token;
         }
 
         // unable to refresh tokens from DRF backend, invalidate the token
