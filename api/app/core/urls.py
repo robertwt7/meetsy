@@ -23,4 +23,5 @@ urlpatterns = [
     ),  # endpoints provided by dj-rest-auth
     path("accounts/", include("allauth.urls")),
     path("api/social/login/", include("meetsyauth.urls")),  # our own views
+    path("api/", include("events.urls")),
 ]
