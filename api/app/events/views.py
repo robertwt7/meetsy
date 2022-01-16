@@ -8,9 +8,11 @@ from rest_framework.response import Response
 class CalendarView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def __init__(self):
-        self.calendar = connect_to_calendar()
-
     def get(self, request):
-        events = self.calendar.events().list(calendarId="primary").execute()
+        events = (
+            connect_to_calendar(request)
+            .calendar.events()
+            .list(calendarId="primary")
+            .execute()
+        )
         return Response(events)
