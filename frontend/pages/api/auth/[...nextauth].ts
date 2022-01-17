@@ -21,6 +21,12 @@ export default NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
+      authorization: {
+        params: {
+          scope:
+            "https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/calendar openid email profile",
+        },
+      },
     }),
   ],
   callbacks: {

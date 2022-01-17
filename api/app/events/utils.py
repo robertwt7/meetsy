@@ -11,7 +11,10 @@ def connect_to_calendar(request):
     token = SocialToken.objects.filter(account=qs[0]).values("token")
 
     # The scope of service like if we want readonly etc
-    SCOPES = ["https://www.googleapis.com/auth/calendar.events"]
+    SCOPES = [
+        "https://www.googleapis.com/auth/calendar.events",
+        "https://www.googleapis.com/auth/calendar",
+    ]
 
     # Finally making a connection request
     creds = Credentials(token[0]["token"], SCOPES)
