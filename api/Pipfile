@@ -16,6 +16,7 @@ djangorestframework-simplejwt = "*"
 psycopg2 = "*"
 google-auth = "*"
 google-api-python-client = "*"
+python-dateutil = "*"
 
 [dev-packages]
 black = "*"
