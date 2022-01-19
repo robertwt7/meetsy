@@ -3872,6 +3872,11 @@ next-auth@^4.0.5:
     preact-render-to-string "^5.1.19"
     uuid "^8.3.2"
 
+next-redux-wrapper@^7.0.5:
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/next-redux-wrapper/-/next-redux-wrapper-7.0.5.tgz#109cd3fe02183b18fbd094924cfcbd21262039dc"
+  integrity sha512-UFXdAWG5i+GFT8+Hoqpx3GArkPh34fVWF9YoA2VSHlBzsrPtnRd7NWM6FNSYUennpommTpWJ09mu+r/1UxyIkg==
+
 next@12.0.5:
   version "12.0.5"
   resolved "https://registry.npmjs.org/next/-/next-12.0.5.tgz"
