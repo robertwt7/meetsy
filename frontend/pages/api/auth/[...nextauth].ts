@@ -32,7 +32,8 @@ export default NextAuth({
   callbacks: {
     async session({ session, token }) {
       console.log("[SESSION CALLBACK]");
-      console.log(token);
+      console.log("Token: ", token);
+      console.log("Session: ", session);
       return {
         ...session,
         accessToken: token.accessToken,

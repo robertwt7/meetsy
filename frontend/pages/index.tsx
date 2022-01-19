@@ -11,7 +11,7 @@ const Index: NextPage = () => {
   const handleMeet = (): void => {
     void router.push("/meet");
   };
-  const session = useSession();
+  const { data, status } = useSession();
 
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center">
@@ -29,13 +29,19 @@ const Index: NextPage = () => {
           </Button>
         </div>
         <div className="mt-8">
-          <Button
-            variant="contained"
-            // eslint-disable-next-line @typescript-eslint/promise-function-async
-            onClick={() => signIn("google")}
-          >
-            Sign in with Google
-          </Button>
+          {status !== "authenticated" ? (
+            <Button
+              variant="contained"
+              // eslint-disable-next-line @typescript-eslint/promise-function-async
+              onClick={() => signIn("google")}
+            >
+              Sign in with Google
+            </Button>
+          ) : (
+            <Typography variant="h6" className="text-gray-600">
+              Welcome, {data?.user?.name}
+            </Typography>
+          )}
         </div>
       </div>
       <div className="my-8">
