@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
 import { app } from "../env";
+import {createApi} from "@reduxjs/toolkit/query/react"
 
 const { DEBUG_MODE } = app;
 
