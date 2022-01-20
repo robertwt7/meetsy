@@ -6,7 +6,7 @@ export const checkAccessTokenValidity = async (
   accessToken: string
 ): Promise<boolean> => {
   try {
-    const response = await axios.post(VERIFY_TOKEN_URL, {
+    await axios.post(VERIFY_TOKEN_URL, {
       token: accessToken,
     });
 

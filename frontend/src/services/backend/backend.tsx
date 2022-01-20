@@ -17,3 +17,5 @@ export const backendApi = createApi({
     }),
   }),
 });
+
+export const { useGetEventsQuery } = backendApi;

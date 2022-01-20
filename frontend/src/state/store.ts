@@ -1,12 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
+import { backendApi } from "src/services/backend/backend";
 import { app } from "../env";
-import {createApi} from "@reduxjs/toolkit/query/react"
 
 const { DEBUG_MODE } = app;
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    [backendApi.reducerPath]: backendApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(backendApi.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
