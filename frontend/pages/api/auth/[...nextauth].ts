@@ -48,11 +48,11 @@ export default NextAuth({
         accessToken: token.accessToken,
       };
     },
-    async jwt({ token, user, account, profile, isNewUser }) {
+    async jwt({ token, user, account }) {
       console.log("[JWT CALLBACK]");
       let newToken = { ...token };
       // user just signed in
-      if (user !== null && user !== undefined) {
+      if (user !== null && user !== undefined && account !== undefined) {
         // may have to switch it up a bit for other providers
         if (account.provider === "google") {
           // extract these two tokens
@@ -90,10 +90,10 @@ export default NextAuth({
       // token has been invalidated, try refreshing it
       if (isJwtExpired(token.accessToken as string)) {
         const [newAccessToken, newRefreshToken] = await refreshTokenRequest(
-          token.refreshToken
+          token.refreshToken as string
         );
 
-        if (newAccessToken && newRefreshToken) {
+        if (newAccessToken !== null && newRefreshToken !== null) {
           return {
             ...token,
             accessToken: newAccessToken,
