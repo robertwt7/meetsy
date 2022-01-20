@@ -1,7 +1,9 @@
-export const api = {
+import { ApiType, AppType } from "./types";
+
+export const api: ApiType = {
   BACKEND_URL: process.env.BACKEND_URL ?? "",
 };
-export const app = {
+export const app: AppType = {
   DEBUG_MODE: process.env.DEBUG_MODE ?? false,
   APP_URL: process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID ?? "",
