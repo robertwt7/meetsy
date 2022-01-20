@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from googleapiclient.errors import HttpError
 
 # Create your views here.
-class CalendarView(APIView):
+class EventsView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
