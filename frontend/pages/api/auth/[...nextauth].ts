@@ -5,22 +5,31 @@ import GoogleProvider from "next-auth/providers/google";
 import axios from "axios";
 import { refreshTokenRequest, isJwtExpired } from "src/utils";
 import { LOGIN_URL } from "src/api";
+import { app } from "src/env";
+
+const {
+  JWT_SECRET,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+  SESSION_SECRET,
+  NODE_ENV,
+} = app;
 
 export default NextAuth({
-  secret: process.env.SESSION_SECRET,
+  secret: SESSION_SECRET,
   session: {
     strategy: "jwt",
     maxAge: 24 * 60 * 60, // 24 hours
   },
   jwt: {
-    secret: process.env.JWT_SECRET,
+    secret: JWT_SECRET,
   },
-  debug: process.env.NODE_ENV === "development",
+  debug: NODE_ENV === "development",
   // Configure one or more authentication providers
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID ?? "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
+      clientId: GOOGLE_CLIENT_ID ?? "",
+      clientSecret: GOOGLE_CLIENT_SECRET ?? "",
       authorization: {
         params: {
           scope:
