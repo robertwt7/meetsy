@@ -32,3 +32,5 @@ class EventsView(APIView):
             return Response(events)
         except HttpError as e:
             return Response(e.error_details, e.status_code)
+        except Exception as e:
+            return Response({"message": str(e)}, 400)

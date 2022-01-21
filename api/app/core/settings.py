@@ -64,7 +64,7 @@ SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "SCOPE": ["profile", "email", "calendar"],
         "AUTH_PARAMS": {
-            "access_type": "online",
+            "access_type": "offline",
         },
     }
 }

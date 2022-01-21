@@ -34,6 +34,9 @@ export default NextAuth({
         params: {
           scope:
             "https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/calendar openid email profile",
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
         },
       },
     }),
@@ -50,13 +53,20 @@ export default NextAuth({
     },
     async jwt({ token, user, account }) {
       console.log("[JWT CALLBACK]");
+      console.log("Token:", token);
+      console.log("User: ", user);
+      console.log("Account: ", account);
       let newToken = { ...token };
       // user just signed in
       if (user !== null && user !== undefined && account !== undefined) {
         // may have to switch it up a bit for other providers
         if (account.provider === "google") {
           // extract these two tokens
-          const { access_token: accessToken, id_token: idToken } = account;
+          const {
+            access_token: accessToken,
+            id_token: idToken,
+            refresh_token: refreshToken,
+          } = account;
 
           // make a POST request to the DRF backend
           try {
@@ -67,6 +77,7 @@ export default NextAuth({
               {
                 access_token: accessToken,
                 id_token: idToken,
+                refresh_token: refreshToken,
               }
             );
 
