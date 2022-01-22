@@ -4,7 +4,7 @@ import { EventsRequest, EventsResponse } from "./model";
 
 export const backendApi = createApi({
   reducerPath: "backendApi",
-  baseQuery: fetchBaseQuery({ baseUrl: api.BACKEND_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: `${api.BACKEND_URL}/api` }),
   tagTypes: ["Events"],
   endpoints: (builder) => ({
     getEvents: builder.query<EventsResponse, EventsRequest>({

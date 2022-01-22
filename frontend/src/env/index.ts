@@ -1,7 +1,7 @@
 import { ApiType, AppType } from "./types";
 
 export const api: ApiType = {
-  BACKEND_URL: process.env.BACKEND_URL ?? "",
+  BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL ?? "",
 };
 export const app: AppType = {
   DEBUG_MODE: process.env.DEBUG_MODE ?? false,
