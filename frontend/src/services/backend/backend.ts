@@ -9,8 +9,6 @@ export const backendApi = createApi({
     baseUrl: `${api.BACKEND_URL}/api`,
     prepareHeaders: async (headers) => {
       const session = await getSession();
-      console.log("result of getsession: ", session);
-
       const token = session?.accessToken;
 
       if (token) {
@@ -26,7 +24,7 @@ export const backendApi = createApi({
       query: (body) => ({
         url: "/events/",
         method: "POST",
-        data: body,
+        body,
       }),
       providesTags: ["Events"],
     }),

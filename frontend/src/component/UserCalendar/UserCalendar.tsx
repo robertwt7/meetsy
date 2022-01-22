@@ -26,12 +26,12 @@ const localizer = dateFnsLocalizer({
 
 export const UserCalendar: FunctionComponent = () => {
   const currentDate = new Date();
-  const { data } = useGetEventsQuery({
+  const payload = {
     minDate: formatISO(startOfMonth(currentDate)),
     maxDate: formatISO(endOfMonth(currentDate)),
-  });
+  };
+  const { data } = useGetEventsQuery(payload);
 
-  console.log(data);
   return (
     <div className="mt-4">
       <Typography align="center" variant="h5">
