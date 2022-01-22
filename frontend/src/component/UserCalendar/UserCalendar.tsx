@@ -40,8 +40,13 @@ export const UserCalendar: FunctionComponent = () => {
       <Calendar
         localizer={localizer}
         events={data?.items}
-        startAccessor="start"
-        endAccessor="end"
+        titleAccessor={(event) => event.summary ?? ""}
+        startAccessor={(event) =>
+          new Date(event?.start?.dateTime ?? event?.start?.date ?? "")
+        }
+        endAccessor={(event) =>
+          new Date(event?.end?.dateTime ?? event?.end?.date ?? "")
+        }
         style={{ height: 500 }}
       />
     </div>
