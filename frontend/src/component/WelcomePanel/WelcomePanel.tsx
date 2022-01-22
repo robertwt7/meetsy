@@ -1,6 +1,6 @@
-import { Button, Typography } from "@mui/material";
+import { Button, Typography, Stack } from "@mui/material";
 import { useRouter } from "next/router";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import logo from "public/images/logo.png";
 import { FunctionComponent } from "react";
@@ -36,9 +36,18 @@ export const WelcomePanel: FunctionComponent = () => {
             Sign in with Google
           </Button>
         ) : (
-          <Typography variant="h6" className="text-gray-600">
-            Welcome, {data?.user?.name}
-          </Typography>
+          <Stack alignContent="center">
+            <Typography variant="h6" className="text-gray-600">
+              Welcome, {data?.user?.name}
+            </Typography>
+            <Button
+              variant="outlined"
+              // eslint-disable-next-line @typescript-eslint/promise-function-async
+              onClick={() => signOut()}
+            >
+              Sign out
+            </Button>
+          </Stack>
         )}
       </div>
     </div>

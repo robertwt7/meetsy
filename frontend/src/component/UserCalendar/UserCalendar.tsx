@@ -47,6 +47,7 @@ export const UserCalendar: FunctionComponent = () => {
         endAccessor={(event) =>
           new Date(event?.end?.dateTime ?? event?.end?.date ?? "")
         }
+        allDayAccessor={(event) => Boolean(event?.end?.date)}
         style={{ height: 500 }}
       />
     </div>
