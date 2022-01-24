@@ -1,68 +1,98 @@
+/* eslint-disable camelcase */
+/* eslint-disable @typescript-eslint/naming-convention */
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import axios from "axios";
-import { refreshTokenRequest, isJwtExpired, makeUrl } from "src/utils";
+import { refreshTokenRequest, isJwtExpired } from "src/utils";
+import { LOGIN_URL } from "src/api";
+import { app } from "src/env";
+
+const {
+  JWT_SECRET,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+  SESSION_SECRET,
+  NODE_ENV,
+} = app;
 
 export default NextAuth({
-  secret: process.env.SESSION_SECRET,
+  secret: SESSION_SECRET,
   session: {
     strategy: "jwt",
     maxAge: 24 * 60 * 60, // 24 hours
   },
   jwt: {
-    secret: process.env.JWT_SECRET,
+    secret: JWT_SECRET,
   },
-  debug: process.env.NODE_ENV === "development",
+  debug: NODE_ENV === "development",
   // Configure one or more authentication providers
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID ?? "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
+      clientId: GOOGLE_CLIENT_ID ?? "",
+      clientSecret: GOOGLE_CLIENT_SECRET ?? "",
+      authorization: {
+        params: {
+          scope:
+            "https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/calendar openid email profile",
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
     }),
-    // ...add more providers here
   ],
   callbacks: {
-    async session(session, userOrToken) {
-      session.accessToken = userOrToken.accessToken;
-      return session;
+    async session({ session, token }) {
+      console.log("[SESSION CALLBACK]");
+      console.log("Token: ", token);
+      console.log("Session: ", session);
+      return {
+        ...session,
+        accessToken: token.accessToken,
+      };
     },
-    async jwt(token, user, account, profile, isNewUser) {
+    async jwt({ token, user, account }) {
+      console.log("[JWT CALLBACK]");
+      console.log("Token:", token);
+      console.log("User: ", user);
+      console.log("Account: ", account);
+      let newToken = { ...token };
       // user just signed in
-      if (user) {
+      if (user !== null && user !== undefined && account !== undefined) {
         // may have to switch it up a bit for other providers
         if (account.provider === "google") {
           // extract these two tokens
-          const { accessToken, idToken } = account;
+          const {
+            access_token: accessToken,
+            id_token: idToken,
+            refresh_token: refreshToken,
+          } = account;
 
           // make a POST request to the DRF backend
           try {
             const response = await axios.post(
               // tip: use a seperate .ts file or json file to store such URL endpoints
               // "http://127.0.0.1:8000/api/social/login/google/",
-              makeUrl(
-                process.env.BACKEND_API_BASE,
-                "social",
-                "login",
-                account.provider
-              ),
+              LOGIN_URL(account.provider),
               {
-                access_token: accessToken, // note the differences in key and value variable names
+                access_token: accessToken,
                 id_token: idToken,
+                refresh_token: refreshToken,
               }
             );
 
             // extract the returned token from the DRF backend and add it to the `user` object
             const { access_token, refresh_token } = response.data;
             // reform the `token` object from the access token we appended to the `user` object
-            token = {
-              ...token,
+            newToken = {
+              ...newToken,
               accessToken: access_token,
               refreshToken: refresh_token,
             };
 
-            return token;
+            return newToken;
           } catch (error) {
-            return null;
+            return {};
           }
         }
       }
@@ -71,19 +101,17 @@ export default NextAuth({
       // token has been invalidated, try refreshing it
       if (isJwtExpired(token.accessToken as string)) {
         const [newAccessToken, newRefreshToken] = await refreshTokenRequest(
-          token.refreshToken
+          token.refreshToken as string
         );
 
-        if (newAccessToken && newRefreshToken) {
-          token = {
+        if (newAccessToken !== null && newRefreshToken !== null) {
+          return {
             ...token,
             accessToken: newAccessToken,
             refreshToken: newRefreshToken,
             iat: Math.floor(Date.now() / 1000),
             exp: Math.floor(Date.now() / 1000 + 2 * 60 * 60),
           };
-
-          return token;
         }
 
         // unable to refresh tokens from DRF backend, invalidate the token

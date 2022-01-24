@@ -51,17 +51,20 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
     # local app
-    "auth",
+    "meetsyauth",
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
+    ]
+}
 
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
-        "SCOPE": [
-            "profile",
-            "email",
-        ],
+        "SCOPE": ["profile", "email", "calendar"],
         "AUTH_PARAMS": {
-            "access_type": "online",
+            "access_type": "offline",
         },
     }
 }
@@ -78,6 +81,7 @@ REST_USE_JWT = True  # use JSON Web Tokens
 
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -90,7 +94,7 @@ MIDDLEWARE = [
 from datetime import timedelta
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=2),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
@@ -103,12 +107,12 @@ SIMPLE_JWT = {
 CORS_ORIGIN_ALLOW_ALL = True  # only for dev environment!, this should be changed before you push to production
 
 # custom user model, because we do not want to use the Django provided user model
-AUTH_USER_MODEL = "auth.CustomUserModel"
+AUTH_USER_MODEL = "meetsyauth.CustomUserModel"
 
 # We need to specify the exact serializer as well for dj-rest-auth, otherwise it will end up shooting itself
 # in the foot and me in the head
 REST_AUTH_SERIALIZERS = {
-    "USER_DETAILS_SERIALIZER": "auth.serializers.CustomUserModelSerializer"
+    "USER_DETAILS_SERIALIZER": "meetsyauth.serializers.CustomUserModelSerializer"
 }
 
 ROOT_URLCONF = "core.urls"
@@ -134,11 +138,15 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
+# TODO: Need to be changed to service for security: https://docs.djangoproject.com/en/4.0/ref/databases/#postgresql-connection-settings
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "meetsy",
+        "USER": "default",
+        "PASSWORD": "secret",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 
