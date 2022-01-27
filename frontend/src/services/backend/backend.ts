@@ -23,8 +23,8 @@ export const backendApi = createApi({
     getEvents: builder.query<EventsResponse, EventsRequest>({
       query: (body) => ({
         url: "/events/",
-        method: "POST",
-        body,
+        method: "GET",
+        params: body,
       }),
       providesTags: ["Events"],
     }),
