@@ -41,24 +41,42 @@ class EventsView(APIView):
             return Response({"message": str(e)}, status.HTTP_401_UNAUTHORIZED)
 
     def post(self, request):
-        # If no request, then default to 1 month from now
-        now = datetime.datetime.utcnow()
-        nowString = now.isoformat() + "Z"  # 'Z' indicates UTC time
-        minDate = request.data["minDate"] if request.data["minDate"] else nowString
-        maxDate = (
-            request.data["maxDate"]
-            if request.data["maxDate"]
-            else (now + relativedelta(months=1)).isoformat() + "Z"
-        )
+        # Example event saved
+        event = {
+            "summary": "Google I/O 2015",
+            "location": "800 Howard St., San Francisco, CA 94103",
+            "description": "A chance to hear more about Google's developer products.",
+            "start": {
+                "dateTime": "2015-05-28T09:00:00-07:00",
+                "timeZone": "America/Los_Angeles",
+            },
+            "end": {
+                "dateTime": "2015-05-28T17:00:00-07:00",
+                "timeZone": "America/Los_Angeles",
+            },
+            "recurrence": ["RRULE:FREQ=DAILY;COUNT=2"],
+            "attendees": [
+                {"email": "lpage@example.com"},
+                {"email": "sbrin@example.com"},
+            ],
+            "reminders": {
+                "useDefault": False,
+                "overrides": [
+                    {"method": "email", "minutes": 24 * 60},
+                    {"method": "popup", "minutes": 10},
+                ],
+            },
+        }
 
         try:
-            events = (
+            event = (
                 connect_to_calendar(request)
                 .events()
-                .list(calendarId="primary", timeMin=minDate, timeMax=maxDate)
+                .insert(calendarId="primary", body=event)
                 .execute()
             )
-            return Response(events)
+            print("Event created: %s" % (event.get("htmlLink")))
+            return Response(event)
         except HttpError as e:
             return Response(e.error_details, e.status_code)
         except Exception as e:
