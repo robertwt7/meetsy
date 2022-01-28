@@ -15,6 +15,7 @@ module.exports = {
   globals: {
     Atomics: "readonly",
     SharedArrayBuffer: "readonly",
+    JSX: true,
   },
   parserOptions: {
     ecmaFeatures: {
@@ -25,7 +26,7 @@ module.exports = {
   },
   plugins: ["react", "jsx-a11y", "import", "prettier", "unused-imports"],
   rules: {
-    "prettier/prettier": ["warn", { endOfLine: "auto", useTabs: false, }],
+    "prettier/prettier": ["warn", { endOfLine: "auto", useTabs: false }],
     "react/jsx-filename-extension": "off",
     "no-console": "off",
     "no-use-before-define": "off",
