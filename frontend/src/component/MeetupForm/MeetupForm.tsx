@@ -34,6 +34,9 @@ export const MeetupForm: FunctionComponent = () => {
             <Typography variant="h4" gutterBottom align="center">
               Add Event
             </Typography>
+            <Typography variant="h5" gutterBottom align="center">
+              Select your available time slot
+            </Typography>
             <FormikTextField name="name" label="Name" />
             <FormikTextField name="location" label="Location" />
             <FormikTextField name="notes" label="Notes" multiline rows={5} />
