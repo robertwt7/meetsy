@@ -62,8 +62,6 @@ export const UserCalendar: FunctionComponent = () => {
     ]);
   };
 
-  console.log(availableDate);
-
   return (
     <div className="mt-4">
       <Typography align="center" variant="h5">
