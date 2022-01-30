@@ -5,15 +5,20 @@ import Document, {
   Main,
   NextScript,
   DocumentContext,
+  DocumentInitialProps,
 } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
 import theme from "../src/theme";
 import createEmotionCache from "../src/createEmotionCache";
 
+interface MyDocumentProps extends DocumentInitialProps {
+  styles: any[];
+}
+
 export default class MyDocument extends Document {
   // `getInitialProps` belongs to `_document` (instead of `_app`),
   // it's compatible with static-site generation (SSG).
-  static async getInitialProps(ctx: DocumentContext) {
+  static async getInitialProps(ctx: DocumentContext): Promise<MyDocumentProps> {
     // Resolution order
     //
     // On the server:
@@ -45,7 +50,7 @@ export default class MyDocument extends Document {
 
     ctx.renderPage = () =>
       originalRenderPage({
-        enhanceApp: (App) =>
+        enhanceApp: (App: any) =>
           function EnhanceApp(props) {
             return <App emotionCache={cache} {...props} />;
           },
