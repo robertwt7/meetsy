@@ -63,7 +63,7 @@ export const UserCalendar: FunctionComponent = () => {
   };
 
   return (
-    <div className="mt-4">
+    <div className="mt-4 w-full lg:w-1/2">
       <Typography align="center" variant="h5">
         Your events
       </Typography>
