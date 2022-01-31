@@ -36,7 +36,15 @@ interface DateRange {
   end: DateTime;
 }
 
-export const UserCalendar: FunctionComponent = () => {
+interface UserCalendarProps {
+  selectable?: boolean;
+  onSelect?: (selectedDates: DateRange[]) => void;
+}
+
+export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
+  selectable = false,
+  onSelect,
+}) => {
   const [availableDate, setAvailableDate] = useState<DateRange[]>([]);
   const currentDate = new Date();
   const payload = {
@@ -48,7 +56,7 @@ export const UserCalendar: FunctionComponent = () => {
     data?.items != null ? [...data.items, ...availableDate] : availableDate;
 
   const handleSelect = (slotInfo: SlotInfo): void => {
-    setAvailableDate([
+    const newAvailableDates = [
       ...availableDate,
       {
         summary: "Blocked Time",
@@ -59,17 +67,22 @@ export const UserCalendar: FunctionComponent = () => {
           dateTime: slotInfo.end as Date,
         },
       },
-    ]);
+    ];
+    setAvailableDate(newAvailableDates);
+
+    if (onSelect != null) {
+      onSelect(newAvailableDates);
+    }
   };
 
   return (
-    <div className="mt-4 w-full lg:w-1/2">
+    <div className="w-full">
       <Typography align="center" variant="h5">
         Your events
       </Typography>
       <Calendar
         localizer={localizer}
-        selectable
+        selectable={selectable}
         events={eventTimes}
         titleAccessor={(event) => event.summary ?? ""}
         startAccessor={(event) =>
