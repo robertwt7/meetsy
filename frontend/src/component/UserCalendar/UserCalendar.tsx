@@ -30,7 +30,7 @@ interface DateTime {
   dateTime: Date;
   date?: Date;
 }
-interface DateRange {
+export interface DateRange {
   summary: string;
   start: DateTime;
   end: DateTime;

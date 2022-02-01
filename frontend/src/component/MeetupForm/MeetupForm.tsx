@@ -4,6 +4,7 @@ import * as yup from "yup";
 import { FormikTextField } from "src/form";
 import { Stack, Button, Typography } from "@mui/material";
 import { UserCalendar } from "src/component";
+import { DateRange } from "../UserCalendar";
 
 const validationSchema = yup.object().shape({
   name: yup.string().required("Name is required"),
@@ -15,15 +16,41 @@ const validationSchema = yup.object().shape({
     .required("Required"),
 });
 
-const initialValues = {
+const initialValues: InitialValuesType = {
   name: "",
   location: "",
   notes: "",
   selectedTimes: [],
 };
 
+interface InitialValuesType {
+  name: string;
+  location: string;
+  notes: string;
+  selectedTimes: DateRange[];
+}
+
 export const MeetupForm: FunctionComponent = () => {
-  const handleSubmit = (): void => { };
+  const handleSubmit = (values: InitialValuesType): void => {
+    const localTimezone =
+      Intl.DateTimeFormat().resolvedOptions().timeZone ?? "Greenwich";
+    const processedValues = {
+      ...values,
+      selectedTimes: values.selectedTimes.map((item) => ({
+        ...item,
+        start: {
+          ...item.start,
+          dateTime: item.start.dateTime.toISOString(),
+          timeZone: localTimezone,
+        },
+        end: {
+          ...item.end,
+          dateTime: item.end.dateTime.toISOString(),
+          timeZone: localTimezone,
+        },
+      })),
+    };
+  };
   return (
     <Formik
       onSubmit={handleSubmit}
@@ -53,7 +80,9 @@ export const MeetupForm: FunctionComponent = () => {
                   multiline
                   rows={5}
                 />
-                <Button variant="contained">Next</Button>
+                <Button variant="contained" type="submit">
+                  Next
+                </Button>
               </Stack>
               <Stack spacing={1} width={{ lg: "50%", xs: "100%" }}>
                 <UserCalendar
