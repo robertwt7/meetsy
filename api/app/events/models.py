@@ -17,3 +17,5 @@ class AvailableDates(models.Model):
     event = models.ForeignKey(Events, on_delete=models.CASCADE)
     start = models.DateField()
     end = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
