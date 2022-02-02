@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     # local app
     "meetsyauth",
+    "events",
 ]
 
 REST_FRAMEWORK = {
