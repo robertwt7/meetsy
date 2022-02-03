@@ -2,7 +2,7 @@ import datetime
 from dateutil.relativedelta import relativedelta
 
 from events.utils import connect_to_calendar
-from rest_framework import status, viewsets, permissions
+from rest_framework import status, viewsets
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -15,18 +15,26 @@ from .models import Events, AvailableDates
 class EventsViewSet(viewsets.ModelViewSet):
     queryset = Events.objects.all()
     serializer_class = EventsSerializer
-    serializer_class = [permissions.IsAuthenticated, IsOwner]
+    serializer_class = [IsAuthenticated, IsOwner]
+
+    def perform_create(self, serializer):
+        return serializer.save(owner=self.request.user)
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return self.queryset.filter(user=self.request.user)
+        return Events.objects.none()
 
 
 class AvailableDatesViewSet(viewsets.ModelViewSet):
     queryset = AvailableDates.objects.all()
     serializer_class = AvailableDatesSerializer
-    serializer_class = [permissions.IsAuthenticated]
+    serializer_class = [IsAuthenticated]
 
 
 class GoogleEventsView(APIView):
     permission_classes = [IsAuthenticated]
-    permission_classes = permissions.IsAuthenticated
+    permission_classes = IsAuthenticated
 
     def get(self, request):
         # If no request, then default to 1 month from now
