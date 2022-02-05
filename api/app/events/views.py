@@ -15,7 +15,7 @@ from .models import Events, AvailableDates
 class EventsViewSet(viewsets.ModelViewSet):
     queryset = Events.objects.all()
     serializer_class = EventsSerializer
-    serializer_class = [IsAuthenticated, IsOwner]
+    permission_classes = [IsAuthenticated, IsOwner]
 
     def perform_create(self, serializer):
         return serializer.save(owner=self.request.user)
@@ -29,12 +29,11 @@ class EventsViewSet(viewsets.ModelViewSet):
 class AvailableDatesViewSet(viewsets.ModelViewSet):
     queryset = AvailableDates.objects.all()
     serializer_class = AvailableDatesSerializer
-    serializer_class = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
 
 class GoogleEventsView(APIView):
     permission_classes = [IsAuthenticated]
-    permission_classes = IsAuthenticated
 
     def get(self, request):
         # If no request, then default to 1 month from now

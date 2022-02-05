@@ -55,9 +55,11 @@ INSTALLED_APPS = [
     "events",
 ]
 
+# Session authentication is added for browsable api
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
     ]
 }
 
