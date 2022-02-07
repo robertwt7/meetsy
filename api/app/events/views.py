@@ -11,7 +11,7 @@ from .permissions import IsOwner
 from .serializers import EventsSerializer, AvailableDatesSerializer
 from .models import Events, AvailableDates
 
-
+# TODO: Create view to process the endpoint of signed url string
 class EventsViewSet(viewsets.ModelViewSet):
     queryset = Events.objects.all()
     serializer_class = EventsSerializer

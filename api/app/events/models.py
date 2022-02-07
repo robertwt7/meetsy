@@ -9,6 +9,7 @@ class Events(models.Model):
     notes = models.TextField(blank=True)
     selected_time = models.DateField(blank=True)
     pending = models.BooleanField(default=True)
+    expiry = models.DateField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
