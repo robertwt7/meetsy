@@ -1,5 +1,6 @@
 from rest_framework.serializers import ModelSerializer, ManyRelatedField
 from .models import Events, AvailableDates
+import datetime, pytz
 
 
 class AvailableDatesSerializer(ModelSerializer):
@@ -15,10 +16,20 @@ class EventsSerializer(ModelSerializer):
     # TODO: Update event to include the signed url string
     # TODO: Add validation that end shouldn't be earlier than start
     def create(self, validated_data):
-        selectedTimes = validated_data.pop("selectedTimes")
+        available_dates = validated_data.pop("available_dates")
         event = Events.objects.create(**validated_data)
-        for selectedTime in selectedTimes:
-            AvailableDates.objects.create(event=event, **selectedTime)
+        for selectedTime in available_dates:
+            start = datetime.datetime.strptime(
+                selectedTime["start"]["datetime"], "%Y-%m-%dT%H:%M:%S.%fZ"
+            ).replace(tzinfo=pytz.timezone(selectedTime["start"]["timezone"]))
+            end = datetime.datetime.strptime(
+                selectedTime["end"]["datetime"], "%Y-%m-%dT%H:%M:%S.%fZ"
+            ).replace(tzinfo=pytz.timezone(selectedTime["end"]["timezone"]))
+
+            print(start)
+            AvailableDates.objects.create(
+                event=event, start=start.isoformat(), end=end.isoformat()
+            )
         return event
 
     class Meta:
