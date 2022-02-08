@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import type { FunctionComponent } from "react";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
@@ -20,14 +21,14 @@ const initialValues: InitialValuesType = {
   name: "",
   location: "",
   notes: "",
-  selectedTimes: [],
+  available_dates: [],
 };
 
 interface InitialValuesType {
   name: string;
   location: string;
   notes: string;
-  selectedTimes: DateRange[];
+  available_dates: DateRange[];
 }
 
 export const MeetupForm: FunctionComponent = () => {
@@ -36,7 +37,7 @@ export const MeetupForm: FunctionComponent = () => {
       Intl.DateTimeFormat().resolvedOptions().timeZone ?? "Greenwich";
     const processedValues = {
       ...values,
-      selectedTimes: values.selectedTimes.map((item) => ({
+      available_dates: values.available_dates.map((item) => ({
         ...item,
         start: {
           ...item.start,
@@ -88,12 +89,12 @@ export const MeetupForm: FunctionComponent = () => {
                 <UserCalendar
                   selectable
                   onSelect={(selectedDates) =>
-                    setFieldValue("selectedTimes", selectedDates)
+                    setFieldValue("available_dates", selectedDates)
                   }
                 />
-                {Boolean(errors?.selectedTimes) && (
+                {Boolean(errors?.available_dates) && (
                   <Typography variant="body2" color="error">
-                    {errors?.selectedTimes}
+                    {errors?.available_dates}
                   </Typography>
                 )}
               </Stack>

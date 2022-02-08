@@ -18,7 +18,7 @@ class EventsViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsOwner]
 
     def perform_create(self, serializer):
-        return serializer.save(owner=self.request.user)
+        return serializer.save(user=self.request.user)
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
