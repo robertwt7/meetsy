@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { FormikTextField } from "src/form";
 import { Stack, Button, Typography } from "@mui/material";
 import { UserCalendar } from "src/component";
+import { formatISO } from "date-fns";
 import { DateRange } from "../UserCalendar";
 
 const validationSchema = yup.object().shape({
@@ -33,22 +34,12 @@ interface InitialValuesType {
 
 export const MeetupForm: FunctionComponent = () => {
   const handleSubmit = (values: InitialValuesType): void => {
-    const localTimezone =
-      Intl.DateTimeFormat().resolvedOptions().timeZone ?? "Greenwich";
     const processedValues = {
       ...values,
       available_dates: values.available_dates.map((item) => ({
         ...item,
-        start: {
-          ...item.start,
-          dateTime: item.start.dateTime.toISOString(),
-          timeZone: localTimezone,
-        },
-        end: {
-          ...item.end,
-          dateTime: item.end.dateTime.toISOString(),
-          timeZone: localTimezone,
-        },
+        start: formatISO(item.start.dateTime),
+        end: formatISO(item.end.dateTime),
       })),
     };
   };

@@ -19,17 +19,11 @@ class EventsSerializer(ModelSerializer):
         available_dates = validated_data.pop("available_dates")
         event = Events.objects.create(**validated_data)
         for selectedTime in available_dates:
-            start = datetime.datetime.strptime(
-                selectedTime["start"]["datetime"], "%Y-%m-%dT%H:%M:%S.%fZ"
-            ).replace(tzinfo=pytz.timezone(selectedTime["start"]["timezone"]))
-            end = datetime.datetime.strptime(
-                selectedTime["end"]["datetime"], "%Y-%m-%dT%H:%M:%S.%fZ"
-            ).replace(tzinfo=pytz.timezone(selectedTime["end"]["timezone"]))
-
-            print(start)
             AvailableDates.objects.create(
-                event=event, start=start.isoformat(), end=end.isoformat()
+                event=event,
+                **selectedTime,
             )
+
         return event
 
     class Meta:
