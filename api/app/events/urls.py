@@ -4,8 +4,8 @@ from .views import GoogleEventsView, EventsViewSet, AvailableDatesViewSet
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register(r"events", EventsViewSet)
-router.register(r"available_dates", AvailableDatesViewSet)
+router.register(r"meetsy-events", EventsViewSet)
+router.register(r"available-dates", AvailableDatesViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),

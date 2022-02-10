@@ -8,3 +8,26 @@ export interface EventsRequest {
 }
 
 export interface EventsResponse extends Schema$Events {}
+
+interface availableDates {
+  start: string;
+  end: string;
+}
+export interface CreateMeetsyEventsRequest {
+  name: string;
+  location: string;
+  notes: string;
+  available_dates: availableDates[];
+}
+
+export interface MeetsyEventsResponse {
+  id: number;
+  user: string;
+  name: string;
+  location: string;
+  notes: string;
+  expiry: string;
+  selected_time: string;
+  pending: boolean;
+  available_dates: Array<availableDates & { id: number; event: number }>;
+}

@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { api } from "src/env";
 import { getSession } from "next-auth/react";
 import { EventsRequest, EventsResponse } from "./model";
+import { CreateMeetsyEventsRequest, MeetsyEventsResponse } from ".";
 
 export const backendApi = createApi({
   reducerPath: "backendApi",
@@ -11,7 +12,7 @@ export const backendApi = createApi({
       const session = await getSession();
       const token = session?.accessToken;
 
-      if (token) {
+      if (token !== null && token !== undefined) {
         headers.set("authorization", `Bearer ${token as string}`);
       }
 
@@ -27,6 +28,22 @@ export const backendApi = createApi({
         params: body,
       }),
       providesTags: ["Events"],
+    }),
+    createMeetsyEvents: builder.query<
+      MeetsyEventsResponse,
+      CreateMeetsyEventsRequest
+    >({
+      query: (body) => ({
+        url: "/meetsy-events/",
+        method: "POST",
+        body,
+      }),
+    }),
+    getMeetsyEvents: builder.query<MeetsyEventsResponse, number>({
+      query: (id) => ({
+        url: `/meetsy-events/${id}/`,
+        method: "GET",
+      }),
     }),
   }),
 });
