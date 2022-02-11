@@ -1,6 +1,7 @@
 from rest_framework.serializers import ModelSerializer, ValidationError
 from .models import Events, AvailableDates
-import datetime, pytz
+import datetime
+from django.core.signing import Signer
 
 
 class AvailableDatesSerializer(ModelSerializer):
@@ -25,7 +26,6 @@ class EventsSerializer(ModelSerializer):
             raise ValidationError("Must select available dates")
         return data
 
-    # TODO: Update event to include the signed url string
     def create(self, validated_data):
         available_dates = validated_data.pop("available_dates")
 
@@ -39,6 +39,16 @@ class EventsSerializer(ModelSerializer):
             )
 
         return event
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        expiry = ret["expiry"]
+        print(ret)
+        signer = Signer()
+        signedObject = signer.sign_object({"expiry": expiry, "id": ret["id"]})
+
+        ret["signed_url"] = signedObject
+        return ret
 
     class Meta:
         read_only_fields = ["id", "created_at", "updated_at", "selected_time", "user"]
