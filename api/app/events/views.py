@@ -4,14 +4,16 @@ from dateutil.relativedelta import relativedelta
 from events.utils import connect_to_calendar
 from rest_framework import status, viewsets
 from rest_framework.views import APIView
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from googleapiclient.errors import HttpError
 from .permissions import IsOwner
 from .serializers import EventsSerializer, AvailableDatesSerializer
 from .models import Events, AvailableDates
+from django.core.signing import Signer
 
-# TODO: Create view to process the endpoint of signed url string
+
 class EventsViewSet(viewsets.ModelViewSet):
     queryset = Events.objects.all()
     serializer_class = EventsSerializer
@@ -24,6 +26,14 @@ class EventsViewSet(viewsets.ModelViewSet):
         if self.request.user.is_authenticated:
             return self.queryset.filter(user=self.request.user)
         return Events.objects.none()
+
+    # TODO: set permission to be the only one who owns the event
+    @action(detail=False)
+    def open_invite(self, request):
+        signer = Signer()
+        data = request.query_params.get("invite_url")
+        extractedData = signer.unsign_object(data)
+        print(extractedData)
 
 
 class AvailableDatesViewSet(viewsets.ModelViewSet):
