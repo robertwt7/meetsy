@@ -43,7 +43,6 @@ class EventsSerializer(ModelSerializer):
     def to_representation(self, instance):
         ret = super().to_representation(instance)
         expiry = ret["expiry"]
-        print(ret)
         signer = Signer()
         signedObject = signer.sign_object({"expiry": expiry, "id": ret["id"]})
 

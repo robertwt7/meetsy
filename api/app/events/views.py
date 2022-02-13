@@ -1,4 +1,5 @@
 import datetime
+import pytz
 from dateutil.relativedelta import relativedelta
 
 from events.utils import connect_to_calendar
@@ -30,10 +31,29 @@ class EventsViewSet(viewsets.ModelViewSet):
     # TODO: set permission to be the only one who owns the event
     @action(detail=False)
     def open_invite(self, request):
-        signer = Signer()
-        data = request.query_params.get("invite_url")
-        extractedData = signer.unsign_object(data)
-        print(extractedData)
+        try:
+            signer = Signer()
+            data = request.query_params.get("invite_url")
+            extractedData = signer.unsign_object(data)
+            if not extractedData["expiry"]:
+                return Response(
+                    {"message": "Invalid hash"}, status=status.HTTP_400_BAD_REQUEST
+                )
+
+            expiry = datetime.datetime.strptime(
+                extractedData["expiry"], "%Y-%m-%dT%H:%M:%S.%f%z"
+            )
+            dateNow = datetime.datetime.now().replace(tzinfo=pytz.UTC)
+            if expiry > dateNow:
+                event = Events.objects.get(id=extractedData["id"])
+                return Response(EventsSerializer(event).data, status=status.HTTP_200_OK)
+            else:
+                return Response(
+                    {"message": "Invitation expired"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+        except Exception as e:
+            return Response({"message": str(e)}, status.HTTP_400_BAD_REQUEST)
 
 
 class AvailableDatesViewSet(viewsets.ModelViewSet):
