@@ -1,3 +1,44 @@
 from django.test import TestCase
+from rest_framework.test import (
+    force_authenticate,
+    APIRequestFactory,
+    APITestCase,
+)
+from rest_framework import status
+from .models import Events
+from django.urls import reverse
+from meetsyauth.models import CustomUserModel
 
 # Create your tests here.
+class MeetsyEventsTestCase(APITestCase):
+    def setUp(self) -> None:
+        self.user = CustomUserModel.objects.create(
+            username="robertwt7", password="password"
+        )
+        return super().setUp()
+
+    def test_create_events(self):
+        user = CustomUserModel.objects.get(username="robertwt7")
+        url = reverse("events-list")
+        data = {
+            "name": "Testing my event",
+            "location": "Australia",
+            "notes": "This is my notes",
+            "available_dates": [
+                {
+                    "start": "2022-02-09T22:39:02+11:00",
+                    "end": "2022-02-09T23:39:02+11:00",
+                },
+                {
+                    "start": "2022-02-10T10:39:02+11:00",
+                    "end": "2022-02-10T23:39:02+11:00",
+                },
+            ],
+        }
+        self.client.force_authenticate(user=user)
+        response = self.client.post(url, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Events.objects.count(), 1)
+        self.assertEqual(
+            Events.objects.get(id=response.data["id"]).name, "Testing my event"
+        )

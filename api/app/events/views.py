@@ -28,7 +28,7 @@ class EventsViewSet(viewsets.ModelViewSet):
             return self.queryset.filter(user=self.request.user)
         return Events.objects.none()
 
-    # TODO: set permission to be the only one who owns the event
+    # TODO: do we need to protect the API from uninvited users?
     @action(detail=False)
     def open_invite(self, request):
         try:
