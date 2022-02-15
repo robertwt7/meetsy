@@ -28,6 +28,7 @@ class EventsViewSet(viewsets.ModelViewSet):
             return self.queryset.filter(user=self.request.user)
         return Events.objects.none()
 
+    # If it is to open invite, we don't need to check if the user is authenticated
     def get_permissions(self):
         if self.action == "open_invite":
             self.permission_classes = []
