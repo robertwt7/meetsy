@@ -28,6 +28,11 @@ class EventsViewSet(viewsets.ModelViewSet):
             return self.queryset.filter(user=self.request.user)
         return Events.objects.none()
 
+    def get_permissions(self):
+        if self.action == "open_invite":
+            self.permission_classes = []
+        return super().get_permissions()
+
     # TODO: do we need to protect the API from uninvited users?
     @action(detail=False)
     def open_invite(self, request):
