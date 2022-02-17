@@ -8,6 +8,8 @@ from rest_framework import status
 from .models import Events
 from django.urls import reverse
 from meetsyauth.models import CustomUserModel
+from django.core.signing import Signer
+import datetime
 
 # Create your tests here.
 class MeetsyEventsTestCase(APITestCase):
@@ -15,6 +17,12 @@ class MeetsyEventsTestCase(APITestCase):
         self.user = CustomUserModel.objects.create(
             username="robertwt7", password="password"
         )
+        data = {
+            "name": "Testing initial event",
+            "location": "Australia",
+            "notes": "This is my notes",
+        }
+        self.event = Events.objects.create(**data, user=self.user)
         return super().setUp()
 
     def test_create_events(self):
@@ -38,7 +46,35 @@ class MeetsyEventsTestCase(APITestCase):
         self.client.force_authenticate(user=user)
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(Events.objects.count(), 1)
+
+        # 2 because of the default event created in setUp
+        self.assertEqual(Events.objects.count(), 2)
         self.assertEqual(
             Events.objects.get(id=response.data["id"]).name, "Testing my event"
         )
+        self.assertIn("signed_url", response.data)
+
+    def test_invite_link_expired(self):
+        url = reverse("events-open-invite")
+        signer = Signer()
+        signedObject = signer.sign_object(
+            {"expiry": datetime.datetime.today().isoformat(), "id": 1}
+        )
+        response = self.client.get(url, {"invite_url": signedObject})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_invite_link(self):
+        url = reverse("events-open-invite")
+        signer = Signer()
+        signedObject = signer.sign_object(
+            {
+                "expiry": (
+                    datetime.datetime.now() + datetime.timedelta(days=2)
+                ).isoformat()
+                + "Z",
+                "id": self.event.id,
+            }
+        )
+        response = self.client.get(url, {"invite_url": signedObject})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["name"], "Testing initial event")
