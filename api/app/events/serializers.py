@@ -46,7 +46,7 @@ class EventsSerializer(ModelSerializer):
         signer = Signer()
         signedObject = signer.sign_object({"expiry": expiry, "id": ret["id"]})
 
-        ret["signed_url"] = signedObject
+        ret["invite_url"] = signedObject
         return ret
 
     class Meta:

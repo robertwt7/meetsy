@@ -52,7 +52,7 @@ class MeetsyEventsTestCase(APITestCase):
         self.assertEqual(
             Events.objects.get(id=response.data["id"]).name, "Testing my event"
         )
-        self.assertIn("signed_url", response.data)
+        self.assertIn("invite_url", response.data)
 
     def test_invite_link_expired(self):
         url = reverse("events-open-invite")
