@@ -13,6 +13,7 @@ export const SnackBarProvider: FunctionComponent<SnackBarProviderProps> = ({
     open: false,
     message: "",
     severity: "success",
+    autoHideDuration: 5000,
   });
 
   return (

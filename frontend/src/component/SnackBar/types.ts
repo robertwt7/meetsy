@@ -10,4 +10,5 @@ export interface SnackBarOptions {
   open: boolean;
   message: string;
   severity: AlertColor;
+  autoHideDuration: number;
 }

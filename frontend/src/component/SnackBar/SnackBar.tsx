@@ -8,12 +8,13 @@ export const SnackBarContext = React.createContext<SnackBarState>({
     open: false,
     message: "",
     severity: "success",
+    autoHideDuration: 5000,
   },
 });
 
 export const SnackBar: FunctionComponent = () => {
   const { setSnackBarOptions, snackBarOptions } = useContext(SnackBarContext);
-  const { open, severity, message } = snackBarOptions;
+  const { open, severity, message, autoHideDuration } = snackBarOptions;
   const handleClose = (): void => {
     setSnackBarOptions({
       ...snackBarOptions,
@@ -23,7 +24,7 @@ export const SnackBar: FunctionComponent = () => {
   return (
     <Snackbar
       open={open}
-      autoHideDuration={4000}
+      autoHideDuration={autoHideDuration}
       onClose={handleClose}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
     >
