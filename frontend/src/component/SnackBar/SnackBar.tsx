@@ -3,22 +3,27 @@ import { Snackbar, Alert } from "@mui/material";
 import { SnackBarState } from "./types";
 
 export const SnackBarContext = React.createContext<SnackBarState>({
-  open: false,
-  setOpen: () => {},
-  message: "",
-  severity: "success",
+  setSnackBarOptions: () => {},
+  snackBarOptions: {
+    open: false,
+    message: "",
+    severity: "success",
+  },
 });
 
 export const SnackBar: FunctionComponent = () => {
-  const { open, setOpen, message, severity } = useContext(SnackBarContext);
-
+  const { setSnackBarOptions, snackBarOptions } = useContext(SnackBarContext);
+  const { open, severity, message } = snackBarOptions;
   const handleClose = (): void => {
-    setOpen(false);
+    setSnackBarOptions({
+      ...snackBarOptions,
+      open: false,
+    });
   };
   return (
     <Snackbar
       open={open}
-      autoHideDuration={6000}
+      autoHideDuration={4000}
       onClose={handleClose}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
     >
