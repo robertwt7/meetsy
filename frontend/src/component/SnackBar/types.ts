@@ -11,5 +11,3 @@ export interface SnackBarOptions {
   message: string;
   severity: AlertColor;
 }
-
-export type SetSnackBarFn = (options: SnackBarOptions) => void;

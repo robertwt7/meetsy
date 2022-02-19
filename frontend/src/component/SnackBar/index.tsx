@@ -1,6 +1,6 @@
 import { FunctionComponent, ReactNode, useContext, useState } from "react";
 import { SnackBarContext, SnackBar } from "./SnackBar";
-import { SetSnackBarFn, SnackBarOptions } from "./types";
+import { SnackBarOptions, SnackBarState } from "./types";
 
 interface SnackBarProviderProps {
   children: ReactNode;
@@ -23,7 +23,7 @@ export const SnackBarProvider: FunctionComponent<SnackBarProviderProps> = ({
   );
 };
 
-export const useSnackbar = (): SetSnackBarFn => {
+export const useSnackbar = (): SnackBarState["setSnackBarOptions"] => {
   const { setSnackBarOptions } = useContext(SnackBarContext);
 
   return setSnackBarOptions;
