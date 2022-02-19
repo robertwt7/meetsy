@@ -29,7 +29,7 @@ export const backendApi = createApi({
       }),
       providesTags: ["Events"],
     }),
-    createMeetsyEvents: builder.query<
+    createMeetsyEvents: builder.mutation<
       MeetsyEventsResponse,
       CreateMeetsyEventsRequest
     >({
@@ -48,4 +48,8 @@ export const backendApi = createApi({
   }),
 });
 
-export const { useGetEventsQuery } = backendApi;
+export const {
+  useGetEventsQuery,
+  useCreateMeetsyEventsMutation,
+  useGetMeetsyEventsQuery,
+} = backendApi;

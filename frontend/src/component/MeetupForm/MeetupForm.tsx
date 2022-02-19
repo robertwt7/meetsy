@@ -6,6 +6,8 @@ import { FormikTextField } from "src/form";
 import { Stack, Button, Typography } from "@mui/material";
 import { UserCalendar } from "src/component";
 import { formatISO } from "date-fns";
+import { useCreateMeetsyEventsMutation } from "src/services/backend";
+import { api } from "src/env";
 import { DateRange } from "../UserCalendar";
 
 const validationSchema = yup.object().shape({
@@ -33,7 +35,8 @@ interface InitialValuesType {
 }
 
 export const MeetupForm: FunctionComponent = () => {
-  const handleSubmit = (values: InitialValuesType): void => {
+  const [createMeetsyEvent] = useCreateMeetsyEventsMutation();
+  const handleSubmit = async (values: InitialValuesType): Promise<void> => {
     const processedValues = {
       ...values,
       available_dates: values.available_dates.map((item) => ({
@@ -42,6 +45,12 @@ export const MeetupForm: FunctionComponent = () => {
         end: formatISO(item.end.dateTime),
       })),
     };
+
+    const response = await createMeetsyEvent(processedValues).unwrap();
+
+    if (response) {
+      const url = `${api.BACKEND_URL}/api/meetsy-events/open_invite/?invite_url=${response.invite_url}`;
+    }
   };
   return (
     <Formik

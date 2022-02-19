@@ -30,4 +30,5 @@ export interface MeetsyEventsResponse {
   selected_time: string;
   pending: boolean;
   available_dates: Array<availableDates & { id: number; event: number }>;
+  invite_url: string;
 }
