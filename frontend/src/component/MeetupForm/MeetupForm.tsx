@@ -16,7 +16,7 @@ const validationSchema = yup.object().shape({
   name: yup.string().required("Name is required"),
   location: yup.string(),
   notes: yup.string(),
-  selectedTimes: yup
+  available_dates: yup
     .array()
     .min(1, "Please select at least 1 time slot")
     .required("Required"),
@@ -42,6 +42,7 @@ export const MeetupForm: FunctionComponent = () => {
     useCreateMeetsyEventsMutation();
   const setSnackBar = useSnackBar();
   const handleSubmit = async (values: InitialValuesType): Promise<void> => {
+    console.log("goes in submit");
     const processedValues = {
       ...values,
       available_dates: values.available_dates.map((item) => ({
@@ -66,7 +67,10 @@ export const MeetupForm: FunctionComponent = () => {
         }, 2000);
       }
     } catch (e) {
-      setSnackBar({ message: "There was an error in creating your event" });
+      setSnackBar({
+        message: e?.data?.detail ?? "There was an error in creating your event",
+        severity: "error",
+      });
     }
   };
   return (
@@ -88,7 +92,7 @@ export const MeetupForm: FunctionComponent = () => {
             >
               <Stack spacing={2} width={{ lg: "50%", xs: "100%" }}>
                 <Typography variant="h5" gutterBottom align="center">
-                  Select your available time slot
+                  Event Details
                 </Typography>
                 <FormikTextField name="name" label="Name" />
                 <FormikTextField name="location" label="Location" />
@@ -109,9 +113,10 @@ export const MeetupForm: FunctionComponent = () => {
               <Stack spacing={1} width={{ lg: "50%", xs: "100%" }}>
                 <UserCalendar
                   selectable
-                  onSelect={(selectedDates) =>
-                    setFieldValue("available_dates", selectedDates)
-                  }
+                  onSelect={(selectedDates) => {
+                    setFieldValue("available_dates", selectedDates);
+                    console.log(errors);
+                  }}
                 />
                 {Boolean(errors?.available_dates) && (
                   <Typography variant="body2" color="error">
