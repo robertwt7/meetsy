@@ -43,7 +43,7 @@ class EventsViewSet(viewsets.ModelViewSet):
             extractedData = signer.unsign_object(data)
             if not extractedData["expiry"]:
                 return Response(
-                    {"message": "Invalid hash"}, status=status.HTTP_400_BAD_REQUEST
+                    {"detail": "Invalid hash"}, status=status.HTTP_400_BAD_REQUEST
                 )
 
             expiry = datetime.datetime.strptime(
@@ -55,11 +55,11 @@ class EventsViewSet(viewsets.ModelViewSet):
                 return Response(EventsSerializer(event).data, status=status.HTTP_200_OK)
             else:
                 return Response(
-                    {"message": "Invitation expired"},
+                    {"detail": "Invitation expired"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
         except Exception as e:
-            return Response({"message": str(e)}, status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": str(e)}, status.HTTP_400_BAD_REQUEST)
 
 
 class AvailableDatesViewSet(viewsets.ModelViewSet):
@@ -97,7 +97,7 @@ class GoogleEventsView(APIView):
         except HttpError as e:
             return Response(e.error_details, e.status_code)
         except Exception as e:
-            return Response({"message": str(e)}, status.HTTP_401_UNAUTHORIZED)
+            return Response({"detail": str(e)}, status.HTTP_401_UNAUTHORIZED)
 
     def post(self, request):
         # Example event saved
@@ -139,4 +139,4 @@ class GoogleEventsView(APIView):
         except HttpError as e:
             return Response(e.error_details, e.status_code)
         except Exception as e:
-            return Response({"message": str(e)}, status.HTTP_401_UNAUTHORIZED)
+            return Response({"detail": str(e)}, status.HTTP_401_UNAUTHORIZED)
