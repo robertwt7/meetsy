@@ -55,17 +55,18 @@ export const MeetupForm: FunctionComponent = () => {
     try {
       const response = await createMeetsyEvent(processedValues).unwrap();
 
-      if (response) {
-        const url = `${api.BACKEND_URL}/api/meetsy-events/open_invite/?invite_url=${response.invite_url}`;
-        setSnackBar({ message: "Event created successfully" });
+      const url = `${api.BACKEND_URL}/api/meetsy-events/open_invite/?invite_url=${response.invite_url}`;
+      setSnackBar({ message: "Event created successfully" });
 
-        setTimeout(() => {
-          void router.push({
+      setTimeout(() => {
+        void router.push(
+          {
             pathname: "/success",
             query: { url },
-          });
-        }, 2000);
-      }
+          },
+          `/success`
+        );
+      }, 2000);
     } catch (e) {
       setSnackBar({
         message: e?.data?.detail ?? "There was an error in creating your event",
