@@ -7,8 +7,10 @@ export interface SnackBarState {
 }
 
 export interface SnackBarOptions {
-  open: boolean;
+  open?: boolean;
   message: string;
-  severity: AlertColor;
-  autoHideDuration: number;
+  severity?: AlertColor;
+  autoHideDuration?: number;
 }
+
+export type SetSnackBarFn = (options: SnackBarOptions) => void;

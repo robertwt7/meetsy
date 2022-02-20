@@ -10,7 +10,7 @@ import type { EmotionCache } from "@emotion/utils";
 import type { ReactNode } from "react";
 import { SessionProvider } from "next-auth/react";
 import { wrapper } from "src/state/store";
-import { SnackBarProvider } from "src";
+import { SnackBarProvider, MainLayout } from "src";
 import theme from "../src/theme";
 import createEmotionCache from "../src/createEmotionCache";
 import "tailwindcss/tailwind.css";
@@ -34,7 +34,9 @@ function MeetsyApp(
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
             <SnackBarProvider>
-              <Component {...pageProps} />
+              <MainLayout>
+                <Component {...pageProps} />
+              </MainLayout>
             </SnackBarProvider>
           </ThemeProvider>
         </SessionProvider>

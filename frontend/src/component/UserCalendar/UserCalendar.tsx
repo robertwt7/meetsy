@@ -78,7 +78,7 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
   return (
     <div className="w-full">
       <Typography align="center" variant="h5">
-        Your events
+        Your Calendar
       </Typography>
       <Calendar
         localizer={localizer}

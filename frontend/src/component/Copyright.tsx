@@ -1,7 +1,7 @@
 import Typography from "@mui/material/Typography";
-import MuiLink from "@mui/material/Link";
 import type { FunctionComponent } from "react";
 import { app } from "src/env";
+import MuiLink from "./Link";
 
 export const Copyright: FunctionComponent = () => {
   const { APP_URL } = app;

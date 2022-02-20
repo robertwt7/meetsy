@@ -8,6 +8,8 @@ import { UserCalendar } from "src/component";
 import { formatISO } from "date-fns";
 import { useCreateMeetsyEventsMutation } from "src/services/backend";
 import { api } from "src/env";
+import { useRouter } from "next/router";
+import { useSnackBar } from "../SnackBar";
 import { DateRange } from "../UserCalendar";
 
 const validationSchema = yup.object().shape({
@@ -35,7 +37,10 @@ interface InitialValuesType {
 }
 
 export const MeetupForm: FunctionComponent = () => {
-  const [createMeetsyEvent] = useCreateMeetsyEventsMutation();
+  const router = useRouter();
+  const [createMeetsyEvent, { isLoading, isSuccess }] =
+    useCreateMeetsyEventsMutation();
+  const setSnackBar = useSnackBar();
   const handleSubmit = async (values: InitialValuesType): Promise<void> => {
     const processedValues = {
       ...values,
@@ -46,10 +51,22 @@ export const MeetupForm: FunctionComponent = () => {
       })),
     };
 
-    const response = await createMeetsyEvent(processedValues).unwrap();
+    try {
+      const response = await createMeetsyEvent(processedValues).unwrap();
 
-    if (response) {
-      const url = `${api.BACKEND_URL}/api/meetsy-events/open_invite/?invite_url=${response.invite_url}`;
+      if (response) {
+        const url = `${api.BACKEND_URL}/api/meetsy-events/open_invite/?invite_url=${response.invite_url}`;
+        setSnackBar({ message: "Event created successfully" });
+
+        setTimeout(() => {
+          void router.push({
+            pathname: "/success",
+            query: { url },
+          });
+        }, 2000);
+      }
+    } catch (e) {
+      setSnackBar({ message: "There was an error in creating your event" });
     }
   };
   return (
@@ -58,7 +75,7 @@ export const MeetupForm: FunctionComponent = () => {
       initialValues={initialValues}
       validationSchema={validationSchema}
     >
-      {({ setFieldValue, errors }) => (
+      {({ setFieldValue, errors, isSubmitting }) => (
         <Stack width="100%">
           <Form>
             <Typography variant="h4" gutterBottom align="center">
@@ -81,7 +98,11 @@ export const MeetupForm: FunctionComponent = () => {
                   multiline
                   rows={5}
                 />
-                <Button variant="contained" type="submit">
+                <Button
+                  variant="contained"
+                  type="submit"
+                  disabled={isSubmitting || isLoading || isSuccess}
+                >
                   Next
                 </Button>
               </Stack>
