@@ -1,19 +1,24 @@
 import type { NextPage } from "next";
+import { MeetupForm } from "src";
 import { useRouter } from "next/router";
-import { Copyright, MeetupForm } from "src";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
-const Index: NextPage = () => {
+const Meet: NextPage = () => {
+  const { status } = useSession();
   const router = useRouter();
+
+  useEffect(() => {
+    if (status !== "authenticated") {
+      void router.push("/");
+    }
+  }, [status, router]);
+
   return (
-    <div className="w-full h-screen flex flex-col justify-center items-center">
-      <div className="flex flex-col items-center w-1/3">
-        <MeetupForm />
-      </div>
-      <div className="my-8">
-        <Copyright />
-      </div>
+    <div className="flex flex-col items-center lg:w-1/2 w-3/4">
+      <MeetupForm />
     </div>
   );
 };
 
-export default Index;
+export default Meet;

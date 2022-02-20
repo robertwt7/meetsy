@@ -21,11 +21,14 @@ export const WelcomePanel: FunctionComponent = () => {
       <h4 className="text-lg font-semibold">
         Simple, fast, and open source online booking system
       </h4>
-      <div className="mt-8">
-        <Button variant="contained" onClick={handleMeet}>
-          Create a meet
-        </Button>
-      </div>
+      {status === "authenticated" && (
+        <div className="mt-8">
+          <Button variant="contained" onClick={handleMeet}>
+            Create a meet
+          </Button>
+        </div>
+      )}
+
       <div className="mt-8">
         {status !== "authenticated" ? (
           <Button

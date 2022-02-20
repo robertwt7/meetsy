@@ -4,3 +4,4 @@ export * from "./Link";
 export * from "./ProTip";
 export * from "./UserCalendar";
 export * from "./WelcomePanel";
+export * from "./SnackBar";

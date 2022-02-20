@@ -6,7 +6,7 @@ from googleapiclient.discovery import build
 def connect_to_calendar(request):
     # Fetches the User of the request
     qs = SocialAccount.objects.filter(user=request.user)
-    print(request.user)
+
     # Fetches the Acces token of the User
     token = SocialToken.objects.filter(account=qs[0]).values("token")
 
