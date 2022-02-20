@@ -8,6 +8,7 @@
     "@emotion/react": "^11.7.0",
     "@emotion/server": "latest",
     "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.4.2",
     "@mui/lab": "^5.0.0-alpha.58",
     "@mui/material": "^5.2.2",
     "@reduxjs/toolkit": "^1.7.1",
