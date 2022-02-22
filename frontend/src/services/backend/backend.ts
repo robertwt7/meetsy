@@ -45,7 +45,7 @@ export const backendApi = createApi({
         method: "GET",
       }),
     }),
-    getInvitedEvent: builder.query<MeetsyEventsResponse, number>({
+    getInvitedEvent: builder.query<MeetsyEventsResponse, string>({
       query: (signedUrl) => ({
         url: `/meetsy-events/open_invite/?invite_url=${signedUrl}`,
         method: "GET",
@@ -58,4 +58,5 @@ export const {
   useGetEventsQuery,
   useCreateMeetsyEventsMutation,
   useGetMeetsyEventsQuery,
+  useGetInvitedEventQuery,
 } = backendApi;

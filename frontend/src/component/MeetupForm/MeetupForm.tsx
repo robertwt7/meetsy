@@ -7,7 +7,7 @@ import { Stack, Button, Typography } from "@mui/material";
 import { UserCalendar } from "src/component";
 import { formatISO } from "date-fns";
 import { useCreateMeetsyEventsMutation } from "src/services/backend";
-import { api } from "src/env";
+import { app } from "src/env";
 import { useRouter } from "next/router";
 import { useSnackBar } from "../SnackBar";
 import { DateRange } from "../UserCalendar";
@@ -42,7 +42,6 @@ export const MeetupForm: FunctionComponent = () => {
     useCreateMeetsyEventsMutation();
   const setSnackBar = useSnackBar();
   const handleSubmit = async (values: InitialValuesType): Promise<void> => {
-    console.log("goes in submit");
     const processedValues = {
       ...values,
       available_dates: values.available_dates.map((item) => ({
@@ -55,7 +54,7 @@ export const MeetupForm: FunctionComponent = () => {
     try {
       const response = await createMeetsyEvent(processedValues).unwrap();
 
-      const url = `${api.BACKEND_URL}/api/meetsy-events/open_invite/?invite_url=${response.invite_url}`;
+      const url = `${app.APP_URL}/invite/?url=${response.invite_url}`;
       setSnackBar({ message: "Event created successfully" });
 
       setTimeout(() => {
@@ -116,7 +115,6 @@ export const MeetupForm: FunctionComponent = () => {
                   selectable
                   onSelect={(selectedDates) => {
                     setFieldValue("available_dates", selectedDates);
-                    console.log(errors);
                   }}
                 />
                 {Boolean(errors?.available_dates) && (
