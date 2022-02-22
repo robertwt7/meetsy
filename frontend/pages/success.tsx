@@ -1,9 +1,7 @@
 import { NextPage } from "next";
-import { Typography, Stack, Button } from "@mui/material";
 import { useRouter } from "next/router";
-import { useSnackBar } from "src";
+import { SuccessPanel, useSnackBar } from "src";
 import { useEffect } from "react";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 const Success: NextPage = () => {
   const router = useRouter();
@@ -19,37 +17,9 @@ const Success: NextPage = () => {
     }
   }, [router, url]);
 
-  const handleCopy = (): void => {
-    void navigator.clipboard.writeText(url as string);
-    setSnackBar({ message: "Copied to clipboard" });
-  };
-
   return (
-    <div className="flex flex-col items-center lg:w-1/2 w-3/4">
-      <Stack spacing={2}>
-        <Typography align="center" variant="h5" color="blue.400">
-          Events created successfully, please share the link below to your
-          friends
-        </Typography>
-        <div className="bg-gray-200 rounded-lg relative">
-          <Button
-            variant="outlined"
-            size="small"
-            onClick={handleCopy}
-            startIcon={<ContentCopyIcon />}
-          >
-            Copy
-          </Button>
-          <Typography
-            align="center"
-            variant="body1"
-            onClick={handleCopy}
-            sx={{ margin: "1rem" }}
-          >
-            {url}
-          </Typography>
-        </div>
-      </Stack>
+    <div className="flex flex-col md:items-center lg:w-1/2 w-3/4">
+      <SuccessPanel url={url as string} />
     </div>
   );
 };
