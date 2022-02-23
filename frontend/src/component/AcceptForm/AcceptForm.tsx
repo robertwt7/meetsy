@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
 import { Paper, Typography } from "@mui/material";
-import { useGetInvitedEventQuery } from "src";
+import { useGetInvitedEventQuery, UserCalendar } from "src";
+import { mapDatesToCalendarObject } from "./utils";
 
 interface AcceptFormProps {
   url: string;
@@ -12,7 +13,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
   return (
     <div className="flex flex-row w-full">
       <Paper className="w-full">
-        <div className="flex flex-row items-center">
+        <div className="flex flex-row items-stretch">
           <div className="w-1/4">
             <Typography variant="h4" className="m-4 mb-2">
               {data?.name}
@@ -24,10 +25,11 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
               {data?.notes}
             </Typography>
           </div>
-          <div className="w-3/4 border-l h-full p-4 border-gray-300">
-            <Typography variant="body1" sx={{ marginLeft: 2 }}>
-              Event calendar here
-            </Typography>
+          <div className="w-3/4 border-l p-4 border-gray-300">
+            <UserCalendar
+              selectable={false}
+              availableDates={mapDatesToCalendarObject(data?.available_dates)}
+            />
           </div>
         </div>
       </Paper>

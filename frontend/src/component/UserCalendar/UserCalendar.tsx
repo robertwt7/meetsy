@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useState, useEffect } from "react";
 import { Typography } from "@mui/material";
 import { useGetEventsQuery } from "src/services/backend";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
@@ -39,11 +39,13 @@ export interface DateRange {
 interface UserCalendarProps {
   selectable?: boolean;
   onSelect?: (selectedDates: DateRange[]) => void;
+  availableDates?: DateRange[];
 }
 
 export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
   selectable = false,
   onSelect,
+  availableDates,
 }) => {
   const [availableDate, setAvailableDate] = useState<DateRange[]>([]);
   const currentDate = new Date();
@@ -74,6 +76,15 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
       onSelect(newAvailableDates);
     }
   };
+
+  /**
+   * Set default value if available
+   */
+  useEffect(() => {
+    if (availableDates !== undefined) {
+      setAvailableDate(availableDates);
+    }
+  }, [availableDates]);
 
   return (
     <div className="w-full">

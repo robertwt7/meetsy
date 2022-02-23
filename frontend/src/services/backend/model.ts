@@ -20,6 +20,10 @@ export interface CreateMeetsyEventsRequest {
   available_dates: availableDates[];
 }
 
+export type AvailableDates = Array<
+  availableDates & { id: number; event: number }
+>;
+
 export interface MeetsyEventsResponse {
   id: number;
   user: string;
@@ -29,6 +33,6 @@ export interface MeetsyEventsResponse {
   expiry: string;
   selected_time: string;
   pending: boolean;
-  available_dates: Array<availableDates & { id: number; event: number }>;
+  available_dates: AvailableDates;
   invite_url: string;
 }
