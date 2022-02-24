@@ -70,16 +70,11 @@ export default NextAuth({
 
           // make a POST request to the DRF backend
           try {
-            const response = await axios.post(
-              // tip: use a seperate .ts file or json file to store such URL endpoints
-              // "http://127.0.0.1:8000/api/social/login/google/",
-              LOGIN_URL(account.provider),
-              {
-                access_token: accessToken,
-                id_token: idToken,
-                refresh_token: refreshToken,
-              }
-            );
+            const response = await axios.post(LOGIN_URL(account.provider), {
+              access_token: accessToken,
+              id_token: idToken,
+              refresh_token: refreshToken,
+            });
 
             // extract the returned token from the DRF backend and add it to the `user` object
             const { access_token, refresh_token } = response.data;
