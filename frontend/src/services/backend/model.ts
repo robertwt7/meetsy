@@ -20,13 +20,20 @@ export interface CreateMeetsyEventsRequest {
   available_dates: availableDates[];
 }
 
+export interface UserDetails {
+  userId: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+}
+
 export type AvailableDates = Array<
   availableDates & { id: number; event: number }
 >;
 
 export interface MeetsyEventsResponse {
   id: number;
-  user: string;
+  user: UserDetails;
   name: string;
   location: string;
   notes: string;
