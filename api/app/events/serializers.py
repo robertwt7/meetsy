@@ -65,6 +65,7 @@ class EventsSerializer(ModelSerializer):
             "user",
             "name",
             "location",
+            "duration",
             "notes",
             "expiry",
             "selected_time",
