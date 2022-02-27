@@ -89,7 +89,7 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
   return (
     <div className="w-full">
       <Typography align="center" variant="h5">
-        Select available time slots
+        Date Range
       </Typography>
       <Calendar
         localizer={localizer}

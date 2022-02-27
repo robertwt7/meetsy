@@ -50,20 +50,16 @@ export const FormikTextField = React.memo<
 
 export interface FormikSelectProps extends SelectProps {
   label: string;
-  labelId: string;
-  selectId: string;
   options: Array<{ id: string | number; name: string | number }>;
   name: string;
-  className: string;
-  helperText: ReactNode;
-  handleChangeCallback: () => void;
+  className?: string;
+  helperText?: ReactNode;
+  handleChangeCallback?: () => void;
 }
 
 export const FormikSelect = React.memo(
   ({
     label,
-    labelId,
-    selectId,
     options,
     name,
     className,
@@ -86,13 +82,13 @@ export const FormikSelect = React.memo(
 
     return (
       <FormControl variant="outlined" className={clsx(className)}>
-        <InputLabel id={labelId}>{label}</InputLabel>
+        <InputLabel id={`${name}-label-id`}>{label}</InputLabel>
         <Select
           {...field}
           {...props}
           label={label}
-          labelId={labelId}
-          id={selectId}
+          labelId={`${name}-label-id`}
+          id={`${name}-select-id`}
           onChange={handleChange}
           name={name}
         >
