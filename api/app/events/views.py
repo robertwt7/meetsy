@@ -52,7 +52,25 @@ class EventsViewSet(viewsets.ModelViewSet):
             dateNow = datetime.datetime.now().replace(tzinfo=pytz.UTC)
             if expiry > dateNow:
                 event = Events.objects.get(id=extractedData["id"])
-                return Response(EventsSerializer(event).data, status=status.HTTP_200_OK)
+                spots = []
+
+                availableDate: AvailableDates
+                for availableDate in event.available_dates.all():
+                    startTime = availableDate.start
+                    timeRangeEnd = startTime + datetime.timedelta(
+                        minutes=event.duration
+                    )
+                    endTime = availableDate.end
+                    while timeRangeEnd <= endTime:
+                        # TODO: add invites remaining, status, etc as future features
+                        spot = {"start": startTime}
+                        startTime = timeRangeEnd
+                        timeRangeEnd += datetime.timedelta(minutes=event.duration)
+                        spots.append(spot)
+
+                returnedEvents = EventsSerializer(event).data
+                returnedEvents["spots"] = spots
+                return Response(returnedEvents, status=status.HTTP_200_OK)
             else:
                 return Response(
                     {"detail": "Invitation expired"},
