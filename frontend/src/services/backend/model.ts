@@ -31,6 +31,15 @@ export type AvailableDates = Array<
   availableDates & { id: number; event: number }
 >;
 
+export interface AvailableSpot {
+  start: string;
+  startTime: string;
+}
+
+export interface Spots {
+  [key: string]: AvailableSpot[];
+}
+
 export interface MeetsyEventsResponse {
   id: number;
   user: UserDetails;
@@ -42,4 +51,8 @@ export interface MeetsyEventsResponse {
   pending: boolean;
   available_dates: AvailableDates;
   invite_url: string;
+}
+
+export interface MeetsyOpenInviteResponse extends MeetsyEventsResponse {
+  spots: Spots;
 }

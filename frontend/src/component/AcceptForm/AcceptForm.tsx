@@ -1,14 +1,58 @@
-import { FunctionComponent } from "react";
-import { Paper, Typography } from "@mui/material";
-import { useGetInvitedEventQuery, UserCalendar } from "src";
+import { FunctionComponent, useState } from "react";
+import { Paper, Typography, Button } from "@mui/material";
+import { useGetInvitedEventQuery } from "src";
 import PersonIcon from "@mui/icons-material/Person";
-import { mapDatesToCalendarObject } from "./utils";
+import CalendarPicker from "@mui/lab/CalendarPicker";
+import dayjs from "dayjs";
+import { AvailableSpot } from "src/services/backend/model";
+import type { Dayjs } from "dayjs";
+import { FormikSelect, FormikSelectOptions } from "src/form";
+import { Formik, Form } from "formik";
+import * as yup from "yup";
 
 interface AcceptFormProps {
   url: string;
 }
+
+const validationSchema = yup.object().shape({
+  name: yup.string().required("Name is required"),
+  notes: yup.string(),
+  email: yup.string().email().required("Email is required"),
+  spots: yup.string().required("Spots is required"),
+});
+
+const initialValues = {
+  spots: "",
+  name: "",
+  email: "",
+  notes: "",
+};
+
 export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
   const { data, isFetching, isError, error } = useGetInvitedEventQuery(url);
+  const [date, setDate] = useState<Dayjs | null>(dayjs(new Date()));
+  const availableDates = data?.spots != null ? Object.keys(data?.spots) : [];
+  const [options, setOptions] = useState<AvailableSpot[] | null>(null);
+
+  const shouldDisableDate = (newDate: Dayjs): boolean => {
+    // If not in available dates then we should disable it
+    const parsedDate = dayjs(newDate).format("YYYY-MM-DD");
+
+    return !availableDates.includes(parsedDate);
+  };
+
+  const handleChangedate = (newDate: Dayjs | null): void => {
+    setDate(newDate);
+
+    const parsedDate = dayjs(newDate).format("YYYY-MM-DD");
+    const spots = data?.spots ?? null;
+    const availableSpots = spots?.[parsedDate] ?? null;
+    setOptions(availableSpots);
+  };
+
+  const handleSubmit (): void => {
+
+  }
 
   // TODO: check if there is any error in the query
   return !isFetching ? (
@@ -35,11 +79,31 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
               {data?.notes}
             </Typography>
           </div>
-          <div className="w-3/4 border-l p-4 border-gray-300">
-            <UserCalendar
-              selectable={false}
-              availableDates={mapDatesToCalendarObject(data?.available_dates)}
-            />
+          <div className="w-3/4 border-l p-4 border-gray-300 flex flex-row">
+            <div className="w-1/2">
+              <CalendarPicker
+                date={date}
+                views={["day", "month"]}
+                onChange={handleChangedate}
+                shouldDisableDate={shouldDisableDate}
+              />
+            </div>
+            <div className="w-1/2">
+              <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
+              >
+                <Form>
+                  <FormikSelect
+                    options={(options as FormikSelectOptions) ?? []}
+                    name="spot"
+                    label="Spot"
+                  />
+                  <Button type="submit">Confirm</Button>
+                </Form>
+              </Formik>
+            </div>
           </div>
         </div>
       </Paper>

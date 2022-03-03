@@ -2,7 +2,11 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { api } from "src/env";
 import { getSession } from "next-auth/react";
 import { EventsRequest, EventsResponse } from "./model";
-import { CreateMeetsyEventsRequest, MeetsyEventsResponse } from ".";
+import {
+  CreateMeetsyEventsRequest,
+  MeetsyEventsResponse,
+  MeetsyOpenInviteResponse,
+} from ".";
 
 export const backendApi = createApi({
   reducerPath: "backendApi",
@@ -45,7 +49,7 @@ export const backendApi = createApi({
         method: "GET",
       }),
     }),
-    getInvitedEvent: builder.query<MeetsyEventsResponse, string>({
+    getInvitedEvent: builder.query<MeetsyOpenInviteResponse, string>({
       query: (signedUrl) => ({
         url: `/meetsy-events/open_invite/?invite_url=${signedUrl}`,
         method: "GET",

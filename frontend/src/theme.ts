@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material/styles";
+import type {} from "@mui/lab/themeAugmentation";
 import { red } from "@mui/material/colors";
 
 // Create a theme instance.

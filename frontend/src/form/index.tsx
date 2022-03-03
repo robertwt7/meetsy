@@ -48,13 +48,17 @@ export const FormikTextField = React.memo<
   );
 }, areEqual);
 
+export type FormikSelectOptions = Array<{ [key: string]: string | number }>;
+
 export interface FormikSelectProps extends SelectProps {
   label: string;
-  options: Array<{ id: string | number; name: string | number }>;
+  options: FormikSelectOptions;
   name: string;
   className?: string;
   helperText?: ReactNode;
   handleChangeCallback?: () => void;
+  valueKey?: string;
+  nameKey?: string;
 }
 
 export const FormikSelect = React.memo(
@@ -65,6 +69,8 @@ export const FormikSelect = React.memo(
     className,
     helperText = "Select value from the drop down",
     handleChangeCallback,
+    valueKey = "id",
+    nameKey = "name",
     ...props
   }: FormikSelectProps) => {
     const [field, meta] = useField(name);
@@ -96,8 +102,11 @@ export const FormikSelect = React.memo(
             <em>None</em>
           </MenuItem>
           {options.map((value) => (
-            <MenuItem value={value.id} key={value.id}>
-              {value.name}
+            <MenuItem
+              value={value[valueKey]}
+              key={value?.id ?? value[valueKey]}
+            >
+              {value[nameKey]}
             </MenuItem>
           ))}
         </Select>

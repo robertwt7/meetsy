@@ -105,6 +105,7 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
         allDayAccessor={(event) => Boolean(event?.end?.date)}
         onSelectSlot={handleSelect}
         style={{ height: 500 }}
+        views={{ day: true, month: true, week: true, work_week: true }}
       />
     </div>
   );
