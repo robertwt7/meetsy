@@ -50,9 +50,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
     setOptions(availableSpots);
   };
 
-  const handleSubmit (): void => {
-
-  }
+  const handleSubmit = (): void => {};
 
   // TODO: check if there is any error in the query
   return !isFetching ? (
@@ -88,19 +86,31 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
                 shouldDisableDate={shouldDisableDate}
               />
             </div>
-            <div className="w-1/2">
+            <div className="w-1/3">
               <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
               >
                 <Form>
-                  <FormikSelect
-                    options={(options as FormikSelectOptions) ?? []}
-                    name="spot"
-                    label="Spot"
-                  />
-                  <Button type="submit">Confirm</Button>
+                  <div className="flex flex-col">
+                    <FormikSelect
+                      options={(options as FormikSelectOptions) ?? []}
+                      name="spot"
+                      label="Spot"
+                      valueKey="start"
+                      nameKey="startTime"
+                    />
+                    <div className="mt-8 w-full">
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        className="w-full"
+                      >
+                        Confirm
+                      </Button>
+                    </div>
+                  </div>
                 </Form>
               </Formik>
             </div>
