@@ -64,7 +64,10 @@ class EventsViewSet(viewsets.ModelViewSet):
                     while timeRangeEnd <= endTime:
                         # TODO: add invites remaining, status, etc as future features
                         dateKey = startTime.strftime("%Y-%m-%d")
-                        spot = {"start": startTime, "startTime": startTime.strftime("%H:%M")}
+                        spot = {
+                            "start": startTime,
+                            "startTime": startTime.strftime("%H:%M"),
+                        }
                         startTime = timeRangeEnd
                         timeRangeEnd += datetime.timedelta(minutes=event.duration)
                         spots[dateKey] = spots.get(dateKey, []) + [spot]
@@ -120,7 +123,7 @@ class GoogleEventsView(APIView):
 
     def post(self, request):
         # Example event saved
-        event = {
+        payload = {
             "summary": "Google I/O 2015",
             "location": "800 Howard St., San Francisco, CA 94103",
             "description": "A chance to hear more about Google's developer products.",
@@ -150,7 +153,7 @@ class GoogleEventsView(APIView):
             event = (
                 connect_to_calendar(request)
                 .events()
-                .insert(calendarId="primary", body=event)
+                .insert(calendarId="primary", body=payload)
                 .execute()
             )
             print("Event created: %s" % (event.get("htmlLink")))

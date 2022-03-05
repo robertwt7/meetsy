@@ -6,8 +6,9 @@ import CalendarPicker from "@mui/lab/CalendarPicker";
 import dayjs from "dayjs";
 import { AvailableSpot } from "src/services/backend/model";
 import type { Dayjs } from "dayjs";
-import { FormikSelect, FormikSelectOptions } from "src/form";
+import { FormikSelect } from "src/form";
 import { Formik, Form } from "formik";
+import { useConfirmEventMutation } from "src/services/backend";
 import * as yup from "yup";
 
 interface AcceptFormProps {
@@ -33,6 +34,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
   const [date, setDate] = useState<Dayjs | null>(dayjs(new Date()));
   const availableDates = data?.spots != null ? Object.keys(data?.spots) : [];
   const [options, setOptions] = useState<AvailableSpot[] | null>(null);
+  const [confirmEvent] = useConfirmEventMutation();
 
   const shouldDisableDate = (newDate: Dayjs): boolean => {
     // If not in available dates then we should disable it
@@ -93,9 +95,9 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
                 onSubmit={handleSubmit}
               >
                 <Form>
-                  <div className="flex flex-col">
+                  <div className="flex flex-col py-4">
                     <FormikSelect
-                      options={(options as FormikSelectOptions) ?? []}
+                      options={options !== null ? options : []}
                       name="spot"
                       label="Spot"
                       valueKey="start"

@@ -48,11 +48,15 @@ export const FormikTextField = React.memo<
   );
 }, areEqual);
 
-export type FormikSelectOptions = Array<{ [key: string]: string | number }>;
+// TODO: ask question why casting object to FormikSelectOptions is not working in typescript in AcceptForm.tsx
+// https://stackoverflow.com/questions/37006008/typescript-index-signature-is-missing-in-type
+export type FormikSelectOptions = Array<{
+  [key: string]: string | number;
+}>;
 
-export interface FormikSelectProps extends SelectProps {
+export interface FormikSelectProps<T> extends SelectProps {
   label: string;
-  options: FormikSelectOptions;
+  options: T[];
   name: string;
   className?: string;
   helperText?: ReactNode;
@@ -62,7 +66,7 @@ export interface FormikSelectProps extends SelectProps {
 }
 
 export const FormikSelect = React.memo(
-  ({
+  <T extends Record<string, any>>({
     label,
     options,
     name,
@@ -72,7 +76,7 @@ export const FormikSelect = React.memo(
     valueKey = "id",
     nameKey = "name",
     ...props
-  }: FormikSelectProps) => {
+  }: FormikSelectProps<T>) => {
     const [field, meta] = useField(name);
 
     const { setFieldValue } = useFormikContext();
@@ -91,6 +95,23 @@ export const FormikSelect = React.memo(
       setFieldValue(name, "");
     }, [options, name]);
 
+    const renderValue = (): ReactNode => {
+      return options.map((value) => {
+        if (value[valueKey] !== undefined && value[nameKey] !== undefined) {
+          return (
+            <MenuItem
+              value={value[valueKey]}
+              key={value?.id ?? value[valueKey]}
+            >
+              {value[nameKey]}
+            </MenuItem>
+          );
+        }
+
+        return null;
+      });
+    };
+
     return (
       <FormControl variant="outlined" className={clsx(className)}>
         <InputLabel id={`${name}-label-id`}>{label}</InputLabel>
@@ -106,14 +127,7 @@ export const FormikSelect = React.memo(
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          {options.map((value) => (
-            <MenuItem
-              value={value[valueKey]}
-              key={value?.id ?? value[valueKey]}
-            >
-              {value[nameKey]}
-            </MenuItem>
-          ))}
+          {renderValue()}
         </Select>
         <FormHelperText error={Boolean(meta.error)}>
           {meta?.error !== undefined && meta.error !== ""

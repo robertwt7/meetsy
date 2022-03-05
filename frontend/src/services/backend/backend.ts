@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { api } from "src/env";
 import { getSession } from "next-auth/react";
-import { EventsRequest, EventsResponse } from "./model";
+import { ConfirmEventRequest, EventsRequest, EventsResponse } from "./model";
 import {
   CreateMeetsyEventsRequest,
   MeetsyEventsResponse,
@@ -33,6 +33,13 @@ export const backendApi = createApi({
       }),
       providesTags: ["Events"],
     }),
+    confirmEvent: builder.mutation<ConfirmEventRequest, MeetsyEventsResponse>({
+      query: (body) => ({
+        url: "/events/",
+        method: "POST",
+        body,
+      }),
+    }),
     createMeetsyEvents: builder.mutation<
       MeetsyEventsResponse,
       CreateMeetsyEventsRequest
@@ -60,6 +67,7 @@ export const backendApi = createApi({
 
 export const {
   useGetEventsQuery,
+  useConfirmEventMutation,
   useCreateMeetsyEventsMutation,
   useGetMeetsyEventsQuery,
   useGetInvitedEventQuery,

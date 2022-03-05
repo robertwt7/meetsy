@@ -56,3 +56,24 @@ export interface MeetsyEventsResponse {
 export interface MeetsyOpenInviteResponse extends MeetsyEventsResponse {
   spots: Spots;
 }
+
+export interface TimeZone {
+  dateTime: string;
+  timeZone: string;
+}
+
+export interface Attendees {
+  email: string;
+}
+
+export interface ConfirmEventRequest {
+  summary: string;
+  location: string;
+  description: string;
+  start: TimeZone;
+  end: TimeZone;
+  attendees: Attendees[];
+  reminders: {
+    useDefault: boolean;
+  };
+}
