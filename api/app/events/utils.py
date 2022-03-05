@@ -3,9 +3,9 @@ from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
 # Connect to Google Calendar
-def connect_to_calendar(request):
+def connect_to_calendar(request, user):
     # Fetches the User of the request
-    qs = SocialAccount.objects.filter(user=request.user)
+    qs = SocialAccount.objects.filter(user=user)
 
     # Fetches the Acces token of the User
     token = SocialToken.objects.filter(account=qs[0]).values("token")

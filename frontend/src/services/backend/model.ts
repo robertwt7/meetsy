@@ -77,3 +77,7 @@ export interface ConfirmEventRequest {
     useDefault: boolean;
   };
 }
+
+export interface MeetsyBackendError {
+  detail: string;
+}

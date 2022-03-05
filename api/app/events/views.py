@@ -13,6 +13,7 @@ from .permissions import IsOwner
 from .serializers import EventsSerializer, AvailableDatesSerializer
 from .models import Events, AvailableDates
 from django.core.signing import Signer
+from meetsyauth.models import CustomUserModel
 
 
 class EventsViewSet(viewsets.ModelViewSet):
@@ -110,7 +111,7 @@ class GoogleEventsView(APIView):
 
         try:
             events = (
-                connect_to_calendar(request)
+                connect_to_calendar(request, request.user)
                 .events()
                 .list(calendarId="primary", timeMin=minDate, timeMax=maxDate)
                 .execute()
@@ -121,7 +122,15 @@ class GoogleEventsView(APIView):
         except Exception as e:
             return Response({"detail": str(e)}, status.HTTP_401_UNAUTHORIZED)
 
+    # TODO: Validate request
     def post(self, request):
+        userId = request.data["userId"]
+
+        if not userId:
+            return Response(
+                {"detail": "Missing Inviter user ID "},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         # Example event saved
         payload = {
             "summary": "Google I/O 2015",
@@ -150,8 +159,10 @@ class GoogleEventsView(APIView):
         }
 
         try:
+            # TODO: What if token of the inviter has expired in the background
+            user = CustomUserModel.objects.get(id=userId)
             event = (
-                connect_to_calendar(request)
+                connect_to_calendar(request, user)
                 .events()
                 .insert(calendarId="primary", body=payload)
                 .execute()
@@ -161,4 +172,4 @@ class GoogleEventsView(APIView):
         except HttpError as e:
             return Response(e.error_details, e.status_code)
         except Exception as e:
-            return Response({"detail": str(e)}, status.HTTP_401_UNAUTHORIZED)
+            return Response({"detail": str(e)}, status.HTTP_400_BAD_REQUEST)

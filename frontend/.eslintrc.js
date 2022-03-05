@@ -24,7 +24,14 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: "module",
   },
-  plugins: ["react", "jsx-a11y", "import", "prettier", "unused-imports"],
+  plugins: [
+    "react",
+    "jsx-a11y",
+    "import",
+    "prettier",
+    "unused-imports",
+    "@typescript-eslint",
+  ],
   rules: {
     "prettier/prettier": ["warn", { endOfLine: "auto", useTabs: false }],
     "react/jsx-filename-extension": "off",
