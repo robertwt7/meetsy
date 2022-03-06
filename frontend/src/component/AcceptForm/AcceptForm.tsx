@@ -62,7 +62,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
     setDate(newDate);
 
     const parsedDate = dayjs(newDate).format("YYYY-MM-DD");
-    const spots = data?.spots ?? null;
+    const spots = eventData?.spots ?? null;
     const availableSpots = spots?.[parsedDate] ?? null;
     setOptions(availableSpots);
   };

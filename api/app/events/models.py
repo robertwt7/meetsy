@@ -3,7 +3,16 @@ from meetsyauth.models import CustomUserModel
 
 
 class Events(models.Model):
-    user = models.ForeignKey(CustomUserModel, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        CustomUserModel, on_delete=models.CASCADE, related_name="users"
+    )
+    invitee = models.ForeignKey(
+        CustomUserModel,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="invitees",
+    )
     name = models.CharField(max_length=128, blank=False)
     location = models.CharField(max_length=128, blank=True)
     notes = models.TextField(blank=True)
