@@ -91,7 +91,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
           : values.notes;
 
       const payload = {
-        inviterId: eventData.id,
+        inviterId: eventData.user.userId,
         googleEventPayload: {
           summary: eventData.name,
           location: eventData.location,
@@ -116,7 +116,10 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
 
       const response = await confirmEvent(payload).unwrap();
 
-      setSnackBar({ message: "Event confirmed, please check your email" });
+      setSnackBar({ message: "Event confirmed, please check your calendar" });
+      setTimeout((): void => {
+        void router.push("/thankyou");
+      }, 3000);
     } catch (e) {
       let message = "Something has gone wrong, please refresh";
       if (isMeetsyBackendError(e?.data)) {

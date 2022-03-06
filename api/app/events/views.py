@@ -124,49 +124,34 @@ class GoogleEventsView(APIView):
 
     # TODO: Validate request
     def post(self, request):
-        userId = request.data["userId"]
+        inviterId = request.data["inviterId"]
+        invitee = request.user
 
-        if not userId:
+        if not inviterId:
             return Response(
                 {"detail": "Missing Inviter user ID "},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         # Example event saved
-        payload = {
-            "summary": "Google I/O 2015",
-            "location": "800 Howard St., San Francisco, CA 94103",
-            "description": "A chance to hear more about Google's developer products.",
-            "start": {
-                "dateTime": "2015-05-28T09:00:00-07:00",
-                "timeZone": "America/Los_Angeles",
-            },
-            "end": {
-                "dateTime": "2015-05-28T17:00:00-07:00",
-                "timeZone": "America/Los_Angeles",
-            },
-            "recurrence": ["RRULE:FREQ=DAILY;COUNT=2"],
-            "attendees": [
-                {"email": "lpage@example.com"},
-                {"email": "sbrin@example.com"},
-            ],
-            "reminders": {
-                "useDefault": False,
-                "overrides": [
-                    {"method": "email", "minutes": 24 * 60},
-                    {"method": "popup", "minutes": 10},
-                ],
-            },
-        }
-
+        payload = request.data["googleEventPayload"]
         try:
             # TODO: What if token of the inviter has expired in the background
-            user = CustomUserModel.objects.get(id=userId)
+            user = CustomUserModel.objects.get(userId=inviterId)
             event = (
                 connect_to_calendar(request, user)
                 .events()
                 .insert(calendarId="primary", body=payload)
                 .execute()
             )
+
+            # Create event for invitee
+            event = (
+                connect_to_calendar(request, invitee)
+                .events()
+                .insert(calendarId="primary", body=payload)
+                .execute()
+            )
+
             print("Event created: %s" % (event.get("htmlLink")))
             return Response(event)
         except HttpError as e:
