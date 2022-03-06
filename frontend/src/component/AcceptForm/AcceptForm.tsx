@@ -17,6 +17,7 @@ import { signIn, useSession } from "next-auth/react";
 import { isMeetsyBackendError } from "src/services/backend/utils";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import { UserCalendar } from "../UserCalendar";
 import { useSnackBar } from "../SnackBar";
 
 dayjs.extend(utc);
@@ -175,7 +176,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
 
   // TODO: check if there is any error in the query
   return !isFetching ? (
-    <div className="flex flex-row w-full">
+    <div className="flex flex-col w-full">
       <Paper className="w-full">
         <div className="flex flex-row items-stretch">
           <div className="w-1/4">
@@ -265,6 +266,9 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
           </div>
         </div>
       </Paper>
+      <div className="my-2">
+        <UserCalendar selectable={false} label="Your calendar" />
+      </div>
     </div>
   ) : null;
 };

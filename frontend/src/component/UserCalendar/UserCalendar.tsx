@@ -40,12 +40,14 @@ interface UserCalendarProps {
   selectable?: boolean;
   onSelect?: (selectedDates: DateRange[]) => void;
   availableDates?: DateRange[];
+  label?: string;
 }
 
 export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
   selectable = false,
   onSelect,
   availableDates,
+  label = "Date Range",
 }) => {
   const [availableDate, setAvailableDate] = useState<DateRange[]>([]);
   const currentDate = new Date();
@@ -89,7 +91,7 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
   return (
     <div className="w-full">
       <Typography align="center" variant="h5">
-        Date Range
+        {label}
       </Typography>
       <Calendar
         localizer={localizer}
