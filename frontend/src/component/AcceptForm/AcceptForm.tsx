@@ -74,6 +74,9 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
 
   const handleSubmit = async (values: FormikValues): Promise<void> => {
     try {
+      if (eventData === undefined || sessionData === null) {
+        throw new Error("Session is expired, please refresh the page");
+      }
       const timeZone = dayjs.tz.guess();
       const spotInDayJs = dayjs(values.spot);
       const startTime = spotInDayJs.format();
@@ -86,12 +89,13 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
               sessionData?.user?.name ?? "invitee"
             }: ${values.notes}`
           : values.notes;
+
       const payload = {
-        inviterId: eventData?.id,
+        inviterId: eventData.id,
         googleEventPayload: {
-          summary: eventData?.name,
-          location: eventData?.location,
-          decsription: notes,
+          summary: eventData.name,
+          location: eventData.location,
+          description: notes,
           start: {
             dateTime: startTime,
             timeZone,
@@ -101,8 +105,8 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
             timeZone,
           },
           attendees: [
-            { email: sessionData?.user?.email },
-            { email: eventData?.user?.email },
+            { email: sessionData.user?.email ?? "" },
+            { email: eventData.user.email },
           ],
           reminders: {
             useDefault: true,
@@ -114,8 +118,14 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
 
       setSnackBar({ message: "Event confirmed, please check your email" });
     } catch (e) {
+      let message = "Something has gone wrong, please refresh";
+      if (isMeetsyBackendError(e?.data)) {
+        message = e?.data?.detail;
+      } else if (e?.message !== undefined) {
+        message = e?.message;
+      }
       setSnackBar({
-        message: "Something has gone wrong, please retry",
+        message,
         severity: "error",
       });
     }
@@ -212,45 +222,41 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
               >
-                {({ isSubmitting, isValid, errors }) => {
-                  console.log(isValid);
-                  console.log(errors);
-                  return (
-                    <Form>
-                      <div className="flex flex-col">
-                        <div className="my-2 w-full">
-                          <FormikSelect
-                            options={options !== null ? options : []}
-                            name="spot"
-                            label="Spot"
-                            valueKey="start"
-                            nameKey="startTime"
-                            className="w-full"
-                          />
-                        </div>
-                        <div className="my-2">
-                          <FormikTextField
-                            name="notes"
-                            label="Extra notes"
-                            multiline
-                            rows={4}
-                            className="w-full"
-                          />
-                        </div>
-                        <div className="mt-8 w-full">
-                          <Button
-                            type="submit"
-                            variant="contained"
-                            className="w-full"
-                            disabled={isSubmitting || !isValid}
-                          >
-                            Confirm
-                          </Button>
-                        </div>
+                {({ isSubmitting, isValid }) => (
+                  <Form>
+                    <div className="flex flex-col">
+                      <div className="my-2 w-full">
+                        <FormikSelect
+                          options={options !== null ? options : []}
+                          name="spot"
+                          label="Spot"
+                          valueKey="start"
+                          nameKey="startTime"
+                          className="w-full"
+                        />
                       </div>
-                    </Form>
-                  );
-                }}
+                      <div className="my-2">
+                        <FormikTextField
+                          name="notes"
+                          label="Extra notes"
+                          multiline
+                          rows={4}
+                          className="w-full"
+                        />
+                      </div>
+                      <div className="mt-8 w-full">
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          className="w-full"
+                          disabled={isSubmitting || !isValid}
+                        >
+                          Confirm
+                        </Button>
+                      </div>
+                    </div>
+                  </Form>
+                )}
               </Formik>
             </div>
           </div>
