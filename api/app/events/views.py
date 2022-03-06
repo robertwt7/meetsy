@@ -13,6 +13,7 @@ from .permissions import IsOwner
 from .serializers import EventsSerializer, AvailableDatesSerializer
 from .models import Events, AvailableDates
 from django.core.signing import Signer
+from meetsyauth.models import CustomUserModel
 
 
 class EventsViewSet(viewsets.ModelViewSet):
@@ -52,7 +53,29 @@ class EventsViewSet(viewsets.ModelViewSet):
             dateNow = datetime.datetime.now().replace(tzinfo=pytz.UTC)
             if expiry > dateNow:
                 event = Events.objects.get(id=extractedData["id"])
-                return Response(EventsSerializer(event).data, status=status.HTTP_200_OK)
+                spots = {}
+
+                availableDate: AvailableDates
+                for availableDate in event.available_dates.all():
+                    startTime = availableDate.start
+                    timeRangeEnd = startTime + datetime.timedelta(
+                        minutes=event.duration
+                    )
+                    endTime = availableDate.end
+                    while timeRangeEnd <= endTime:
+                        # TODO: add invites remaining, status, etc as future features
+                        dateKey = startTime.strftime("%Y-%m-%d")
+                        spot = {
+                            "start": startTime,
+                            "startTime": startTime.strftime("%H:%M"),
+                        }
+                        startTime = timeRangeEnd
+                        timeRangeEnd += datetime.timedelta(minutes=event.duration)
+                        spots[dateKey] = spots.get(dateKey, []) + [spot]
+
+                returnedEvents = EventsSerializer(event).data
+                returnedEvents["spots"] = spots
+                return Response(returnedEvents, status=status.HTTP_200_OK)
             else:
                 return Response(
                     {"detail": "Invitation expired"},
@@ -88,7 +111,7 @@ class GoogleEventsView(APIView):
 
         try:
             events = (
-                connect_to_calendar(request)
+                connect_to_calendar(request, request.user)
                 .events()
                 .list(calendarId="primary", timeMin=minDate, timeMax=maxDate)
                 .execute()
@@ -99,44 +122,39 @@ class GoogleEventsView(APIView):
         except Exception as e:
             return Response({"detail": str(e)}, status.HTTP_401_UNAUTHORIZED)
 
+    # TODO: Validate request
     def post(self, request):
-        # Example event saved
-        event = {
-            "summary": "Google I/O 2015",
-            "location": "800 Howard St., San Francisco, CA 94103",
-            "description": "A chance to hear more about Google's developer products.",
-            "start": {
-                "dateTime": "2015-05-28T09:00:00-07:00",
-                "timeZone": "America/Los_Angeles",
-            },
-            "end": {
-                "dateTime": "2015-05-28T17:00:00-07:00",
-                "timeZone": "America/Los_Angeles",
-            },
-            "recurrence": ["RRULE:FREQ=DAILY;COUNT=2"],
-            "attendees": [
-                {"email": "lpage@example.com"},
-                {"email": "sbrin@example.com"},
-            ],
-            "reminders": {
-                "useDefault": False,
-                "overrides": [
-                    {"method": "email", "minutes": 24 * 60},
-                    {"method": "popup", "minutes": 10},
-                ],
-            },
-        }
+        inviterId = request.data["inviterId"]
+        invitee = request.user
 
+        if not inviterId:
+            return Response(
+                {"detail": "Missing Inviter user ID "},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        # Example event saved
+        payload = request.data["googleEventPayload"]
         try:
+            # TODO: What if token of the inviter has expired in the background
+            user = CustomUserModel.objects.get(userId=inviterId)
             event = (
-                connect_to_calendar(request)
+                connect_to_calendar(request, user)
                 .events()
-                .insert(calendarId="primary", body=event)
+                .insert(calendarId="primary", body=payload)
                 .execute()
             )
+
+            # Create event for invitee
+            event = (
+                connect_to_calendar(request, invitee)
+                .events()
+                .insert(calendarId="primary", body=payload)
+                .execute()
+            )
+
             print("Event created: %s" % (event.get("htmlLink")))
             return Response(event)
         except HttpError as e:
             return Response(e.error_details, e.status_code)
         except Exception as e:
-            return Response({"detail": str(e)}, status.HTTP_401_UNAUTHORIZED)
+            return Response({"detail": str(e)}, status.HTTP_400_BAD_REQUEST)

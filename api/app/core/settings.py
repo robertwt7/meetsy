@@ -65,7 +65,7 @@ REST_FRAMEWORK = {
 
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
-        "SCOPE": ["profile", "email", "calendar"],
+        "SCOPE": ["profile", "email", "calendar", "openid"],
         "AUTH_PARAMS": {
             "access_type": "offline",
         },

@@ -1,8 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { api } from "src/env";
 import { getSession } from "next-auth/react";
-import { EventsRequest, EventsResponse } from "./model";
-import { CreateMeetsyEventsRequest, MeetsyEventsResponse } from ".";
+import { ConfirmEventRequest, EventsRequest, EventsResponse } from "./model";
+import {
+  CreateMeetsyEventsRequest,
+  MeetsyEventsResponse,
+  MeetsyOpenInviteResponse,
+} from ".";
 
 export const backendApi = createApi({
   reducerPath: "backendApi",
@@ -29,6 +33,13 @@ export const backendApi = createApi({
       }),
       providesTags: ["Events"],
     }),
+    confirmEvent: builder.mutation<MeetsyEventsResponse, ConfirmEventRequest>({
+      query: (body) => ({
+        url: "/events/",
+        method: "POST",
+        body,
+      }),
+    }),
     createMeetsyEvents: builder.mutation<
       MeetsyEventsResponse,
       CreateMeetsyEventsRequest
@@ -45,11 +56,19 @@ export const backendApi = createApi({
         method: "GET",
       }),
     }),
+    getInvitedEvent: builder.query<MeetsyOpenInviteResponse, string>({
+      query: (signedUrl) => ({
+        url: `/meetsy-events/open_invite/?invite_url=${signedUrl}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
 export const {
   useGetEventsQuery,
+  useConfirmEventMutation,
   useCreateMeetsyEventsMutation,
   useGetMeetsyEventsQuery,
+  useGetInvitedEventQuery,
 } = backendApi;

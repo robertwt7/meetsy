@@ -1,27 +1,32 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { SuccessPanel, useSnackBar } from "src";
+import { useSnackBar } from "src";
 import { useEffect } from "react";
+import { AcceptForm } from "src/component/AcceptForm";
 
-const Success: NextPage = () => {
+const Invite: NextPage = () => {
   const router = useRouter();
   const setSnackBar = useSnackBar();
   const url = router.query?.url ?? "";
+  const urlUnsafe = router.isReady && url === "";
 
   useEffect(() => {
-    if (url === "") {
+    /**
+     * on first load, url is always undefined in nextjs: https://github.com/vercel/next.js/discussions/11484
+     */
+    if (urlUnsafe) {
       setSnackBar({ message: "Invalid signed url", severity: "error" });
       setTimeout(() => {
         void router.push("/");
       }, 3000);
     }
-  }, [router, url]);
+  }, [urlUnsafe]);
 
-  return (
+  return router.isReady ? (
     <div className="flex flex-col md:items-center lg:w-1/2 w-3/4">
-      <SuccessPanel url={url as string} />
+      <AcceptForm url={url as string} />
     </div>
-  );
+  ) : null;
 };
 
-export default Success;
+export default Invite;

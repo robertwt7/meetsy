@@ -2,6 +2,7 @@ from rest_framework.serializers import ModelSerializer, ValidationError
 from .models import Events, AvailableDates
 import datetime
 from django.core.signing import Signer
+from meetsyauth.models import CustomUserModel
 
 
 class AvailableDatesSerializer(ModelSerializer):
@@ -11,8 +12,15 @@ class AvailableDatesSerializer(ModelSerializer):
         fields = ["id", "event", "start", "end"]
 
 
+class UserShortSerializer(ModelSerializer):
+    class Meta:
+        model = CustomUserModel
+        fields = ["userId", "email", "first_name", "last_name"]
+
+
 class EventsSerializer(ModelSerializer):
     available_dates = AvailableDatesSerializer(many=True)
+    user = UserShortSerializer(many=False, read_only=True)
 
     def validate(self, data):
         """
@@ -57,6 +65,7 @@ class EventsSerializer(ModelSerializer):
             "user",
             "name",
             "location",
+            "duration",
             "notes",
             "expiry",
             "selected_time",
