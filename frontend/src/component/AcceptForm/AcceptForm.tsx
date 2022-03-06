@@ -15,23 +15,28 @@ import * as yup from "yup";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { signIn, useSession } from "next-auth/react";
 import { isMeetsyBackendError } from "src/services/backend/utils";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 import { useSnackBar } from "../SnackBar";
 
+dayjs.extend(utc);
+dayjs.extend(timezone);
 interface AcceptFormProps {
   url: string;
 }
 
+interface FormikValues {
+  spot: string;
+  notes: string;
+}
+
 const validationSchema = yup.object().shape({
-  name: yup.string().required("Name is required"),
+  spot: yup.string().required("Spots is required"),
   notes: yup.string(),
-  email: yup.string().email().required("Email is required"),
-  spots: yup.string().required("Spots is required"),
 });
 
 const initialValues = {
-  spots: "",
-  name: "",
-  email: "",
+  spot: "",
   notes: "",
 };
 
@@ -67,7 +72,54 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
     setOptions(availableSpots);
   };
 
-  const handleSubmit = (): void => {};
+  const handleSubmit = async (values: FormikValues): Promise<void> => {
+    try {
+      const timeZone = dayjs.tz.guess();
+      const spotInDayJs = dayjs(values.spot);
+      const startTime = spotInDayJs.format();
+      const endTime = spotInDayJs
+        .add(eventData?.duration ?? 30, "minute")
+        .format();
+      const notes =
+        eventData?.notes !== undefined
+          ? `${eventData?.notes} <br/> Notes from ${
+              sessionData?.user?.name ?? "invitee"
+            }: ${values.notes}`
+          : values.notes;
+      const payload = {
+        inviterId: eventData?.id,
+        googleEventPayload: {
+          summary: eventData?.name,
+          location: eventData?.location,
+          decsription: notes,
+          start: {
+            dateTime: startTime,
+            timeZone,
+          },
+          end: {
+            dateTime: endTime,
+            timeZone,
+          },
+          attendees: [
+            { email: sessionData?.user?.email },
+            { email: eventData?.user?.email },
+          ],
+          reminders: {
+            useDefault: true,
+          },
+        },
+      };
+
+      const response = await confirmEvent(payload).unwrap();
+
+      setSnackBar({ message: "Event confirmed, please check your email" });
+    } catch (e) {
+      setSnackBar({
+        message: "Something has gone wrong, please retry",
+        severity: "error",
+      });
+    }
+  };
 
   useEffect(() => {
     if (isError) {
@@ -143,43 +195,62 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
               />
             </div>
             <div className="w-1/3">
+              <div className="m-4 mt-2">
+                <Typography variant="h5">Your Detail:</Typography>
+              </div>
+              <div className="flex flex-row space-x-4 m-4 mb-2 items-center">
+                <PersonIcon />
+                <Typography variant="h5">{sessionData?.user?.name}</Typography>
+              </div>
+              <Typography variant="h6" className="ml-4">
+                {sessionData?.user?.email}
+              </Typography>
+            </div>
+            <div className="w-1/3">
               <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
               >
-                <Form>
-                  <div className="flex flex-col">
-                    <div className="my-2 w-full">
-                      <FormikSelect
-                        options={options !== null ? options : []}
-                        name="spot"
-                        label="Spot"
-                        valueKey="start"
-                        nameKey="startTime"
-                        className="w-full"
-                      />
-                    </div>
-                    <div className="my-2">
-                      <FormikTextField
-                        name="notes"
-                        label="Extra notes"
-                        multiline
-                        rows={4}
-                        className="w-full"
-                      />
-                    </div>
-                    <div className="mt-8 w-full">
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        className="w-full"
-                      >
-                        Confirm
-                      </Button>
-                    </div>
-                  </div>
-                </Form>
+                {({ isSubmitting, isValid, errors }) => {
+                  console.log(isValid);
+                  console.log(errors);
+                  return (
+                    <Form>
+                      <div className="flex flex-col">
+                        <div className="my-2 w-full">
+                          <FormikSelect
+                            options={options !== null ? options : []}
+                            name="spot"
+                            label="Spot"
+                            valueKey="start"
+                            nameKey="startTime"
+                            className="w-full"
+                          />
+                        </div>
+                        <div className="my-2">
+                          <FormikTextField
+                            name="notes"
+                            label="Extra notes"
+                            multiline
+                            rows={4}
+                            className="w-full"
+                          />
+                        </div>
+                        <div className="mt-8 w-full">
+                          <Button
+                            type="submit"
+                            variant="contained"
+                            className="w-full"
+                            disabled={isSubmitting || !isValid}
+                          >
+                            Confirm
+                          </Button>
+                        </div>
+                      </div>
+                    </Form>
+                  );
+                }}
               </Formik>
             </div>
           </div>

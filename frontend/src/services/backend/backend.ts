@@ -33,7 +33,7 @@ export const backendApi = createApi({
       }),
       providesTags: ["Events"],
     }),
-    confirmEvent: builder.mutation<ConfirmEventRequest, MeetsyEventsResponse>({
+    confirmEvent: builder.mutation<MeetsyEventsResponse, ConfirmEventRequest>({
       query: (body) => ({
         url: "/events/",
         method: "POST",

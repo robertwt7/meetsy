@@ -43,6 +43,7 @@ export interface Spots {
 export interface MeetsyEventsResponse {
   id: number;
   user: UserDetails;
+  duration: number;
   name: string;
   location: string;
   notes: string;
@@ -66,7 +67,7 @@ export interface Attendees {
   email: string;
 }
 
-export interface ConfirmEventRequest {
+export interface GoogleEventPayload {
   summary: string;
   location: string;
   description: string;
@@ -76,6 +77,11 @@ export interface ConfirmEventRequest {
   reminders: {
     useDefault: boolean;
   };
+}
+
+export interface ConfirmEventRequest {
+  inviterId: string | number;
+  googleEventPayload: GoogleEventPayload;
 }
 
 export interface MeetsyBackendError {
