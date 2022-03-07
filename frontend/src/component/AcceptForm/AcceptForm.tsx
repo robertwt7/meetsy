@@ -51,7 +51,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
   const [date, setDate] = useState<Dayjs | null>(dayjs(new Date()));
   const availableDates =
     eventData?.spots != null ? Object.keys(eventData?.spots) : [];
-  const [options, setOptions] = useState<AvailableSpot[] | null>(null);
+  const [options, setOptions] = useState<AvailableSpot[]>([]);
   const [confirmEvent] = useConfirmEventMutation();
   const setSnackBar = useSnackBar();
   const router = useRouter();
@@ -69,7 +69,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
 
     const parsedDate = dayjs(newDate).format("YYYY-MM-DD");
     const spots = eventData?.spots ?? null;
-    const availableSpots = spots?.[parsedDate] ?? null;
+    const availableSpots = spots?.[parsedDate] ?? [];
     setOptions(availableSpots);
   };
 
@@ -231,7 +231,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
                     <div className="flex flex-col">
                       <div className="my-2 w-full">
                         <FormikSelect
-                          options={options !== null ? options : []}
+                          options={options}
                           name="spot"
                           label="Spot"
                           valueKey="start"
