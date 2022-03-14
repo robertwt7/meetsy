@@ -66,14 +66,25 @@ export default NextAuth({
             access_token: accessToken,
             id_token: idToken,
             refresh_token: refreshToken,
+            expires_at: expiresAt,
           } = account;
 
-          // make a POST request to the DRF backend
+          const expireDate = new Date((expiresAt ?? 0) * 1000);
+          const timeNow = new Date();
+
+          /**
+           * make a POST request to the DRF backend
+           * It's called with expires_in key because that is the default google token response,
+           * thus backend django-allauth is expecting expires_in key
+           * */
           try {
             const response = await axios.post(LOGIN_URL(account.provider), {
               access_token: accessToken,
               id_token: idToken,
               refresh_token: refreshToken,
+              expires_in: Math.floor(
+                (expireDate.getTime() - timeNow.getTime()) / 1000
+              ),
             });
 
             // extract the returned token from the DRF backend and add it to the `user` object

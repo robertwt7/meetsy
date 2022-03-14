@@ -75,6 +75,7 @@ SOCIALACCOUNT_PROVIDERS = {
 # we are turning off email verification for now
 SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
 SOCIALACCOUNT_EMAIL_REQUIRED = False
+SOCIALACCOUNT_STORE_TOKENS = True
 
 SITE_ID = 1  # https://dj-rest-auth.readthedocs.io/en/latest/installation.html#registration-optional
 REST_USE_JWT = True  # use JSON Web Tokens
