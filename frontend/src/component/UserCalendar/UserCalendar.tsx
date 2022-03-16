@@ -41,6 +41,7 @@ interface UserCalendarProps {
   onSelect?: (selectedDates: DateRange[]) => void;
   availableDates?: DateRange[];
   label?: string;
+  date?: Date;
 }
 
 export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
@@ -48,6 +49,7 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
   onSelect,
   availableDates,
   label = "Date Range",
+  date,
 }) => {
   const [availableDate, setAvailableDate] = useState<DateRange[]>([]);
   const currentDate = new Date();
@@ -95,8 +97,11 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
       </Typography>
       <Calendar
         localizer={localizer}
+        date={date !== undefined ? date : undefined}
         selectable={selectable}
         events={eventTimes}
+        defaultView="week"
+        defaultDate={new Date()}
         titleAccessor={(event) => event.summary ?? ""}
         startAccessor={(event) =>
           new Date(event?.start?.dateTime ?? event?.start?.date ?? "")
@@ -107,7 +112,7 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
         allDayAccessor={(event) => Boolean(event?.end?.date)}
         onSelectSlot={handleSelect}
         style={{ height: 500 }}
-        views={{ day: true, month: true, week: true, work_week: true }}
+        views={{ week: true }}
       />
     </div>
   );
