@@ -1,4 +1,10 @@
-import { FunctionComponent, useState, useEffect } from "react";
+import React, {
+  useCallback,
+  FunctionComponent,
+  useState,
+  useEffect,
+  ReactElement,
+} from "react";
 import { Typography } from "@mui/material";
 import { useGetEventsQuery } from "src/services/backend";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
@@ -42,6 +48,7 @@ interface UserCalendarProps {
   availableDates?: DateRange[];
   label?: string;
   date?: Date;
+  toolbar?: () => ReactElement;
 }
 
 export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
@@ -50,6 +57,7 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
   availableDates,
   label = "Date Range",
   date,
+  toolbar,
 }) => {
   const [availableDate, setAvailableDate] = useState<DateRange[]>([]);
   const currentDate = new Date();
@@ -90,6 +98,20 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
     }
   }, [availableDates]);
 
+  const eventPropGetter = useCallback(
+    (event, start, end, isSelected): React.HTMLAttributes<HTMLDivElement> => {
+      if (isSelected === true) {
+        return { className: "bg-red-500" };
+      }
+      const backgroundColor =
+        event.summary === "Blocked Time" || event.summary === "Available Time"
+          ? "bg-green-400"
+          : "bg-orange-800";
+      return { className: backgroundColor };
+    },
+    []
+  );
+
   return (
     <div className="w-full">
       <Typography align="center" variant="h5">
@@ -99,6 +121,7 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
         localizer={localizer}
         date={date !== undefined ? date : undefined}
         selectable={selectable}
+        components={{ toolbar: toolbar !== undefined ? toolbar : undefined }}
         events={eventTimes}
         defaultView="week"
         defaultDate={new Date()}
@@ -109,8 +132,11 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
         endAccessor={(event) =>
           new Date(event?.end?.dateTime ?? event?.end?.date ?? "")
         }
+        eventPropGetter={eventPropGetter}
         allDayAccessor={(event) => Boolean(event?.end?.date)}
         onSelectSlot={handleSelect}
+        step={30}
+        timeslots={1}
         style={{ height: 500 }}
         views={{ week: true }}
       />

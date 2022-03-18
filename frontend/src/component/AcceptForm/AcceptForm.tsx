@@ -1,7 +1,7 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { TextField, Paper, Typography, Button } from "@mui/material";
 import { red } from "@mui/material/colors";
-import { Paper, Typography, Button } from "@mui/material";
 import { useGetInvitedEventQuery } from "src";
 import PersonIcon from "@mui/icons-material/Person";
 import CalendarPicker from "@mui/lab/CalendarPicker";
@@ -17,8 +17,10 @@ import { signIn, useSession } from "next-auth/react";
 import { isMeetsyBackendError } from "src/services/backend/utils";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import { DatePicker } from "@mui/lab";
 import { UserCalendar } from "../UserCalendar";
 import { useSnackBar } from "../SnackBar";
+import { mapDatesToCalendarObject } from "./utils";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -51,6 +53,12 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
   const [date, setDate] = useState<Dayjs | null>(dayjs(new Date()));
   const availableDates =
     eventData?.spots != null ? Object.keys(eventData?.spots) : [];
+  const allSpots =
+    eventData?.spots != null
+      ? ([] as AvailableSpot[]).concat(
+          ...Object.values(eventData.spots).map((e) => e)
+        )
+      : [];
   const [options, setOptions] = useState<AvailableSpot[]>([]);
   const [confirmEvent] = useConfirmEventMutation();
   const setSnackBar = useSnackBar();
@@ -267,7 +275,26 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
         </div>
       </Paper>
       <div className="my-2">
-        <UserCalendar selectable={false} label="Your calendar" />
+        <UserCalendar
+          selectable={false}
+          label="Your calendar"
+          date={date?.toDate()}
+          availableDates={mapDatesToCalendarObject(
+            allSpots,
+            eventData?.duration
+          )}
+          toolbar={() => (
+            <div className="my-3">
+              <DatePicker
+                date={date}
+                views={["day", "month"]}
+                onChange={handleChangedate}
+                renderInput={(params) => <TextField {...params} />}
+                shouldDisableDate={shouldDisableDate}
+              />
+            </div>
+          )}
+        />
       </div>
     </div>
   ) : null;

@@ -1,12 +1,19 @@
-import { AvailableDates } from "src";
+import { AvailableSpot } from "src/services/backend";
+import dayjs from "dayjs";
 import { DateRange } from "..";
 
 export const mapDatesToCalendarObject = (
-  availableDates: AvailableDates
+  availableSpot: AvailableSpot[],
+  eventDuration: number
 ): DateRange[] => {
-  return availableDates.map(({ start, end }) => ({
-    summary: "Available Time",
-    start: { dateTime: new Date(start) },
-    end: { dateTime: new Date(end) },
-  }));
+  return availableSpot.map(({ start }) => {
+    const eventStart = new Date(start);
+    return {
+      summary: "Available Time",
+      start: { dateTime: eventStart },
+      end: {
+        dateTime: dayjs(eventStart).add(eventDuration, "minute").toDate(),
+      },
+    };
+  });
 };
