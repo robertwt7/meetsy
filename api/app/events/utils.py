@@ -16,7 +16,10 @@ def connect_to_calendar(request, user):
         "https://www.googleapis.com/auth/calendar",
     ]
 
+    # Refresh token if available
+    refresh = token[0]["token_secret"] or ""
+
     # Finally making a connection request
-    creds = Credentials(token[0]["token"], SCOPES)
+    creds = Credentials(token[0]["token"], SCOPES, refresh_token=refresh)
     service = build("calendar", "v3", credentials=creds)
     return service
