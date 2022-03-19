@@ -100,13 +100,14 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
 
   const eventPropGetter = useCallback(
     (event, start, end, isSelected): React.HTMLAttributes<HTMLDivElement> => {
-      if (isSelected === true) {
-        return { className: "bg-red-500" };
+      console.log("This is my event: ", event);
+      const googleEvent = event?.kind === "calendar#event";
+      if (isSelected === true && !googleEvent) {
+        return { className: "bg-blue-400 border-blue-900 text-blue-900" };
       }
-      const backgroundColor =
-        event.summary === "Blocked Time" || event.summary === "Available Time"
-          ? "bg-green-400"
-          : "bg-orange-800";
+      const backgroundColor = googleEvent
+        ? "bg-grey-400 text-black opacity-80"
+        : "bg-blue-100 border-blue-900 text-blue-900";
       return { className: backgroundColor };
     },
     []
@@ -137,7 +138,7 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
         onSelectSlot={handleSelect}
         step={30}
         timeslots={1}
-        style={{ height: 500 }}
+        style={{ height: 800 }}
         views={{ week: true }}
       />
     </div>
