@@ -13,7 +13,6 @@ import { useSnackBar } from "../SnackBar";
 import { DateRange } from "../UserCalendar";
 
 const durationOptions = [
-  { id: "15", name: "15 Minutes" },
   { id: "30", name: "30 Minutes" },
   { id: "45", name: "45 Minutes" },
   { id: "60", name: "60 Minutes" },
@@ -128,7 +127,7 @@ export const MeetupForm: FunctionComponent = () => {
               <Stack spacing={1} width={{ lg: "50%", xs: "100%" }}>
                 <UserCalendar
                   selectable
-                  onSelect={(selectedDates) => {
+                  onSelectSlot={(selectedDates) => {
                     setFieldValue("available_dates", selectedDates);
                   }}
                 />

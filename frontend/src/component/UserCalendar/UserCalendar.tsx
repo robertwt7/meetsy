@@ -6,7 +6,7 @@ import React, {
   ReactElement,
 } from "react";
 import { Typography } from "@mui/material";
-import { useGetEventsQuery } from "src/services/backend";
+import { Schema$Event, useGetEventsQuery } from "src/services/backend";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import format from "date-fns/format";
 import parse from "date-fns/parse";
@@ -31,6 +31,10 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
+// Typeguard
+const isGoogleEvent = (e: DateRange | Schema$Event): e is Schema$Event =>
+  Boolean((e as Schema$Event).kind);
+
 // Follow google event type format for react-big-calendar
 interface DateTime {
   dateTime: Date;
@@ -44,7 +48,8 @@ export interface DateRange {
 
 interface UserCalendarProps {
   selectable?: boolean;
-  onSelect?: (selectedDates: DateRange[]) => void;
+  onSelectSlot?: (selectedDates: DateRange[]) => void;
+  onSelectEvent?: (event: DateRange | Schema$Event) => void;
   availableDates?: DateRange[];
   label?: string;
   date?: Date;
@@ -53,7 +58,8 @@ interface UserCalendarProps {
 
 export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
   selectable = false,
-  onSelect,
+  onSelectSlot,
+  onSelectEvent,
   availableDates,
   label = "Date Range",
   date,
@@ -69,7 +75,7 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
   const eventTimes =
     data?.items != null ? [...data.items, ...availableDate] : availableDate;
 
-  const handleSelect = (slotInfo: SlotInfo): void => {
+  const handleSelectSlot = (slotInfo: SlotInfo): void => {
     const newAvailableDates = [
       ...availableDate,
       {
@@ -84,8 +90,16 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
     ];
     setAvailableDate(newAvailableDates);
 
-    if (onSelect != null) {
-      onSelect(newAvailableDates);
+    if (onSelectSlot != null) {
+      onSelectSlot(newAvailableDates);
+    }
+  };
+
+  const handleSelectEvent = (event: DateRange | Schema$Event): void => {
+    const googleEvent = !!isGoogleEvent(event);
+
+    if (onSelectEvent !== undefined && !googleEvent) {
+      onSelectEvent(event);
     }
   };
 
@@ -99,15 +113,23 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
   }, [availableDates]);
 
   const eventPropGetter = useCallback(
-    (event, start, end, isSelected): React.HTMLAttributes<HTMLDivElement> => {
-      console.log("This is my event: ", event);
-      const googleEvent = event?.kind === "calendar#event";
-      if (isSelected === true && !googleEvent) {
-        return { className: "bg-blue-400 border-blue-900 text-blue-900" };
+    (
+      event: DateRange | Schema$Event,
+      start,
+      end,
+      isSelected: boolean
+    ): React.HTMLAttributes<HTMLDivElement> => {
+      const googleEvent = !!isGoogleEvent(event);
+
+      if (isSelected && !googleEvent) {
+        return {
+          className:
+            "bg-blue-400 border-blue-900 text-blue-900 flex flex-row flex-wrap",
+        };
       }
       const backgroundColor = googleEvent
-        ? "bg-grey-400 text-black opacity-80"
-        : "bg-blue-100 border-blue-900 text-blue-900";
+        ? "bg-grey-400 text-black opacity-80 flex flex-row flex-wrap"
+        : "bg-blue-100 border-blue-900 text-blue-900 flex flex-row flex-wrap";
       return { className: backgroundColor };
     },
     []
@@ -135,7 +157,8 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
         }
         eventPropGetter={eventPropGetter}
         allDayAccessor={(event) => Boolean(event?.end?.date)}
-        onSelectSlot={handleSelect}
+        onSelectSlot={handleSelectSlot}
+        onSelectEvent={handleSelectEvent}
         step={30}
         timeslots={1}
         style={{ height: 800 }}
