@@ -241,11 +241,12 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
                       </Typography>
                     </div>
                   </div>
-                  <div className="m-4 mt-6">
+                  <div className="m-4 mt-6 ">
                     <Typography variant="body1" className="text-gray-800">
                       Available Dates
                     </Typography>
                     <CalendarPicker
+                      className="ml-0 mr-auto"
                       date={date}
                       views={["day", "month"]}
                       onChange={handleChangedate}
