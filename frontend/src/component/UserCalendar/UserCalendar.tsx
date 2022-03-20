@@ -123,12 +123,12 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
       const basicClassName = "flex flex-row flex-wrap text-sm";
       if (isSelected && !googleEvent) {
         return {
-          className: `bg-blue-400 border-blue-900 text-blue-900 ${basicClassName}`,
+          className: `bg-blue-400 border-primary text-primary ${basicClassName}`,
         };
       }
       const backgroundColor = googleEvent
         ? "bg-grey-400 text-black opacity-80"
-        : "bg-blue-100 border-blue-900 text-blue-900";
+        : "bg-blue-100 border-primary text-primary";
       return { className: `${backgroundColor} ${basicClassName}` };
     },
     []

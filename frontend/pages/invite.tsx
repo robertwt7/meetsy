@@ -23,7 +23,7 @@ const Invite: NextPage = () => {
   }, [urlUnsafe]);
 
   return router.isReady ? (
-    <div className="flex flex-col md:items-center lg:w-1/2 w-3/4">
+    <div className="flex flex-col md:items-center w-3/4">
       <AcceptForm url={url as string} />
     </div>
   ) : null;

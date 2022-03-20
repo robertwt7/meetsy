@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { Paper, Typography, Button } from "@mui/material";
 import { red } from "@mui/material/colors";
 import { useGetInvitedEventQuery } from "src";
-import PersonIcon from "@mui/icons-material/Person";
 import CalendarPicker from "@mui/lab/CalendarPicker";
 import dayjs from "dayjs";
 import { AvailableSpot } from "src/services/backend/model";
@@ -208,38 +207,44 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
           <Form>
             <Paper className="w-full">
               <div className="flex flex-row items-stretch">
-                <div className="w-1/3">
+                <div className="w-1/3 bg-gray-50">
                   <div className="m-4 space-y-2">
-                    <Typography variant="h5">Inviter Details</Typography>
-                    <div className="flex flex-row space-x-2 items-center">
-                      <PersonIcon />
-                      <Typography variant="h6">
-                        {eventData?.user?.first_name}{" "}
-                        {eventData?.user?.last_name}
-                      </Typography>
-                    </div>
-                    <Typography variant="h6">
-                      {eventData?.user?.email}
+                    <Typography variant="body1" className="text-gray-800">
+                      Meeting Details
                     </Typography>
                     <Typography variant="h6">{eventData?.name}</Typography>
                     <Typography variant="body1">
-                      {eventData?.location}
+                      🕖 Duration: {eventData?.duration}
                     </Typography>
-                    <Typography variant="body2">{eventData?.notes}</Typography>
-                  </div>
-                  <div className="m-4 space-y-2">
-                    <Typography variant="h5">Your Details</Typography>
+                    <Typography variant="body1">
+                      📍 Location: {eventData?.location}
+                    </Typography>
                     <div className="flex flex-row space-x-2 items-center">
-                      <PersonIcon />
-                      <Typography variant="h6">
-                        {sessionData?.user?.name}
+                      <Typography variant="body1">
+                        👋 From: {eventData?.user?.first_name}{" "}
+                        {eventData?.user?.last_name} ({eventData?.user?.email})
                       </Typography>
                     </div>
-                    <Typography variant="h6">
-                      {sessionData?.user?.email}
+
+                    <Typography variant="body1">
+                      📖 Notes: {eventData?.notes}
                     </Typography>
                   </div>
-                  <div>
+                  <div className="m-4 space-y-2">
+                    <Typography variant="body1" className="text-gray-800">
+                      Your Details
+                    </Typography>
+                    <div className="flex flex-row space-x-2 items-center">
+                      <Typography variant="body1">
+                        👋 Me: {sessionData?.user?.name} (
+                        {sessionData?.user?.email})
+                      </Typography>
+                    </div>
+                  </div>
+                  <div className="m-4 mt-6">
+                    <Typography variant="body1" className="text-gray-800">
+                      Available Dates
+                    </Typography>
                     <CalendarPicker
                       date={date}
                       views={["day", "month"]}
@@ -261,7 +266,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
                         <div className="my-2">
                           <FormikTextField
                             name="notes"
-                            label="Extra notes"
+                            label="Add your notes"
                             multiline
                             rows={4}
                             className="w-full"
