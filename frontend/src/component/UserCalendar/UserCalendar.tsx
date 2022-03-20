@@ -49,7 +49,7 @@ export interface DateRange {
 interface UserCalendarProps {
   selectable?: boolean;
   onSelectSlot?: (selectedDates: DateRange[]) => void;
-  onSelectEvent?: (event: DateRange | Schema$Event) => void;
+  onSelectEvent?: (event: DateRange) => void;
   availableDates?: DateRange[];
   label?: string;
   date?: Date;
@@ -120,17 +120,16 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
       isSelected: boolean
     ): React.HTMLAttributes<HTMLDivElement> => {
       const googleEvent = !!isGoogleEvent(event);
-
+      const basicClassName = "flex flex-row flex-wrap text-sm";
       if (isSelected && !googleEvent) {
         return {
-          className:
-            "bg-blue-400 border-blue-900 text-blue-900 flex flex-row flex-wrap",
+          className: `bg-blue-400 border-blue-900 text-blue-900 ${basicClassName}`,
         };
       }
       const backgroundColor = googleEvent
-        ? "bg-grey-400 text-black opacity-80 flex flex-row flex-wrap"
-        : "bg-blue-100 border-blue-900 text-blue-900 flex flex-row flex-wrap";
-      return { className: backgroundColor };
+        ? "bg-grey-400 text-black opacity-80"
+        : "bg-blue-100 border-blue-900 text-blue-900";
+      return { className: `${backgroundColor} ${basicClassName}` };
     },
     []
   );

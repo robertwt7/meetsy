@@ -125,11 +125,18 @@ class GoogleEventsView(APIView):
     # TODO: Validate request
     def post(self, request):
         inviterId = request.data["inviterId"]
+        eventId = request.data["eventId"]
         invitee = request.user
 
         if not inviterId:
             return Response(
                 {"detail": "Missing Inviter user ID "},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        if not eventId:
+            return Response(
+                {"detail": "Missing Event ID "},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         # Example event saved
@@ -151,6 +158,12 @@ class GoogleEventsView(APIView):
                 .insert(calendarId="primary", body=payload)
                 .execute()
             )
+
+            meetsyEvent = Events.objects.get(id=eventId)
+            meetsyEvent.pending = False
+            meetsyEvent.invitee_id = invitee.userId
+            meetsyEvent.selected_time = payload["start"]["dateTime"]
+            meetsyEvent.save()
 
             print("Event created: %s" % (event.get("htmlLink")))
             return Response(event)

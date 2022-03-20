@@ -16,11 +16,8 @@ def connect_to_calendar(request, user):
         "https://www.googleapis.com/auth/calendar",
     ]
 
-    print("This is token: ", token)
     # Refresh token if available
     refresh = token[0]["token_secret"] or ""
-
-    print("refresh: ", refresh)
 
     # Finally making a connection request
     # TODO: error refresh token: The credentials do not contain the necessary fields need to refresh the access token. You must specify refresh_token, token_uri, client_id, and client_secret."

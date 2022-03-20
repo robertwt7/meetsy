@@ -85,6 +85,7 @@ export interface GoogleEventPayload {
 
 export interface ConfirmEventRequest {
   inviterId: string | number;
+  eventId: number;
   googleEventPayload: GoogleEventPayload;
 }
 
