@@ -1,6 +1,12 @@
-import { FunctionComponent, useState, useEffect } from "react";
+import React, {
+  useCallback,
+  FunctionComponent,
+  useState,
+  useEffect,
+  ReactElement,
+} from "react";
 import { Typography } from "@mui/material";
-import { useGetEventsQuery } from "src/services/backend";
+import { Schema$Event, useGetEventsQuery } from "src/services/backend";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import format from "date-fns/format";
 import parse from "date-fns/parse";
@@ -25,6 +31,10 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
+// Typeguard
+const isGoogleEvent = (e: DateRange | Schema$Event): e is Schema$Event =>
+  Boolean((e as Schema$Event).kind);
+
 // Follow google event type format for react-big-calendar
 interface DateTime {
   dateTime: Date;
@@ -38,16 +48,22 @@ export interface DateRange {
 
 interface UserCalendarProps {
   selectable?: boolean;
-  onSelect?: (selectedDates: DateRange[]) => void;
+  onSelectSlot?: (selectedDates: DateRange[]) => void;
+  onSelectEvent?: (event: DateRange) => void;
   availableDates?: DateRange[];
   label?: string;
+  date?: Date;
+  toolbar?: () => ReactElement;
 }
 
 export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
   selectable = false,
-  onSelect,
+  onSelectSlot,
+  onSelectEvent,
   availableDates,
   label = "Date Range",
+  date,
+  toolbar,
 }) => {
   const [availableDate, setAvailableDate] = useState<DateRange[]>([]);
   const currentDate = new Date();
@@ -59,7 +75,7 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
   const eventTimes =
     data?.items != null ? [...data.items, ...availableDate] : availableDate;
 
-  const handleSelect = (slotInfo: SlotInfo): void => {
+  const handleSelectSlot = (slotInfo: SlotInfo): void => {
     const newAvailableDates = [
       ...availableDate,
       {
@@ -74,8 +90,16 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
     ];
     setAvailableDate(newAvailableDates);
 
-    if (onSelect != null) {
-      onSelect(newAvailableDates);
+    if (onSelectSlot != null) {
+      onSelectSlot(newAvailableDates);
+    }
+  };
+
+  const handleSelectEvent = (event: DateRange | Schema$Event): void => {
+    const googleEvent = !!isGoogleEvent(event);
+
+    if (onSelectEvent !== undefined && !googleEvent) {
+      onSelectEvent(event);
     }
   };
 
@@ -88,6 +112,28 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
     }
   }, [availableDates]);
 
+  const eventPropGetter = useCallback(
+    (
+      event: DateRange | Schema$Event,
+      start,
+      end,
+      isSelected: boolean
+    ): React.HTMLAttributes<HTMLDivElement> => {
+      const googleEvent = !!isGoogleEvent(event);
+      const basicClassName = "flex flex-row flex-wrap text-sm";
+      if (isSelected && !googleEvent) {
+        return {
+          className: `bg-blue-400 border-blue-900 text-blue-900 ${basicClassName}`,
+        };
+      }
+      const backgroundColor = googleEvent
+        ? "bg-grey-400 text-black opacity-80"
+        : "bg-blue-100 border-blue-900 text-blue-900";
+      return { className: `${backgroundColor} ${basicClassName}` };
+    },
+    []
+  );
+
   return (
     <div className="w-full">
       <Typography align="center" variant="h5">
@@ -95,8 +141,12 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
       </Typography>
       <Calendar
         localizer={localizer}
+        date={date !== undefined ? date : undefined}
         selectable={selectable}
+        components={{ toolbar: toolbar !== undefined ? toolbar : undefined }}
         events={eventTimes}
+        defaultView="week"
+        defaultDate={new Date()}
         titleAccessor={(event) => event.summary ?? ""}
         startAccessor={(event) =>
           new Date(event?.start?.dateTime ?? event?.start?.date ?? "")
@@ -104,10 +154,14 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
         endAccessor={(event) =>
           new Date(event?.end?.dateTime ?? event?.end?.date ?? "")
         }
+        eventPropGetter={eventPropGetter}
         allDayAccessor={(event) => Boolean(event?.end?.date)}
-        onSelectSlot={handleSelect}
-        style={{ height: 500 }}
-        views={{ day: true, month: true, week: true, work_week: true }}
+        onSelectSlot={handleSelectSlot}
+        onSelectEvent={handleSelectEvent}
+        step={30}
+        timeslots={1}
+        style={{ height: 800 }}
+        views={{ week: true }}
       />
     </div>
   );

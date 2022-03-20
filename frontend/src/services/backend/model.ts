@@ -2,6 +2,10 @@
 import { calendar_v3 } from "googleapis";
 import Schema$Events = calendar_v3.Schema$Events;
 
+import Schema$Event = calendar_v3.Schema$Event;
+
+export type { Schema$Event };
+
 export interface EventsRequest {
   minDate: string;
   maxDate: string;
@@ -81,6 +85,7 @@ export interface GoogleEventPayload {
 
 export interface ConfirmEventRequest {
   inviterId: string | number;
+  eventId: number;
   googleEventPayload: GoogleEventPayload;
 }
 

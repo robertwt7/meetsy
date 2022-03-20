@@ -1,14 +1,14 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { red } from "@mui/material/colors";
 import { Paper, Typography, Button } from "@mui/material";
+import { red } from "@mui/material/colors";
 import { useGetInvitedEventQuery } from "src";
 import PersonIcon from "@mui/icons-material/Person";
 import CalendarPicker from "@mui/lab/CalendarPicker";
 import dayjs from "dayjs";
 import { AvailableSpot } from "src/services/backend/model";
 import type { Dayjs } from "dayjs";
-import { FormikSelect, FormikTextField } from "src/form";
+import { FormikTextField } from "src/form";
 import { Formik, Form } from "formik";
 import { useConfirmEventMutation } from "src/services/backend";
 import * as yup from "yup";
@@ -17,8 +17,9 @@ import { signIn, useSession } from "next-auth/react";
 import { isMeetsyBackendError } from "src/services/backend/utils";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
-import { UserCalendar } from "../UserCalendar";
+import { DateRange, UserCalendar } from "../UserCalendar";
 import { useSnackBar } from "../SnackBar";
+import { mapDatesToCalendarObject } from "./utils";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -32,7 +33,7 @@ interface FormikValues {
 }
 
 const validationSchema = yup.object().shape({
-  spot: yup.string().required("Spots is required"),
+  spot: yup.string().required("Spot is required"),
   notes: yup.string(),
 });
 
@@ -51,6 +52,12 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
   const [date, setDate] = useState<Dayjs | null>(dayjs(new Date()));
   const availableDates =
     eventData?.spots != null ? Object.keys(eventData?.spots) : [];
+  const allSpots =
+    eventData?.spots != null
+      ? ([] as AvailableSpot[]).concat(
+          ...Object.values(eventData.spots).map((e) => e)
+        )
+      : [];
   const [options, setOptions] = useState<AvailableSpot[]>([]);
   const [confirmEvent] = useConfirmEventMutation();
   const setSnackBar = useSnackBar();
@@ -73,6 +80,18 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
     setOptions(availableSpots);
   };
 
+  const handleSelectEvent =
+    (
+      setFieldValue: (
+        field: string,
+        value: any,
+        shouldValidate?: boolean | undefined
+      ) => void
+    ) =>
+    (event: DateRange) => {
+      setFieldValue("spot", dayjs(event?.start?.dateTime).format(), true);
+    };
+
   const handleSubmit = async (values: FormikValues): Promise<void> => {
     try {
       if (eventData === undefined || sessionData === null) {
@@ -93,6 +112,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
 
       const payload = {
         inviterId: eventData.user.userId,
+        eventId: eventData.id,
         googleEventPayload: {
           summary: eventData.name,
           location: eventData.location,
@@ -177,98 +197,115 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
   // TODO: check if there is any error in the query
   return !isFetching ? (
     <div className="flex flex-col w-full">
-      <Paper className="w-full">
-        <div className="flex flex-row items-stretch">
-          <div className="w-1/4">
-            <div className="flex flex-row space-x-4 m-4 mb-2 items-center">
-              <PersonIcon />
-              <Typography variant="h5">
-                {eventData?.user?.first_name} {eventData?.user?.last_name}
-              </Typography>
-            </div>
-            <Typography variant="h6" className="ml-4">
-              {eventData?.user?.email}
-            </Typography>
-            <Typography variant="h4" className="m-4 mb-2">
-              {eventData?.name}
-            </Typography>
-            <Typography variant="body1" className="ml-4 m-2">
-              {eventData?.location}
-            </Typography>
-            <Typography variant="body2" className="ml-4 m-2">
-              {eventData?.notes}
-            </Typography>
-          </div>
-          <div className="w-3/4 border-l p-4 border-gray-300 flex flex-row">
-            <div className="w-1/2">
-              <CalendarPicker
-                date={date}
-                views={["day", "month"]}
-                onChange={handleChangedate}
-                shouldDisableDate={shouldDisableDate}
-              />
-            </div>
-            <div className="w-1/3">
-              <div className="m-4 mt-2">
-                <Typography variant="h5">Your Detail:</Typography>
-              </div>
-              <div className="flex flex-row space-x-4 m-4 mb-2 items-center">
-                <PersonIcon />
-                <Typography variant="h5">{sessionData?.user?.name}</Typography>
-              </div>
-              <Typography variant="h6" className="ml-4">
-                {sessionData?.user?.email}
-              </Typography>
-            </div>
-            <div className="w-1/3">
-              <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={handleSubmit}
-              >
-                {({ isSubmitting, isValid }) => (
-                  <Form>
-                    <div className="flex flex-col">
-                      <div className="my-2 w-full">
-                        <FormikSelect
-                          options={options}
-                          name="spot"
-                          label="Spot"
-                          valueKey="start"
-                          nameKey="startTime"
-                          className="w-full"
-                        />
-                      </div>
-                      <div className="my-2">
-                        <FormikTextField
-                          name="notes"
-                          label="Extra notes"
-                          multiline
-                          rows={4}
-                          className="w-full"
-                        />
-                      </div>
-                      <div className="mt-8 w-full">
-                        <Button
-                          type="submit"
-                          variant="contained"
-                          className="w-full"
-                          disabled={isSubmitting || !isValid}
-                        >
-                          Confirm
-                        </Button>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+        validateOnMount
+        enableReinitialize
+      >
+        {({ isSubmitting, isValid, setFieldValue, errors }) => (
+          <Form>
+            <Paper className="w-full">
+              <div className="flex flex-row items-stretch">
+                <div className="w-1/3">
+                  <div className="m-4 space-y-2">
+                    <Typography variant="h5">Inviter Details</Typography>
+                    <div className="flex flex-row space-x-2 items-center">
+                      <PersonIcon />
+                      <Typography variant="h6">
+                        {eventData?.user?.first_name}{" "}
+                        {eventData?.user?.last_name}
+                      </Typography>
+                    </div>
+                    <Typography variant="h6">
+                      {eventData?.user?.email}
+                    </Typography>
+                    <Typography variant="h6">{eventData?.name}</Typography>
+                    <Typography variant="body1">
+                      {eventData?.location}
+                    </Typography>
+                    <Typography variant="body2">{eventData?.notes}</Typography>
+                  </div>
+                  <div className="m-4 space-y-2">
+                    <Typography variant="h5">Your Details</Typography>
+                    <div className="flex flex-row space-x-2 items-center">
+                      <PersonIcon />
+                      <Typography variant="h6">
+                        {sessionData?.user?.name}
+                      </Typography>
+                    </div>
+                    <Typography variant="h6">
+                      {sessionData?.user?.email}
+                    </Typography>
+                  </div>
+                  <div>
+                    <CalendarPicker
+                      date={date}
+                      views={["day", "month"]}
+                      onChange={handleChangedate}
+                      shouldDisableDate={shouldDisableDate}
+                    />
+                    <div className="m-4 mt-0">
+                      <div className="flex flex-col">
+                        {/* <div className="my-2 w-full">
+                          <FormikSelect
+                            options={options}
+                            name="spot"
+                            label="Spot"
+                            valueKey="start"
+                            nameKey="startTime"
+                            className="w-full"
+                          />
+                        </div> */}
+                        <div className="my-2">
+                          <FormikTextField
+                            name="notes"
+                            label="Extra notes"
+                            multiline
+                            rows={4}
+                            className="w-full"
+                          />
+                        </div>
+                        <div className="mt-8 w-full">
+                          <Button
+                            type="submit"
+                            variant="contained"
+                            className="w-full"
+                            disabled={isSubmitting || !isValid}
+                          >
+                            Confirm
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </Form>
-                )}
-              </Formik>
-            </div>
-          </div>
-        </div>
-      </Paper>
-      <div className="my-2">
-        <UserCalendar selectable={false} label="Your calendar" />
-      </div>
+                  </div>
+                </div>
+                <div className="w-2/3 border-l p-4 border-gray-300 flex flex-col">
+                  <UserCalendar
+                    selectable={false}
+                    label="Your calendar"
+                    date={date?.toDate()}
+                    onSelectEvent={handleSelectEvent(setFieldValue)}
+                    availableDates={mapDatesToCalendarObject(
+                      allSpots,
+                      eventData?.duration ?? 30
+                    )}
+                    toolbar={() => <div />}
+                  />
+                  {Boolean(errors?.spot) && (
+                    <div className="my-3">
+                      <Typography variant="body2" color="error">
+                        {errors?.spot}
+                      </Typography>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </Paper>
+          </Form>
+        )}
+      </Formik>
     </div>
   ) : null;
 };

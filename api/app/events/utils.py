@@ -8,7 +8,7 @@ def connect_to_calendar(request, user):
     qs = SocialAccount.objects.filter(user=user)
 
     # Fetches the Acces token of the User
-    token = SocialToken.objects.filter(account=qs[0]).values("token")
+    token = SocialToken.objects.filter(account=qs[0]).values("token", "token_secret")
 
     # The scope of service like if we want readonly etc
     SCOPES = [
@@ -16,7 +16,11 @@ def connect_to_calendar(request, user):
         "https://www.googleapis.com/auth/calendar",
     ]
 
+    # Refresh token if available
+    refresh = token[0]["token_secret"] or ""
+
     # Finally making a connection request
-    creds = Credentials(token[0]["token"], SCOPES)
+    # TODO: error refresh token: The credentials do not contain the necessary fields need to refresh the access token. You must specify refresh_token, token_uri, client_id, and client_secret."
+    creds = Credentials(token[0]["token"], scopes=SCOPES, refresh_token=refresh)
     service = build("calendar", "v3", credentials=creds)
     return service
