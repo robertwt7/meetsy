@@ -10,6 +10,7 @@ module.exports = {
     "standard-with-typescript",
     "plugin:react/recommended",
     "airbnb",
+    "plugin:testing-library/react",
     "plugin:prettier/recommended",
   ],
   globals: {
@@ -48,6 +49,7 @@ module.exports = {
     "react/react-in-jsx-scope": "off",
     "unused-imports/no-unused-imports": "error",
     "import/extensions": "off",
+    "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
   },
   overrides: [
     {

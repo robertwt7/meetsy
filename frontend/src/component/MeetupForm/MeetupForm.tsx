@@ -4,13 +4,12 @@ import { Form, Formik } from "formik";
 import * as yup from "yup";
 import { FormikTextField, FormikSelect } from "src/form";
 import { Stack, Button, Typography } from "@mui/material";
-import { UserCalendar } from "src/component";
 import { formatISO } from "date-fns";
 import { useCreateMeetsyEventsMutation } from "src/services/backend";
 import { app } from "src/env";
 import { useRouter } from "next/router";
 import { useSnackBar } from "../SnackBar";
-import { DateRange } from "../UserCalendar";
+import { DateRange, UserCalendar } from "../UserCalendar";
 
 const durationOptions = [
   { id: "30", name: "30 Minutes" },
