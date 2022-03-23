@@ -1,6 +1,5 @@
 module.exports = {
-  purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./src/**/*.{js,ts,jsx,tsx}"],
-  darkMode: false, // or 'media' or 'class'
+  content: ["./pages/**/*.{js,ts,jsx,tsx}", "./src/**/*.{js,ts,jsx,tsx}"],
   important: "#__next",
   theme: {
     colors: {
@@ -350,9 +349,6 @@ module.exports = {
         A700: "#00B8D4",
       },
     },
-    extend: {},
-  },
-  variants: {
     extend: {},
   },
   plugins: [],

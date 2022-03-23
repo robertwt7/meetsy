@@ -123,7 +123,11 @@ export const MeetupForm: FunctionComponent = () => {
                   Next
                 </Button>
               </Stack>
-              <Stack spacing={1} width={{ lg: "50%", xs: "100%" }}>
+              <Stack
+                spacing={1}
+                width={{ lg: "50%", xs: "100%" }}
+                className="relative overflow-hidden"
+              >
                 <UserCalendar
                   selectable
                   onSelectSlot={(selectedDates) => {

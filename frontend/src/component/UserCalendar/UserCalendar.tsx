@@ -134,8 +134,12 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
     []
   );
 
+  /**
+   * The reason for the styling is to adjust height to the left siblings
+   * https://stackoverflow.com/questions/48943233/how-can-you-set-the-height-of-an-outer-div-to-always-be-equal-to-a-particular-in
+   */
   return (
-    <div className="w-full">
+    <div className="w-full h-0 min-h-[95%] pb-8">
       <Typography align="center" variant="h5">
         {label}
       </Typography>
@@ -160,7 +164,6 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
         onSelectEvent={handleSelectEvent}
         step={30}
         timeslots={1}
-        style={{ height: 800 }}
         views={{ week: true }}
       />
     </div>
