@@ -136,6 +136,7 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
 
   /**
    * The reason for the styling is to adjust height to the left siblings
+   * Parents of this div is also modified with classname: relative overflow-auto
    * https://stackoverflow.com/questions/48943233/how-can-you-set-the-height-of-an-outer-div-to-always-be-equal-to-a-particular-in
    */
   return (
