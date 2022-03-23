@@ -50,6 +50,7 @@ module.exports = {
     "unused-imports/no-unused-imports": "error",
     "import/extensions": "off",
     "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
+    "no-shadow": "off",
   },
   overrides: [
     {
@@ -68,7 +69,7 @@ module.exports = {
       },
     },
     {
-      files: ["apps/**/*.{ts,tsx}", "packages/**/*.{ts,tsx}"],
+      files: ["pages/**/*.{ts,tsx}", "src/**/*.{ts,tsx}"],
       rules: {
         "@typescript-eslint/no-floating-promises": "off",
         "react/display-name": "off",
@@ -79,6 +80,7 @@ module.exports = {
           "off",
           { allowInGenericTypeArguments: true },
         ],
+        "@typescript-eslint/no-shadow": ["error"],
       },
     },
   ],
