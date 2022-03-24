@@ -2,7 +2,7 @@ import { Button, Typography, Stack } from "@mui/material";
 import { useRouter } from "next/router";
 import { signIn, useSession, signOut } from "next-auth/react";
 import Image from "next/image";
-import logo from "public/images/logo.png";
+import logo from "public/images/meetsy_logo.png";
 import { FunctionComponent } from "react";
 
 export const WelcomePanel: FunctionComponent = () => {
@@ -14,10 +14,9 @@ export const WelcomePanel: FunctionComponent = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <Image src={logo} alt="logo" width={200} height={200} />
-      <Typography variant="h3" fontWeight="semibold" gutterBottom>
-        Meetsy
-      </Typography>
+      <div className="w-1/6">
+        <Image src={logo} alt="logo" />
+      </div>
       <h4 className="text-lg font-semibold">
         Simple, fast, and open source online booking system
       </h4>
