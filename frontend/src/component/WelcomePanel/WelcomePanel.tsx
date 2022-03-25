@@ -1,9 +1,9 @@
 import { Button, Typography, Stack } from "@mui/material";
 import { useRouter } from "next/router";
-import { signIn, useSession, signOut } from "next-auth/react";
 import Image from "next/image";
-import logo from "public/images/meetsy_logo.png";
+import { signIn, useSession, signOut } from "next-auth/react";
 import { FunctionComponent } from "react";
+import meetingImage from "public/images/meeting.png";
 
 export const WelcomePanel: FunctionComponent = () => {
   const router = useRouter();
@@ -14,8 +14,8 @@ export const WelcomePanel: FunctionComponent = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="w-1/6">
-        <Image src={logo} alt="logo" />
+      <div className="w-1/3">
+        <Image src={meetingImage} alt="meeting" layout="responsive" />
       </div>
       <h4 className="text-lg font-semibold">
         Simple, fast, and open source online booking system

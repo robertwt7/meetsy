@@ -5,6 +5,8 @@ import {
   ListItem,
   Drawer,
   Typography,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import clsx, { ClassValue } from "clsx";
@@ -16,6 +18,7 @@ import { Route } from "../../config/router";
 interface NavigationProps {
   onMenuToggle?: () => void;
   menuActive?: boolean;
+  handleCloseMenu?: () => void;
 }
 
 export interface INavigationItemProps {
@@ -23,7 +26,6 @@ export interface INavigationItemProps {
   testId: string;
   route: Route;
   target?: HTMLAttributeAnchorTarget;
-  icon?: IconNames;
 }
 
 interface MenuToggleProps {
@@ -71,7 +73,7 @@ export const NavigationList: FunctionComponent<NavigationMenuProps> = ({
   onSelect,
 }) => {
   return (
-    <ul className={styles.list}>
+    <ul className="flex flex-col justify-center items-center">
       {items.map((item) => (
         <NavigationItem key={item.testId} {...item} onSelect={onSelect} />
       ))}
@@ -86,18 +88,22 @@ const NavigationItem: FunctionComponent<INavigationItemProps & Selectable> = ({
   target = "_self",
 }) => {
   const router: NextRouter = useRouter();
-  const classNames: ClassValue = clsx(
-    styles.item,
-    router.route === route && styles.selectedRoute
-  );
+  const classNames: ClassValue = clsx("w-full list-none");
+
   return (
     <li data-testid={testId} className={classNames}>
-      <Link href={route} target={target} data-testid={`${testId}-a`}>
-        <div>
-          <Typography variant="body1" fontWeight="bold">
-            {text}
-          </Typography>
-        </div>
+      <Link
+        href={route}
+        target={target}
+        data-testid={`${testId}-a`}
+        underline="hover"
+      >
+        <Typography
+          variant="h6"
+          fontWeight={`${router.route === route ? "bold" : "normal"}`}
+        >
+          {text}
+        </Typography>
       </Link>
     </li>
   );
@@ -140,46 +146,35 @@ const NavigationMenuWithToggle: FunctionComponent<
 export const Navigation: FunctionComponent<NavigationProps> = ({
   onMenuToggle = () => {},
   menuActive,
+  handleCloseMenu = () => {},
 }) => {
-  const isBpMediumUp: boolean = useIsBreakpointMediumAndUp();
-  const classNames: ClassValue = clsx(
-    styles.nav,
-    isBpMediumUp && styles.bpMediumUp
-  );
+  const theme = useTheme();
+  const isBpMediumUp: boolean = useMediaQuery(theme.breakpoints.up("md"));
 
   const items: INavigationItemProps[] = [
     {
       text: "Home",
       testId: "home",
-      icon: "Home",
       route: Route.INDEX,
     },
     {
       text: "Meet",
       testId: "meet",
-      icon: "Meet",
       route: Route.MEET,
     },
   ];
 
   return (
     <>
-      <nav className={classNames}>
+      <nav className="w-full flex flex-col items-center justify-center">
         {isBpMediumUp ? (
           <NavigationList items={items} />
         ) : (
           <NavigationMenuWithToggle
-            items={[
-              ...items,
-              {
-                text: t("common:navigation:logout"),
-                testId: "logout",
-                icon: "Exit",
-                route: Route.LOGOUT,
-              },
-            ]}
+            items={items}
             menuActive={menuActive ?? false}
             onMenuToggle={onMenuToggle}
+            handleCloseMenu={handleCloseMenu}
           />
         )}
       </nav>
