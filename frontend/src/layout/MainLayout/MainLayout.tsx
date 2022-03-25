@@ -4,14 +4,20 @@ import { Copyright } from "src";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import logo from "public/images/meetsy_logo.png";
+import { useRouter } from "next/router";
 import { Navigation } from "../../component";
+
+const hiddenNavigation = ["/invite"];
 
 export const MainLayout: FunctionComponent = ({ children }) => {
   const { status } = useSession();
   const isUnauthenticated = status !== "authenticated";
-  const navigationClassName = isUnauthenticated
-    ? "hidden"
-    : "w-full flex flex-row justify-between my-8";
+  const router = useRouter();
+  const shouldHideNavigation = hiddenNavigation.includes(router.route);
+  const navigationClassName =
+    isUnauthenticated || shouldHideNavigation
+      ? "hidden"
+      : "w-full flex flex-row justify-between my-8";
 
   // TODO: readjust navigation on mobile
   return (
@@ -28,7 +34,6 @@ export const MainLayout: FunctionComponent = ({ children }) => {
                 variant="outlined"
                 // eslint-disable-next-line @typescript-eslint/promise-function-async
                 onClick={() => signOut()}
-                size="small"
               >
                 Sign out
               </Button>
