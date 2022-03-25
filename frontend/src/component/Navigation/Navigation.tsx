@@ -73,7 +73,7 @@ export const NavigationList: FunctionComponent<NavigationMenuProps> = ({
   onSelect,
 }) => {
   return (
-    <ul className="flex flex-col justify-center items-center">
+    <ul className="flex flex-row space-x-8 justify-center items-center">
       {items.map((item) => (
         <NavigationItem key={item.testId} {...item} onSelect={onSelect} />
       ))}
@@ -166,7 +166,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
 
   return (
     <>
-      <nav className="w-full flex flex-col items-center justify-center">
+      <nav className="w-full flex flex-row items-center justify-center">
         {isBpMediumUp ? (
           <NavigationList items={items} />
         ) : (

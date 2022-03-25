@@ -13,7 +13,7 @@ export const WelcomePanel: FunctionComponent = () => {
   const { data, status } = useSession();
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col flex-1 items-center justify-center">
       <div className="w-1/3">
         <Image src={meetingImage} alt="meeting" layout="responsive" />
       </div>

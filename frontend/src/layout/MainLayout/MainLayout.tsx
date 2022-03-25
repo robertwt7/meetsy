@@ -10,20 +10,23 @@ export const MainLayout: FunctionComponent = ({ children }) => {
   const isAuthenticated = status !== "authenticated";
   const navigationClassName = isAuthenticated
     ? "hidden"
-    : "lg:w-1/6 lg:flex lg:flex-col lg:items-center h-full";
+    : "w-full flex flex-row justify-between my-8";
 
-  const contentClassName = isAuthenticated ? "w-full" : "w-full lg:w-5/6";
   // TODO: readjust navigation on mobile
   return (
-    <div className="w-full min-h-screen flex flex-col justify-center items-center">
-      <div className="flex lg:flex-row flex-col ml-auto mr-auto px-8 md:w-3/5 space-x-8">
+    <div className="w-full min-h-screen flex flex-col items-center">
+      <div className="flex flex-col ml-auto mr-auto px-8 md:w-3/5 min-h-screen w-full">
         <div className={navigationClassName}>
-          <Image src={logo} alt="logo" />
-          <Navigation />
+          <div className="w-1/6">
+            <Image src={logo} alt="logo" layout="responsive" />
+          </div>
+          <div className="ml-auto mr-0">
+            <Navigation />
+          </div>
         </div>
-        <div className={contentClassName}>
+        <div className="w-full h-full flex-1 flex flex-col">
           {children}
-          <div className="my-8">
+          <div className="py-8 mt-auto mb-0">
             <Copyright />
           </div>
         </div>
