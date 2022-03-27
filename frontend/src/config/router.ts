@@ -6,6 +6,7 @@ export enum PageNames {
   MEET = "Meet",
   SUCCESS = "Success",
   THANKYOU = "Thankyou",
+  MY_EVENTS = "My Events",
 }
 
 export enum Route {
@@ -14,6 +15,7 @@ export enum Route {
   MEET = "/meet",
   SUCCESS = "/success",
   THANKYOU = "/thankyou",
+  MY_EVENTS = "/my-events",
 }
 
 export const routePageNames: Partial<Record<Route, PageNames>> = {
@@ -22,6 +24,8 @@ export const routePageNames: Partial<Record<Route, PageNames>> = {
   [Route.MEET]: PageNames.MEET,
   [Route.SUCCESS]: PageNames.SUCCESS,
   [Route.THANKYOU]: PageNames.THANKYOU,
+  [Route.THANKYOU]: PageNames.THANKYOU,
+  [Route.MY_EVENTS]: PageNames.MY_EVENTS,
 };
 
 export const useRoutePageName = (): PageNames | undefined => {

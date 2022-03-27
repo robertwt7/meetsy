@@ -22,7 +22,7 @@ export const WelcomePanel: FunctionComponent = () => {
         </div>
       )}
 
-      <div className="w-1/3 mt-4">
+      <div className="md:w-1/3 w-2/3 mt-4">
         <Image src={meetingImage} alt="meeting" layout="responsive" />
       </div>
       <h4 className="text-lg font-semibold">

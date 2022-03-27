@@ -17,7 +17,7 @@ export const MainLayout: FunctionComponent = ({ children }) => {
   const navigationClassName =
     isUnauthenticated || shouldHideNavigation
       ? "hidden"
-      : "w-full flex flex-row justify-between my-8";
+      : "w-full flex flex-row justify-between my-8 items-center";
 
   // TODO: readjust navigation on mobile
   return (

@@ -101,6 +101,7 @@ const NavigationItem: FunctionComponent<INavigationItemProps & Selectable> = ({
         <Typography
           variant="h6"
           fontWeight={`${router.route === route ? "bold" : "normal"}`}
+          noWrap
         >
           {text}
         </Typography>
@@ -156,6 +157,11 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
       text: "Home",
       testId: "home",
       route: Route.INDEX,
+    },
+    {
+      text: "My Events",
+      testId: "my-events",
+      route: Route.MY_EVENTS,
     },
     {
       text: "Meet",
