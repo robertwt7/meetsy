@@ -45,6 +45,17 @@ export interface Spots {
 }
 
 export interface MeetsyEventsResponse {
+  count: number;
+  next: null | string;
+  previous: null | string;
+  results: MeetsyEventResponse[];
+}
+
+export interface MeetsyEventsRequest {
+  page?: number;
+}
+
+export interface MeetsyEventResponse {
   id: number;
   user: UserDetails;
   duration: number;
