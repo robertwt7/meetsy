@@ -56,11 +56,14 @@ export const backendApi = createApi({
         body,
       }),
     }),
-    getMeetsyEvents: builder.query<MeetsyEventsResponse, MeetsyEventsRequest>({
+    getMeetsyEvents: builder.query<
+      MeetsyEventsResponse,
+      MeetsyEventsRequest | void
+    >({
       query: (params) => ({
         url: `/meetsy-events/`,
         method: "GET",
-        params,
+        params: params ?? undefined,
       }),
     }),
     getMeetsyEvent: builder.query<MeetsyEventResponse, number>({

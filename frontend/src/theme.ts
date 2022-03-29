@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 import type {} from "@mui/lab/themeAugmentation";
-import { red } from "@mui/material/colors";
+import { red, green } from "@mui/material/colors";
 
 declare module "@mui/material/styles" {
   interface BreakpointOverrides {
@@ -31,6 +31,10 @@ const theme = createTheme({
     },
     secondary: {
       main: "#bbdefb",
+    },
+    success: {
+      main: green.A200,
+      contrastText: green[500],
     },
     error: {
       main: red.A200,
