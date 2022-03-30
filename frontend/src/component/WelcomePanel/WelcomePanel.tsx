@@ -1,9 +1,10 @@
 import { Button, Typography, Stack } from "@mui/material";
 import { useRouter } from "next/router";
-import { signIn, useSession, signOut } from "next-auth/react";
 import Image from "next/image";
-import logo from "public/images/logo.png";
+import { signIn, useSession, signOut } from "next-auth/react";
 import { FunctionComponent } from "react";
+import logo from "public/images/meetsy_logo.png";
+import meetingImage from "public/images/meeting.png";
 
 export const WelcomePanel: FunctionComponent = () => {
   const router = useRouter();
@@ -11,13 +12,19 @@ export const WelcomePanel: FunctionComponent = () => {
     void router.push("/meet");
   };
   const { data, status } = useSession();
+  const isUnauthenticated = status !== "authenticated";
 
   return (
-    <div className="flex flex-col items-center">
-      <Image src={logo} alt="logo" width={200} height={200} />
-      <Typography variant="h3" fontWeight="semibold" gutterBottom>
-        Meetsy
-      </Typography>
+    <div className="flex flex-col flex-1 items-center justify-center">
+      {isUnauthenticated && (
+        <div className="w-1/6">
+          <Image src={logo} alt="logo" layout="responsive" />
+        </div>
+      )}
+
+      <div className="md:w-1/3 w-2/3 mt-4">
+        <Image src={meetingImage} alt="meeting" layout="responsive" />
+      </div>
       <h4 className="text-lg font-semibold">
         Simple, fast, and open source online booking system
       </h4>
@@ -30,7 +37,7 @@ export const WelcomePanel: FunctionComponent = () => {
       )}
 
       <div className="mt-8">
-        {status !== "authenticated" ? (
+        {isUnauthenticated ? (
           <Button
             variant="contained"
             // eslint-disable-next-line @typescript-eslint/promise-function-async

@@ -287,7 +287,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
                     </div>
                   </div>
                 </div>
-                <div className="w-2/3 border-l p-4 border-gray-300 flex flex-col">
+                <div className="w-2/3 border-l p-4 border-gray-300 flex flex-col relative overflow-auto">
                   <UserCalendar
                     selectable={false}
                     label="Your calendar"

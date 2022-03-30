@@ -1,7 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { api } from "src/env";
 import { getSession } from "next-auth/react";
-import { ConfirmEventRequest, EventsRequest, EventsResponse } from "./model";
+import {
+  ConfirmEventRequest,
+  EventsRequest,
+  EventsResponse,
+  MeetsyEventResponse,
+  MeetsyEventsRequest,
+} from "./model";
 import {
   CreateMeetsyEventsRequest,
   MeetsyEventsResponse,
@@ -23,13 +29,13 @@ export const backendApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Events"],
+  tagTypes: ["Events", "MeetsyEvents"],
   endpoints: (builder) => ({
     getEvents: builder.query<EventsResponse, EventsRequest>({
-      query: (body) => ({
+      query: (params) => ({
         url: "/events/",
         method: "GET",
-        params: body,
+        params,
       }),
       providesTags: ["Events"],
     }),
@@ -50,11 +56,29 @@ export const backendApi = createApi({
         body,
       }),
     }),
-    getMeetsyEvents: builder.query<MeetsyEventsResponse, number>({
+    getMeetsyEvents: builder.query<
+      MeetsyEventsResponse,
+      MeetsyEventsRequest | void
+    >({
+      query: (params) => ({
+        url: `/meetsy-events/`,
+        method: "GET",
+        params: params ?? undefined,
+      }),
+      providesTags: ["MeetsyEvents"],
+    }),
+    getMeetsyEvent: builder.query<MeetsyEventResponse, number>({
       query: (id) => ({
         url: `/meetsy-events/${id}/`,
         method: "GET",
       }),
+    }),
+    deleteMeetsyEvent: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `/meetsy-events/${id}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["MeetsyEvents"],
     }),
     getInvitedEvent: builder.query<MeetsyOpenInviteResponse, string>({
       query: (signedUrl) => ({
@@ -69,6 +93,8 @@ export const {
   useGetEventsQuery,
   useConfirmEventMutation,
   useCreateMeetsyEventsMutation,
+  useGetMeetsyEventQuery,
   useGetMeetsyEventsQuery,
   useGetInvitedEventQuery,
+  useDeleteMeetsyEventMutation,
 } = backendApi;

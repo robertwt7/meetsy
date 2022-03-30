@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SuccessPanel Component should match snapshot 1`] = `
+<body>
+  <div>
+    <div
+      class="w-full css-1p5q5e5-MuiStack-root"
+    >
+      <h5
+        class="MuiTypography-root MuiTypography-h5 MuiTypography-alignCenter css-17qww7q-MuiTypography-root"
+      >
+        Events created successfully, please share the link below to your friends
+      </h5>
+      <div
+        class="bg-gray-200 rounded-lg relative"
+      >
+        <button
+          class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButtonBase-root  css-1k23hlb-MuiButtonBase-root-MuiButton-root"
+          tabindex="0"
+          type="button"
+        >
+          <span
+            class="MuiButton-startIcon MuiButton-iconSizeSmall css-y6rp3m-MuiButton-startIcon"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="ContentCopyIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
+              />
+            </svg>
+          </span>
+          Copy
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
+        <p
+          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter css-1j7gnzl-MuiTypography-root"
+          data-testid="success-panel-url"
+        >
+          testing-my-url
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+`;

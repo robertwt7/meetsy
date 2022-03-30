@@ -13,7 +13,7 @@ import { wrapper } from "src/state/store";
 import { SnackBarProvider, MainLayout } from "src";
 import theme from "../src/theme";
 import createEmotionCache from "../src/createEmotionCache";
-import "tailwindcss/tailwind.css";
+import "src/styles/global.css";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();

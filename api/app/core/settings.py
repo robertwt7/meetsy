@@ -57,10 +57,12 @@ INSTALLED_APPS = [
 
 # Session authentication is added for browsable api
 REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 100,
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
         "rest_framework.authentication.SessionAuthentication",
-    ]
+    ],
 }
 
 SOCIALACCOUNT_PROVIDERS = {
