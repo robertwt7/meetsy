@@ -123,6 +123,7 @@ export const MyEventsPanel: FunctionComponent = () => {
               <Button
                 size="small"
                 color="primary"
+                data-testid="copy-button"
                 disabled={
                   !event?.pending || dayjs().isAfter(dayjs(event.expiry))
                 }
@@ -134,6 +135,7 @@ export const MyEventsPanel: FunctionComponent = () => {
                 size="small"
                 color="error"
                 disabled={!event?.pending}
+                data-testid="delete-button"
                 onClick={handleDeleteClicked(event?.id)}
               >
                 Delete Event

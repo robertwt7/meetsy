@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyEventsPanel Component should match snapshot 1`] = `
+<body>
+  <div>
+    <div
+      class="grid md:grid-cols-4 grid-cols-2 gap-4"
+    >
+      <div
+        class="h-full"
+      >
+        <div
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root h-full flex flex-col css-bhp9pd-MuiPaper-root-MuiCard-root"
+        >
+          <div
+            class="MuiCardContent-root flex-1 css-46bh2p-MuiCardContent-root"
+          >
+            <div
+              class="MuiTypography-root MuiTypography-h5 css-ag7rrr-MuiTypography-root"
+            >
+              Test Event 21
+            </div>
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-9eg9l8-MuiTypography-root"
+            >
+              Melbourne, Victoria Footscray 3011
+            </p>
+            <p
+              class="MuiTypography-root MuiTypography-body1 mb-2 css-ahj2mt-MuiTypography-root"
+            >
+              Status:
+               
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-utzz23-MuiTypography-root"
+              >
+                Accepted
+              </p>
+            </p>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
+            >
+              I want to have this event
+            </p>
+          </div>
+          <div
+            class="MuiCardActions-root MuiCardActions-spacing css-1t6e9jv-MuiCardActions-root"
+          >
+            <button
+              class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeSmall MuiButton-textSizeSmall MuiButtonBase-root Mui-disabled  css-1knaqv7-MuiButtonBase-root-MuiButton-root"
+              data-testid="copy-button"
+              disabled=""
+              tabindex="-1"
+              type="button"
+            >
+              Copy URL
+            </button>
+            <button
+              class="MuiButton-root MuiButton-text MuiButton-textError MuiButton-sizeSmall MuiButton-textSizeSmall MuiButtonBase-root Mui-disabled  css-6ekzlo-MuiButtonBase-root-MuiButton-root"
+              data-testid="delete-button"
+              disabled=""
+              tabindex="-1"
+              type="button"
+            >
+              Delete Event
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
