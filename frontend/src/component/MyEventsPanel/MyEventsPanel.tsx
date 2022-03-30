@@ -1,6 +1,7 @@
 import {
   MeetsyEventResponse,
   useGetMeetsyEventsQuery,
+  useDeleteMeetsyEventMutation,
 } from "src/services/backend";
 import { app } from "src/env";
 import {
@@ -9,13 +10,31 @@ import {
   CardActions,
   Button,
   Typography,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  DialogContent,
 } from "@mui/material";
 import dayjs from "dayjs";
-import { FunctionComponent, ReactNode } from "react";
+import { FunctionComponent, ReactNode, useEffect, useState } from "react";
 import { useSnackBar } from "../SnackBar";
 
 export const MyEventsPanel: FunctionComponent = () => {
-  const { data, isError, isLoading } = useGetMeetsyEventsQuery();
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(0);
+  const {
+    data,
+    isError: isGetEventsError,
+    isLoading: isGetEventsLoading,
+  } = useGetMeetsyEventsQuery();
+  const [
+    deleteMeetsyEvent,
+    {
+      isError: isDeleteError,
+      isLoading: isDeleteLoading,
+      isSuccess: isDeleteSuccess,
+    },
+  ] = useDeleteMeetsyEventMutation();
   const setSnackBar = useSnackBar();
 
   const renderStatus = (event: MeetsyEventResponse): ReactNode => {
@@ -47,7 +66,30 @@ export const MyEventsPanel: FunctionComponent = () => {
     setSnackBar({ message: "Copied to clipboard" });
   };
 
-  return !isLoading && !isError ? (
+  const handleDeleteClicked = (id: number) => (): void => {
+    setSelectedEvent(id);
+    setDeleteModalOpen(true);
+  };
+
+  const handleDelete = async (): Promise<void> => {
+    await deleteMeetsyEvent(selectedEvent);
+  };
+
+  useEffect(() => {
+    if (isDeleteSuccess) {
+      setSnackBar({ message: "Event deleted" });
+      setDeleteModalOpen(false);
+    }
+
+    if (isDeleteError) {
+      setSnackBar({
+        message: "There is a problem with deleting this event",
+        severity: "error",
+      });
+    }
+  }, [isDeleteError, isDeleteSuccess]);
+
+  return !isGetEventsLoading && !isGetEventsError ? (
     <div className="grid md:grid-cols-4 grid-cols-2 gap-4">
       {data?.results.map((event) => (
         <div className="h-full">
@@ -88,13 +130,45 @@ export const MyEventsPanel: FunctionComponent = () => {
               >
                 Copy URL
               </Button>
-              <Button size="small" color="error" disabled={!event?.pending}>
+              <Button
+                size="small"
+                color="error"
+                disabled={!event?.pending}
+                onClick={handleDeleteClicked(event?.id)}
+              >
                 Delete Event
               </Button>
             </CardActions>
           </Card>
         </div>
       ))}
+      <Dialog
+        open={deleteModalOpen}
+        onClose={() => setDeleteModalOpen(false)}
+        aria-labelledby="delete-modal-title"
+        aria-describedby="delete-modal-description"
+      >
+        <DialogTitle id="delete-modal-title">
+          <Typography id="delete-modal-title" variant="h6">
+            Delete Event?
+          </Typography>
+        </DialogTitle>
+        <DialogContent id="delete-modal-description">
+          <Typography id="delete-modal-description">
+            Are you sure? This is irreversible
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDeleteModalOpen(false)}>Cancel</Button>
+          <Button
+            variant="contained"
+            disabled={isDeleteLoading}
+            onClick={handleDelete}
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   ) : null;
 };

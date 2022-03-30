@@ -29,7 +29,7 @@ export const backendApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Events"],
+  tagTypes: ["Events", "MeetsyEvents"],
   endpoints: (builder) => ({
     getEvents: builder.query<EventsResponse, EventsRequest>({
       query: (params) => ({
@@ -65,12 +65,20 @@ export const backendApi = createApi({
         method: "GET",
         params: params ?? undefined,
       }),
+      providesTags: ["MeetsyEvents"],
     }),
     getMeetsyEvent: builder.query<MeetsyEventResponse, number>({
       query: (id) => ({
         url: `/meetsy-events/${id}/`,
         method: "GET",
       }),
+    }),
+    deleteMeetsyEvent: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `/meetsy-events/${id}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["MeetsyEvents"],
     }),
     getInvitedEvent: builder.query<MeetsyOpenInviteResponse, string>({
       query: (signedUrl) => ({
@@ -88,4 +96,5 @@ export const {
   useGetMeetsyEventQuery,
   useGetMeetsyEventsQuery,
   useGetInvitedEventQuery,
+  useDeleteMeetsyEventMutation,
 } = backendApi;
