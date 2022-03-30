@@ -16,7 +16,7 @@ export const SuccessPanel: FunctionComponent<SuccessPanelProps> = ({ url }) => {
   };
 
   return (
-    <Stack spacing={2}>
+    <Stack spacing={2} className="w-full">
       <Typography align="center" variant="h5" color={blue[500]}>
         Events created successfully, please share the link below to your friends
       </Typography>

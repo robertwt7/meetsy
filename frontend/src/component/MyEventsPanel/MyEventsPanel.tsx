@@ -2,6 +2,7 @@ import {
   MeetsyEventResponse,
   useGetMeetsyEventsQuery,
 } from "src/services/backend";
+import { app } from "src/env";
 import {
   Card,
   CardContent,
@@ -11,19 +12,24 @@ import {
 } from "@mui/material";
 import dayjs from "dayjs";
 import { FunctionComponent, ReactNode } from "react";
+import { useSnackBar } from "../SnackBar";
 
 export const MyEventsPanel: FunctionComponent = () => {
   const { data, isError, isLoading } = useGetMeetsyEventsQuery();
+  const setSnackBar = useSnackBar();
 
   const renderStatus = (event: MeetsyEventResponse): ReactNode => {
     const expired = dayjs().isAfter(dayjs(event.expiry));
-    const text = !event?.pending ? "Accepted" : expired ? "Expired" : "Pending";
+    let text = "Pending";
+    let color = "text.secondary";
 
-    const color = !event?.pending
-      ? "success.contrastText"
-      : expired
-      ? "error"
-      : "text.secondary";
+    if (!event?.pending) {
+      text = "Accepted";
+      color = "success.contrastText";
+    } else if (expired) {
+      text = "Expired";
+      color = "error";
+    }
 
     return (
       <Typography className="mb-2">
@@ -33,6 +39,12 @@ export const MyEventsPanel: FunctionComponent = () => {
         </Typography>
       </Typography>
     );
+  };
+
+  const handleCopy = (url: string) => (): void => {
+    const inviteUrl = `${app.APP_URL}/invite/?url=${url}`;
+    navigator.clipboard.writeText(inviteUrl);
+    setSnackBar({ message: "Copied to clipboard" });
   };
 
   return !isLoading && !isError ? (
@@ -63,7 +75,14 @@ export const MyEventsPanel: FunctionComponent = () => {
               <Typography variant="body2">{event?.notes}</Typography>
             </CardContent>
             <CardActions>
-              <Button size="small" color="primary" disabled={!event?.pending}>
+              <Button
+                size="small"
+                color="primary"
+                disabled={
+                  !event?.pending || dayjs().isAfter(dayjs(event.expiry))
+                }
+                onClick={handleCopy(event?.invite_url)}
+              >
                 Copy URL
               </Button>
               <Button size="small" color="error" disabled={!event?.pending}>

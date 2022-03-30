@@ -18,7 +18,7 @@ const Success: NextPage = () => {
   }, [router, url]);
 
   return (
-    <div className="flex flex-col md:items-center lg:w-1/2 w-3/4">
+    <div className="flex-1 flex flex-col w-full items-center justify-center mx-2">
       <SuccessPanel url={url as string} />
     </div>
   );
