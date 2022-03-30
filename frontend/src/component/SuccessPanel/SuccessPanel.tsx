@@ -34,6 +34,7 @@ export const SuccessPanel: FunctionComponent<SuccessPanelProps> = ({ url }) => {
           variant="body1"
           onClick={handleCopy}
           sx={{ margin: "1rem", overflowWrap: "break-word" }}
+          data-testid="success-panel-url"
         >
           {url}
         </Typography>
