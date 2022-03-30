@@ -62,9 +62,12 @@ export const MyEventsPanel: FunctionComponent = () => {
                 </Typography>
               )}
               {renderStatus(event)}
-              <Typography className="mb-2">
-                Expiry: {dayjs(event?.expiry).format("DD MMM YYYY HH:mm")}
-              </Typography>
+              {event?.pending && (
+                <Typography className="mb-2">
+                  Expiry: {dayjs(event?.expiry).format("DD MMM YYYY HH:mm")}
+                </Typography>
+              )}
+
               {event?.selected_time !== null && (
                 <Typography className="mb-2">
                   Selected Time:{" "}
