@@ -69,7 +69,7 @@ export interface MeetsyEventResponse {
   invite_url: string;
 }
 
-export interface MeetsyOpenInviteResponse extends MeetsyEventsResponse {
+export interface MeetsyOpenInviteResponse extends MeetsyEventResponse {
   spots: Spots;
 }
 
