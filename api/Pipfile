@@ -17,6 +17,7 @@ google-auth = "*"
 google-api-python-client = "*"
 python-dateutil = "*"
 dj-rest-auth-social = "*"
+python-dotenv = "*"
 
 [dev-packages]
 black = "*"

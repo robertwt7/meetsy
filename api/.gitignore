@@ -1,5 +1,6 @@
 .DS_Store
 
-secrets.py
 .venv
 __pycache__
+
+.env
