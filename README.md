@@ -1,4 +1,3 @@
-# Meetsy
 <p align="center">
   <p align="center">
     <a href="https://meetsy.xyz" target="_blank">
@@ -10,9 +9,12 @@
   </p>
 </p>
 
+# What's Meetsy?
+
+We're an open source calendly alternative. We allow you to select your free time so you can send it to your friends or colleagues to book it.
+
 
 ## Front end
-
 Front end is created with Next.js
 
 ## Back end
@@ -21,8 +23,5 @@ Backend is created with Django Rest Framework
 
 
 ## Contributing
-
-Please follow the guideline
-
-## License
+Please follow the [guideline](./CONTRIBUTING.md)
 
