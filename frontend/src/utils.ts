@@ -33,15 +33,21 @@ export const refreshTokenRequest = async (
   }
 };
 
+const isJwtPayload = (
+  payload: string | jwt.JwtPayload | null
+): payload is jwt.JwtPayload => {
+  return Boolean((payload as jwt.JwtPayload).exp);
+};
+
 export const isJwtExpired = (token: string): boolean => {
   // offset by 60 seconds, so we will check if the token is "almost expired".
   const currentTime = Math.round(Date.now() / 1000 + 60);
   const decoded = jwt.decode(token);
 
   console.log(`Current time + 60 seconds: ${new Date(currentTime * 1000)}`);
-  console.log(`Token lifetime: ${new Date(decoded.exp * 1000)}`);
 
-  if (decoded.exp) {
+  if (isJwtPayload(decoded) && decoded?.exp !== undefined) {
+    console.log(`Token lifetime: ${new Date(decoded.exp * 1000)}`);
     const adjustedExpiry = decoded.exp;
 
     if (adjustedExpiry < currentTime) {
