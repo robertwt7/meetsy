@@ -18,6 +18,8 @@ google-api-python-client = "*"
 python-dateutil = "*"
 dj-rest-auth-social = "*"
 python-dotenv = "*"
+uvicorn = "*"
+gunicorn = "*"
 
 [dev-packages]
 black = "*"
