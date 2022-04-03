@@ -13,7 +13,7 @@ services:
     ### PostgreSQL ###########################################
     postgres:
       build:
-        context: ./postgres
+        context: ./infrastructure/postgres
         args:
           - POSTGRES_VERSION=${POSTGRES_VERSION}
       volumes:
@@ -30,3 +30,11 @@ services:
         - MEETSY_POSTGRES_PASSWORD=${MEETSY_POSTGRES_PASSWORD}
       networks:
         - backend
+
+    ### Meetsy Backend ###########################################
+    core:
+      build:
+        context: ./
+        dockerfile: './infrastructure/app/Dockerfile'
+      ports:
+        - "8000:8000"
