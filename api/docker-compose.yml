@@ -38,3 +38,5 @@ services:
         dockerfile: './infrastructure/app/Dockerfile'
       ports:
         - "8000:8000"
+      networks:
+        - backend
