@@ -11,7 +11,13 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-from .secrets import DJANGO_SECRET_KEY, JWT_SECRET_KEY
+from .secrets import (
+    DJANGO_SECRET_KEY,
+    JWT_SECRET_KEY,
+    POSTGRES_DB,
+    POSTGRES_PASSWORD,
+    POSTGRES_USER,
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -54,6 +60,27 @@ INSTALLED_APPS = [
     "meetsyauth",
     "events",
 ]
+
+# Logging
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": "/app/debug.log",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["file"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+    },
+}
+
 
 # Session authentication is added for browsable api
 REST_FRAMEWORK = {
@@ -148,10 +175,10 @@ WSGI_APPLICATION = "core.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "meetsy",
-        "USER": "default",
-        "PASSWORD": "secret",
-        "HOST": "localhost",
+        "NAME": POSTGRES_DB,
+        "USER": POSTGRES_USER,
+        "PASSWORD": POSTGRES_PASSWORD,
+        "HOST": "postgres",
         "PORT": "5432",
     }
 }
