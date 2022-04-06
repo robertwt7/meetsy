@@ -18,6 +18,9 @@ ENV PYTHONPATH=/app
 
 EXPOSE 8000
 
+# Collect static
+RUN python manage.py collectstatic
+
 # Run the start script, it will check for an /app/prestart.sh script (e.g. for migrations)
 # And then will start Gunicorn with Uvicorn
 CMD ["./start.sh"]
