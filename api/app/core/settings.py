@@ -17,6 +17,7 @@ from .secrets import (
     POSTGRES_DB,
     POSTGRES_PASSWORD,
     POSTGRES_USER,
+    POSTGRES_HOST,
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,11 +29,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = DJANGO_SECRET_KEY
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = [".meetsy.xyz"]
 
 
 # Application definition
@@ -69,7 +65,7 @@ LOGGING = {
         "file": {
             "level": "DEBUG",
             "class": "logging.FileHandler",
-            "filename": "/app/debug.log",
+            "filename": "../debug.log",
         },
     },
     "loggers": {
@@ -178,7 +174,7 @@ DATABASES = {
         "NAME": POSTGRES_DB,
         "USER": POSTGRES_USER,
         "PASSWORD": POSTGRES_PASSWORD,
-        "HOST": "postgres",
+        "HOST": POSTGRES_HOST,
         "PORT": "5432",
     }
 }
@@ -227,7 +223,12 @@ STATIC_URL = "/static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# [CHANGE BEFORE DEPLOYING]
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
 
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+ALLOWED_HOSTS = [".meetsy.xyz", "127.0.0.1"]
+
+SECURE_SSL_REDIRECT = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False

@@ -10,6 +10,16 @@ volumes:
   postgres:
     driver: ${VOLUMES_DRIVER}
 services:
+    ### Nginx ###########################################
+    # nginx:
+    #   build:
+    #     context: ./infrastructure/nginx
+    #   ports:
+    #     - "80:80"
+    #     - "443:443"
+    #   depends_on:
+    #     - core
+
     ### PostgreSQL ###########################################
     postgres:
       build:
@@ -40,3 +50,5 @@ services:
         - "8000:8000"
       networks:
         - backend
+      depends_on:
+        - postgres

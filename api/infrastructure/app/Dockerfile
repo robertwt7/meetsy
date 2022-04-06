@@ -16,7 +16,7 @@ RUN chmod +x ./start.sh
 
 ENV PYTHONPATH=/app
 
-EXPOSE 80
+EXPOSE 8000
 
 # Run the start script, it will check for an /app/prestart.sh script (e.g. for migrations)
 # And then will start Gunicorn with Uvicorn
