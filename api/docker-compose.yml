@@ -10,16 +10,33 @@ volumes:
   postgres:
     driver: ${VOLUMES_DRIVER}
 services:
+    # TODO: Share static files for nginx
     ### Nginx ###########################################
-    # nginx:
-    #   build:
-    #     context: ./infrastructure/nginx
-    #   ports:
-    #     - "80:80"
-    #     - "443:443"
-    #   depends_on:
-    #     - core
+    nginx:
+      build:
+        context: ./
+        dockerfile: './infrastructure/nginx/Dockerfile'
+      ports:
+        - "80:80"
+        - "443:443"
+      volumes:
+        - "./infrastructure/nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro"
+        - "/var/www/html:/var/www/html"
+        - "/etc/letsencrypt:/etc/letsencrypt"
+        - "/var/lib/letsencrypt:/var/lib/letsencrypt"
 
+      depends_on:
+        - core
+
+    ### Certbot ###########################################
+    certbot:
+      image: "certbot/certbot"
+      command: "certonly --standalone -d ${CORE_DOMAIN}"
+      ports:
+        - "80:80"
+      volumes:
+        - "/etc/letsencrypt:/etc/letsencrypt"
+        - "/var/lib/letsencrypt:/var/lib/letsencrypt"
     ### PostgreSQL ###########################################
     postgres:
       build:

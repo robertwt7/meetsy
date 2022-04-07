@@ -233,6 +233,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [".meetsy.xyz", "127.0.0.1"]
 
+# This can be off because our app is sitting behind nginx
+# https://www.reddit.com/r/django/comments/gaf0iq/secure_ssl_redirect_with_nginx_reverse_proxy/
 SECURE_SSL_REDIRECT = False
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
