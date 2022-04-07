@@ -2,7 +2,7 @@ FROM nginx:alpine
 
 LABEL maintainer="Robert T <robert@sharkware.org>"
 
-COPY ./app/core/static /app/static
+COPY ./app/static /app/static
 
 
 EXPOSE 80 81 443
