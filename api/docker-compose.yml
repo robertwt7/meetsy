@@ -31,7 +31,7 @@ services:
     ### Certbot ###########################################
     certbot:
       image: "certbot/certbot"
-      command: "certonly --standalone -n -m ${EMAIL} -d ${CORE_DOMAIN}"
+      command: "certonly --standalone -n -m ${EMAIL} -d ${CORE_DOMAIN} --agree-tos"
       ports:
         - "80:80"
       volumes:
