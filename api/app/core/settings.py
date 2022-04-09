@@ -10,8 +10,16 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
-from .secrets import DJANGO_SECRET_KEY, JWT_SECRET_KEY
+from .secrets import (
+    DJANGO_SECRET_KEY,
+    JWT_SECRET_KEY,
+    POSTGRES_DB,
+    POSTGRES_PASSWORD,
+    POSTGRES_USER,
+    POSTGRES_HOST,
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,11 +30,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = DJANGO_SECRET_KEY
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = [".meetsy.xyz"]
 
 
 # Application definition
@@ -54,6 +57,27 @@ INSTALLED_APPS = [
     "meetsyauth",
     "events",
 ]
+
+# Logging
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": "../debug.log",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["file"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+    },
+}
+
 
 # Session authentication is added for browsable api
 REST_FRAMEWORK = {
@@ -148,10 +172,10 @@ WSGI_APPLICATION = "core.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "meetsy",
-        "USER": "default",
-        "PASSWORD": "secret",
-        "HOST": "localhost",
+        "NAME": POSTGRES_DB,
+        "USER": POSTGRES_USER,
+        "PASSWORD": POSTGRES_PASSWORD,
+        "HOST": POSTGRES_HOST,
         "PORT": "5432",
     }
 }
@@ -194,13 +218,25 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# [CHANGE BEFORE DEPLOYING]
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
 
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+ALLOWED_HOSTS = [".meetsy.xyz"]
+
+# This can be off because our app is sitting behind nginx
+# https://www.reddit.com/r/django/comments/gaf0iq/secure_ssl_redirect_with_nginx_reverse_proxy/
+SECURE_SSL_REDIRECT = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+CORS_ORIGIN_ALLOW_ALL = True
+CSRF_TRUSTED_ORIGINS = ["https://*.meetsy.xyz"]

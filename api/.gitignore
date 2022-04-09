@@ -4,3 +4,6 @@
 __pycache__
 
 .env
+
+volumes
+debug.log
