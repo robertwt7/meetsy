@@ -32,8 +32,8 @@ class CustomUserModelManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, username, email, password):
-        user = self.create_user(username, email, password=password)
+    def create_superuser(self, username, email, password, first_name="", last_name=""):
+        user = self.create_user(username, email, first_name, last_name, password)
 
         user.is_staff = True
         user.is_superuser = True
