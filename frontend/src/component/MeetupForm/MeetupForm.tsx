@@ -91,16 +91,16 @@ export const MeetupForm: FunctionComponent = () => {
         <Stack width="100%">
           <Form>
             <Typography variant="h4" gutterBottom align="center">
-              Add Event
+              Create your meet
             </Typography>
             <Stack
               spacing={3}
               direction={{ lg: "row", xs: "column" }}
               width="100%"
             >
-              <Stack spacing={2} width={{ lg: "50%", xs: "100%" }}>
+              <Stack spacing={2} width={{ lg: "25%", xs: "100%" }}>
                 <Typography variant="h5" gutterBottom align="center">
-                  Event Details
+                  Add your meeting details
                 </Typography>
                 <FormikTextField name="name" label="Name" />
                 <FormikSelect
@@ -125,11 +125,12 @@ export const MeetupForm: FunctionComponent = () => {
               </Stack>
               <Stack
                 spacing={1}
-                width={{ lg: "50%", xs: "100%" }}
+                width={{ lg: "75%", xs: "100%" }}
                 className="relative overflow-hidden"
               >
                 <UserCalendar
                   selectable
+                  label="Select available times"
                   onSelectSlot={(selectedDates) => {
                     setFieldValue("available_dates", selectedDates);
                   }}
