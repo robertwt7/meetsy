@@ -12,18 +12,18 @@ exports[`MeetupForm Component should match snapshot 1`] = `
         <h4
           class="MuiTypography-root MuiTypography-h4 MuiTypography-alignCenter MuiTypography-gutterBottom css-1trk376-MuiTypography-root"
         >
-          Add Event
+          Create your meet
         </h4>
         <div
           class="css-18ensrp-MuiStack-root"
         >
           <div
-            class="css-1v93a31-MuiStack-root"
+            class="css-1dnqmv9-MuiStack-root"
           >
             <h5
               class="MuiTypography-root MuiTypography-h5 MuiTypography-alignCenter MuiTypography-gutterBottom css-68fhrh-MuiTypography-root"
             >
-              Event Details
+              Add your meeting details
             </h5>
             <div
               aria-invalid="false"
@@ -220,7 +220,7 @@ exports[`MeetupForm Component should match snapshot 1`] = `
             </button>
           </div>
           <div
-            class="relative overflow-hidden css-fa9c7h-MuiStack-root"
+            class="relative overflow-hidden css-1a00jwk-MuiStack-root"
           >
             <div
               data-testid="user-calendar"
