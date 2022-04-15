@@ -16,6 +16,7 @@ export const WelcomePanel: FunctionComponent = () => {
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center">
+      <Typography variant="h5">Welcome, {data?.user?.name}</Typography>
       {isUnauthenticated && (
         <div className="w-1/6">
           <Image src={logo} alt="logo" layout="responsive" />
@@ -47,9 +48,6 @@ export const WelcomePanel: FunctionComponent = () => {
           </Button>
         ) : (
           <Stack alignContent="center">
-            <Typography variant="h6" className="text-gray-600">
-              Welcome, {data?.user?.name}
-            </Typography>
             <Button
               variant="outlined"
               // eslint-disable-next-line @typescript-eslint/promise-function-async
