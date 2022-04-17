@@ -114,6 +114,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
         eventId: eventData.id,
         googleEventPayload: {
           summary: eventData.name,
+          conferenceDataVersion: 1,
           location: eventData.location,
           description: notes,
           start: {
