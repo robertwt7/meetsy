@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import type { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
 import { FormikTextField, FormikSelect } from "src/form";
@@ -130,6 +130,7 @@ export const MeetupForm: FunctionComponent = () => {
               >
                 <UserCalendar
                   selectable
+                  deletable
                   label="Select available times"
                   onSelectSlot={(selectedDates) => {
                     setFieldValue("available_dates", selectedDates);
