@@ -4,7 +4,7 @@ import { Typography } from "@mui/material";
 
 const Thankyou: NextPage = () => {
   return (
-    <div className="flex flex-col md:items-center lg:w-1/2 w-3/4">
+    <div className="flex flex-col justify-center flex-1 w-full">
       <Typography variant="h5" align="center" color={blue[500]}>
         Thankyou for using Meetsy, please check your calendar to see your event
         details.
