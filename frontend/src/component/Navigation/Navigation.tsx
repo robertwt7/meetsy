@@ -7,11 +7,13 @@ import {
   Typography,
   useTheme,
   useMediaQuery,
+  Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import clsx, { ClassValue } from "clsx";
 import { NextRouter, useRouter } from "next/router";
 import { FunctionComponent, HTMLAttributeAnchorTarget } from "react";
+import { signOut } from "next-auth/react";
 import { Link } from "..";
 import { Route } from "../../config/router";
 
@@ -63,6 +65,15 @@ export const NavigationMenu: FunctionComponent<NavigationMenuProps> = ({
             />
           </ListItem>
         ))}
+        <ListItem button key="signOut" onClick={onSelect}>
+          <Button
+            variant="outlined"
+            // eslint-disable-next-line @typescript-eslint/promise-function-async
+            onClick={() => signOut()}
+          >
+            Sign out
+          </Button>
+        </ListItem>
       </List>
     </Box>
   );
@@ -135,11 +146,9 @@ const NavigationMenuWithToggle: FunctionComponent<
   return (
     <>
       <MenuToggle handleToggleMenu={onMenuToggle} />
-      {menuActive && (
-        <Drawer anchor="left" open={menuActive} onClose={handleCloseMenu}>
-          <NavigationMenu items={items} onSelect={handleCloseMenu} />
-        </Drawer>
-      )}
+      <Drawer anchor="left" open={menuActive} onClose={handleCloseMenu}>
+        <NavigationMenu items={items} onSelect={handleCloseMenu} />
+      </Drawer>
     </>
   );
 };

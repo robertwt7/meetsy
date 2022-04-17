@@ -5,7 +5,14 @@ import React, {
   useEffect,
   ReactElement,
 } from "react";
-import { Typography } from "@mui/material";
+import {
+  Typography,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  DialogContent,
+} from "@mui/material";
 import { Schema$Event, useGetEventsQuery } from "src/services/backend";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import format from "date-fns/format";
@@ -15,6 +22,7 @@ import getDay from "date-fns/getDay";
 import enAU from "date-fns/locale/en-AU";
 import { startOfMonth, endOfMonth, formatISO } from "date-fns";
 import type { SlotInfo } from "react-big-calendar";
+import { useSnackBar } from "../SnackBar";
 
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -48,6 +56,7 @@ export interface DateRange {
 
 interface UserCalendarProps {
   selectable?: boolean;
+  deletable?: boolean;
   onSelectSlot?: (selectedDates: DateRange[]) => void;
   onSelectEvent?: (event: DateRange) => void;
   availableDates?: DateRange[];
@@ -61,11 +70,15 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
   onSelectSlot,
   onSelectEvent,
   availableDates,
+  deletable = false,
   label = "Date Range",
   date,
   toolbar,
 }) => {
   const [availableDate, setAvailableDate] = useState<DateRange[]>([]);
+  const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
+  const [selectedDate, setSelectedDate] = useState<DateRange | null>(null);
+  const setSnackBar = useSnackBar();
   const currentDate = new Date();
   const payload = {
     minDate: formatISO(startOfMonth(currentDate)),
@@ -98,9 +111,31 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
   const handleSelectEvent = (event: DateRange | Schema$Event): void => {
     const googleEvent = !!isGoogleEvent(event);
 
+    if (!googleEvent && deletable) {
+      setSelectedDate(event);
+      setDeleteModalOpen(true);
+    }
+
     if (onSelectEvent !== undefined && !googleEvent) {
       onSelectEvent(event);
     }
+  };
+
+  const handleDeleteEvent = (): void => {
+    const newAvailableDates = availableDate.filter((d) => {
+      return (
+        d?.start?.dateTime.getTime() !==
+          selectedDate?.start?.dateTime?.getTime() &&
+        d?.end?.dateTime?.getTime() !== selectedDate?.end?.dateTime?.getTime()
+      );
+    });
+
+    setAvailableDate(newAvailableDates);
+    if (onSelectSlot != null) {
+      onSelectSlot(newAvailableDates);
+    }
+    setDeleteModalOpen(false);
+    setSnackBar({ message: "Delete success" });
   };
 
   /**
@@ -167,6 +202,27 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
         timeslots={1}
         views={{ week: true }}
       />
+      <Dialog
+        open={deleteModalOpen}
+        onClose={() => setDeleteModalOpen(false)}
+        aria-labelledby="delete-modal-title"
+        aria-describedby="delete-modal-description"
+      >
+        <DialogTitle id="delete-modal-title">
+          <Typography id="delete-modal-title" variant="h6">
+            Delete Event?
+          </Typography>
+        </DialogTitle>
+        <DialogContent id="delete-modal-description">
+          <Typography id="delete-modal-description">Are you sure?</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDeleteModalOpen(false)}>Cancel</Button>
+          <Button variant="contained" onClick={handleDeleteEvent}>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
