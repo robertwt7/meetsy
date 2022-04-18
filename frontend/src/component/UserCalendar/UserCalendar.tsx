@@ -125,7 +125,7 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
     const newAvailableDates = availableDate.filter((d) => {
       return (
         d?.start?.dateTime.getTime() !==
-          selectedDate?.start?.dateTime?.getTime() &&
+          selectedDate?.start?.dateTime?.getTime() ||
         d?.end?.dateTime?.getTime() !== selectedDate?.end?.dateTime?.getTime()
       );
     });
