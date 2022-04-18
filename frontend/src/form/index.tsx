@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useEffect } from "react";
+import React, { ReactNode, useCallback } from "react";
 import type { SelectProps, TextFieldProps } from "@mui/material";
 import {
   FormControl,
@@ -89,11 +89,6 @@ export const FormikSelect = React.memo(
       },
       [name, setFieldValue, handleChangeCallback]
     );
-
-    // On option changes, set value back to none
-    useEffect(() => {
-      setFieldValue(name, "");
-    }, [options, name]);
 
     const renderValue = (): ReactNode => {
       return options.map((value) => {
