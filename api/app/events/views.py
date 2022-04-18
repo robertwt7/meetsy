@@ -147,7 +147,7 @@ class GoogleEventsView(APIView):
             event = (
                 connect_to_calendar(request, user)
                 .events()
-                .insert(calendarId="primary", body=payload)
+                .insert(calendarId="primary", body=payload, sendUpdates="all")
                 .execute()
             )
 
@@ -155,7 +155,7 @@ class GoogleEventsView(APIView):
             event = (
                 connect_to_calendar(request, invitee)
                 .events()
-                .insert(calendarId="primary", body=payload)
+                .insert(calendarId="primary", body=payload, sendUpdates="all")
                 .execute()
             )
 
