@@ -143,13 +143,17 @@ class GoogleEventsView(APIView):
         payload = request.data["googleEventPayload"]
         try:
             # TODO: What if token of the inviter has expired in the background
-            user = CustomUserModel.objects.get(userId=inviterId)
-            event = (
-                connect_to_calendar(request, user)
-                .events()
-                .insert(calendarId="primary", body=payload, sendUpdates="all")
-                .execute()
-            )
+            # This might have been fixed by using "attendee" key in the event payload.
+            # Thus inviter is re-invited by google straightaway,
+            # this also removes duplicate events becasuse frontend attached inviter and invitee as attendees
+            # Check https://developers.google.com/calendar/api/concepts/sharing
+            # user = CustomUserModel.objects.get(userId=inviterId)
+            # event = (
+            #     connect_to_calendar(request, user)
+            #     .events()
+            #     .insert(calendarId="primary", body=payload, sendUpdates="all")
+            #     .execute()
+            # )
 
             # Create event for invitee
             event = (
