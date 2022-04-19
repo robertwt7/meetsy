@@ -126,7 +126,7 @@ export const MeetupForm: FunctionComponent = () => {
               <Stack
                 spacing={1}
                 width={{ lg: "75%", xs: "100%" }}
-                className="relative overflow-hidden"
+                className="md:relative md:overflow-hidden overflow-auto"
               >
                 <UserCalendar
                   selectable

@@ -12,9 +12,11 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import { Schema$Event, useGetEventsQuery } from "src/services/backend";
-import { Calendar, dateFnsLocalizer } from "react-big-calendar";
+import { Calendar, dateFnsLocalizer, Views } from "react-big-calendar";
 import format from "date-fns/format";
 import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
@@ -22,6 +24,7 @@ import getDay from "date-fns/getDay";
 import enAU from "date-fns/locale/en-AU";
 import { startOfMonth, endOfMonth, formatISO } from "date-fns";
 import type { SlotInfo } from "react-big-calendar";
+import { ThreeDaysWeek } from "./ThreeDaysWeek";
 import { useSnackBar } from "../SnackBar";
 
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
@@ -31,7 +34,7 @@ const locales = {
   "en-AU": enAU,
 };
 
-const localizer = dateFnsLocalizer({
+export const localizer = dateFnsLocalizer({
   format,
   parse,
   startOfWeek,
@@ -85,6 +88,8 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
     maxDate: formatISO(endOfMonth(currentDate)),
   };
   const { data } = useGetEventsQuery(payload);
+  const theme = useTheme();
+  const isBpMediumUp: boolean = useMediaQuery(theme.breakpoints.up("md"));
   const eventTimes =
     data?.items != null ? [...data.items, ...availableDate] : availableDate;
 
@@ -175,7 +180,7 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
    * https://stackoverflow.com/questions/48943233/how-can-you-set-the-height-of-an-outer-div-to-always-be-equal-to-a-particular-in
    */
   return (
-    <div className="w-full h-0 min-h-[95%] pb-8">
+    <div className="w-full md:h-0 min-h-[95%] max-h-[500px] pb-8">
       <Typography align="center" variant="h5">
         {label}
       </Typography>
@@ -185,7 +190,7 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
         selectable={selectable}
         components={{ toolbar: toolbar !== undefined ? toolbar : undefined }}
         events={eventTimes}
-        defaultView="week"
+        defaultView={Views.WEEK}
         defaultDate={new Date()}
         titleAccessor={(event) => event.summary ?? ""}
         startAccessor={(event) =>
@@ -200,7 +205,7 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
         onSelectEvent={handleSelectEvent}
         step={30}
         timeslots={1}
-        views={{ week: true }}
+        views={{ week: isBpMediumUp ? true : ThreeDaysWeek }}
       />
       <Dialog
         open={deleteModalOpen}
