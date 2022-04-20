@@ -180,7 +180,7 @@ export const UserCalendar: FunctionComponent<UserCalendarProps> = ({
    * https://stackoverflow.com/questions/48943233/how-can-you-set-the-height-of-an-outer-div-to-always-be-equal-to-a-particular-in
    */
   return (
-    <div className="w-full md:h-0 min-h-[95%] max-h-[500px] pb-8">
+    <div className="max-h-[500px] min-h-[95%] w-full pb-8 md:h-0">
       <Typography align="center" variant="h5">
         {label}
       </Typography>
