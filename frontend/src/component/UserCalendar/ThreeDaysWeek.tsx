@@ -1,5 +1,6 @@
 import { FunctionComponent, useMemo } from "react";
 // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/53437
+// @ts-expect-error
 import TimeGrid from "react-big-calendar/lib/TimeGrid";
 import { Navigate, NavigateAction, TimeGridProps } from "react-big-calendar";
 
