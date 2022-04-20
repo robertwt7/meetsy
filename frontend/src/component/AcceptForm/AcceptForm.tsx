@@ -196,7 +196,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
 
   // TODO: check if there is any error in the query
   return !isFetching ? (
-    <div className="flex flex-col w-full">
+    <div className="flex w-full flex-col py-4 md:py-0">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -207,8 +207,8 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
         {({ isSubmitting, isValid, setFieldValue, errors }) => (
           <Form>
             <Paper className="w-full">
-              <div className="flex flex-row items-stretch">
-                <div className="w-1/3 bg-gray-50">
+              <div className="flex flex-col md:flex-row md:items-stretch">
+                <div className="w-full bg-gray-50 md:w-1/3">
                   <div className="m-4 space-y-2">
                     <Typography variant="body1" className="text-gray-800">
                       Meeting Details
@@ -220,7 +220,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
                     <Typography variant="body1">
                       📍 Location: {eventData?.location}
                     </Typography>
-                    <div className="flex flex-row space-x-2 items-center">
+                    <div className="flex flex-row items-center space-x-2">
                       <Typography variant="body1">
                         👋 From: {eventData?.user?.first_name}{" "}
                         {eventData?.user?.last_name} ({eventData?.user?.email})
@@ -235,7 +235,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
                     <Typography variant="body1" className="text-gray-800">
                       Your Details
                     </Typography>
-                    <div className="flex flex-row space-x-2 items-center">
+                    <div className="flex flex-row items-center space-x-2">
                       <Typography variant="body1">
                         👋 Me: {sessionData?.user?.name} (
                         {sessionData?.user?.email})
@@ -288,7 +288,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
                     </div>
                   </div>
                 </div>
-                <div className="w-2/3 border-l p-4 border-gray-300 flex flex-col relative overflow-auto">
+                <div className="relative flex w-full flex-col overflow-auto border-l border-gray-300 p-4 md:w-2/3">
                   <UserCalendar
                     selectable={false}
                     label="Your calendar"
