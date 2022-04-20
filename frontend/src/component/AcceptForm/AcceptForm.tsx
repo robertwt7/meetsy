@@ -196,7 +196,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
 
   // TODO: check if there is any error in the query
   return !isFetching ? (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full py-4 md:py-0">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -207,8 +207,8 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
         {({ isSubmitting, isValid, setFieldValue, errors }) => (
           <Form>
             <Paper className="w-full">
-              <div className="flex flex-row items-stretch">
-                <div className="w-1/3 bg-gray-50">
+              <div className="flex md:flex-row flex-col md:items-stretch">
+                <div className="md:w-1/3 w-full bg-gray-50">
                   <div className="m-4 space-y-2">
                     <Typography variant="body1" className="text-gray-800">
                       Meeting Details
@@ -288,7 +288,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
                     </div>
                   </div>
                 </div>
-                <div className="w-2/3 border-l p-4 border-gray-300 flex flex-col relative overflow-auto">
+                <div className="md:w-2/3 w-full border-l p-4 border-gray-300 flex flex-col relative overflow-auto">
                   <UserCalendar
                     selectable={false}
                     label="Your calendar"
