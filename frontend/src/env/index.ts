@@ -11,4 +11,5 @@ export const app: AppType = {
   SESSION_SECRET: process.env.SESSION_SECRET ?? "",
   JWT_SECRET: process.env.JWT_SECRET ?? "",
   NODE_ENV: process.env.NODE_ENV ?? "development",
+  GOOGLE_TRACKING_ID: process.env.NEXT_PUBLIC_GOOGLE_TRACKING_ID ?? "",
 };
