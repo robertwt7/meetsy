@@ -1,9 +1,9 @@
 import { FunctionComponent, useState } from "react";
 import { Button, useMediaQuery, useTheme } from "@mui/material";
-import { Copyright } from "src";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import logo from "public/images/meetsy_logo.png";
+import { Footer } from "src/component/Footer";
 import { useRouter } from "next/router";
 import { Link, Navigation } from "../../component";
 
@@ -68,7 +68,7 @@ export const MainLayout: FunctionComponent = ({ children }) => {
         <div className="flex h-full w-full flex-1 flex-col">
           {children}
           <div className="mt-auto mb-0 py-8">
-            <Copyright />
+            <Footer />
           </div>
         </div>
       </div>
