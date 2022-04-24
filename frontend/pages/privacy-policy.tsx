@@ -1,4 +1,4 @@
-import { NextPage, GetStaticProps, GetStaticPropsContext } from "next";
+import { NextPage, GetStaticProps } from "next";
 import { read } from "to-vfile";
 import { remark } from "remark";
 import remarkHtml from "remark-html";
@@ -19,15 +19,12 @@ const PrivacyPolicy: NextPage<PrivacyPolicyProps> = ({ mdFile }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async (
-  contex: GetStaticPropsContext
-) => {
+export const getStaticProps: GetStaticProps = async () => {
   const mdFile = await remark()
     .use(remarkPresetLintMarkdownStyleGuide)
     .use(remarkHtml)
     .process(await read("src/content/privacyPolicy.md"));
 
-  console.log(mdFile);
   return {
     props: { mdFile: String(mdFile) },
   };
