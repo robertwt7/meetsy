@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Copyright Component should match snapshot 1`] = `
+<body>
+  <div>
+    <p
+      class="MuiTypography-root MuiTypography-body2 MuiTypography-alignCenter css-1vl95ex-MuiTypography-root"
+    >
+      Copyright © 
+      <a
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1kgfegd-MuiTypography-root-MuiLink-root"
+        href="http://localhost:3000"
+      >
+        Meetsy
+      </a>
+       
+      2022
+      .
+    </p>
+  </div>
+</body>
+`;
