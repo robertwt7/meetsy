@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer Component should match snapshot 1`] = `
+<body>
+  <div>
+    <div
+      class="flex flex-col"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body2 MuiTypography-alignCenter css-1vl95ex-MuiTypography-root"
+      >
+        Copyright © 
+        <a
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1kgfegd-MuiTypography-root-MuiLink-root"
+          href="http://localhost:3000"
+        >
+          Meetsy
+        </a>
+         
+        2022
+        .
+      </p>
+      <div
+        class="flex flex-row justify-center"
+      >
+        <ul
+          class="flex flex-row items-center justify-center space-x-8 pl-0"
+        >
+          <li
+            class="w-full list-none"
+            data-testid="privacypolicy"
+          >
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-17dcqu8-MuiTypography-root-MuiLink-root"
+              data-testid="privacypolicy-a"
+              href="/privacy-policy"
+              target="_self"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 MuiTypography-noWrap css-10gb19z-MuiTypography-root"
+              >
+                Privacy Policy
+              </p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+`;
