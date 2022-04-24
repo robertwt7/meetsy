@@ -187,6 +187,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
           variant="contained"
           // eslint-disable-next-line @typescript-eslint/promise-function-async
           onClick={() => signIn("google")}
+          data-testid="sign-in-button"
         >
           Sign in With Google to see Invite
         </Button>

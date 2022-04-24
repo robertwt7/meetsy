@@ -220,7 +220,7 @@ exports[`MeetupForm Component should match snapshot 1`] = `
             </button>
           </div>
           <div
-            class="relative overflow-hidden css-1a00jwk-MuiStack-root"
+            class="md:relative md:overflow-hidden overflow-auto css-1a00jwk-MuiStack-root"
           >
             <div
               data-testid="user-calendar"

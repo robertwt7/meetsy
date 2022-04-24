@@ -1,0 +1,799 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AcceptForm Component should match snapshot 1`] = `
+<body>
+  <div>
+    <div
+      class="flex w-full flex-col py-4 md:py-0"
+    >
+      <form
+        action="#"
+      >
+        <div
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 w-full css-1ps6pg7-MuiPaper-root"
+        >
+          <div
+            class="flex flex-col md:flex-row md:items-stretch"
+          >
+            <div
+              class="w-full bg-gray-50 md:w-1/3"
+            >
+              <div
+                class="m-4 space-y-2"
+              >
+                <p
+                  class="MuiTypography-root MuiTypography-body1 text-gray-800 css-ahj2mt-MuiTypography-root"
+                >
+                  Meeting Details
+                </p>
+                <h6
+                  class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
+                >
+                  Event
+                </h6>
+                <p
+                  class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                >
+                  🕖 Duration: 
+                  30
+                </p>
+                <p
+                  class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                >
+                  📍 Location: 
+                  Melbourne
+                </p>
+                <div
+                  class="flex flex-row items-center space-x-2"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                  >
+                    👋 From: 
+                     
+                     (
+                    )
+                  </p>
+                </div>
+                <p
+                  class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                >
+                  📖 Notes: 
+                  Note
+                </p>
+              </div>
+              <div
+                class="m-4 space-y-2"
+              >
+                <p
+                  class="MuiTypography-root MuiTypography-body1 text-gray-800 css-ahj2mt-MuiTypography-root"
+                >
+                  Your Details
+                </p>
+                <div
+                  class="flex flex-row items-center space-x-2"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                  >
+                    👋 Me: 
+                     (
+                    )
+                  </p>
+                </div>
+              </div>
+              <div
+                class="m-4 mt-6 "
+              >
+                <p
+                  class="MuiTypography-root MuiTypography-body1 text-gray-800 css-ahj2mt-MuiTypography-root"
+                >
+                  Available Dates
+                </p>
+                <div
+                  class="MuiCalendarPicker-root ml-0 mr-auto css-169iwlq-MuiCalendarPicker-root"
+                >
+                  <div
+                    class="css-1dozdou"
+                  >
+                    <div
+                      class="css-l0iinn"
+                      role="presentation"
+                    >
+                      <div
+                        class="PrivatePickersFadeTransitionGroup-root css-1bx5ylf"
+                      >
+                        <div
+                          aria-live="polite"
+                          class="css-1v994a0"
+                          style="opacity: 1;"
+                        >
+                          April
+                        </div>
+                      </div>
+                      <div
+                        class="PrivatePickersFadeTransitionGroup-root css-1bx5ylf"
+                      >
+                        <div
+                          aria-live="polite"
+                          class="css-1v994a0"
+                          style="opacity: 1;"
+                        >
+                          2022
+                        </div>
+                      </div>
+                      <button
+                        aria-label="calendar view is open, switch to year view"
+                        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-7kykdr-MuiButtonBase-root-MuiIconButton-root"
+                        tabindex="0"
+                        type="button"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-fd2y78-MuiSvgIcon-root"
+                          data-testid="ArrowDropDownIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M7 10l5 5 5-5z"
+                          />
+                        </svg>
+                        <span
+                          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                        />
+                      </button>
+                    </div>
+                    <div
+                      class="css-k008qs"
+                      style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+                    >
+                      <button
+                        aria-label="Previous month"
+                        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeSmall css-1wgcwo1-MuiButtonBase-root-MuiIconButton-root"
+                        tabindex="0"
+                        title="Previous month"
+                        type="button"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                          data-testid="ArrowLeftIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"
+                          />
+                        </svg>
+                        <span
+                          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                        />
+                      </button>
+                      <div
+                        class="css-18puooo"
+                      />
+                      <button
+                        aria-label="Next month"
+                        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeStart MuiIconButton-sizeSmall css-nfrs8p-MuiButtonBase-root-MuiIconButton-root"
+                        tabindex="0"
+                        title="Next month"
+                        type="button"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                          data-testid="ArrowRightIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"
+                          />
+                        </svg>
+                        <span
+                          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                        />
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    class="PrivatePickersFadeTransitionGroup-root MuiCalendarPicker-viewTransitionContainer css-1wvgxus-MuiCalendarPicker-viewTransitionContainer"
+                  >
+                    <div
+                      style="opacity: 1;"
+                    >
+                      <div
+                        class="css-1n2mv2k"
+                      >
+                        <span
+                          aria-hidden="true"
+                          class="MuiTypography-root MuiTypography-caption css-1w13o7u-MuiTypography-root"
+                        >
+                          S
+                        </span>
+                        <span
+                          aria-hidden="true"
+                          class="MuiTypography-root MuiTypography-caption css-1w13o7u-MuiTypography-root"
+                        >
+                          M
+                        </span>
+                        <span
+                          aria-hidden="true"
+                          class="MuiTypography-root MuiTypography-caption css-1w13o7u-MuiTypography-root"
+                        >
+                          T
+                        </span>
+                        <span
+                          aria-hidden="true"
+                          class="MuiTypography-root MuiTypography-caption css-1w13o7u-MuiTypography-root"
+                        >
+                          W
+                        </span>
+                        <span
+                          aria-hidden="true"
+                          class="MuiTypography-root MuiTypography-caption css-1w13o7u-MuiTypography-root"
+                        >
+                          T
+                        </span>
+                        <span
+                          aria-hidden="true"
+                          class="MuiTypography-root MuiTypography-caption css-1w13o7u-MuiTypography-root"
+                        >
+                          F
+                        </span>
+                        <span
+                          aria-hidden="true"
+                          class="MuiTypography-root MuiTypography-caption css-1w13o7u-MuiTypography-root"
+                        >
+                          S
+                        </span>
+                      </div>
+                      <div
+                        class="PrivatePickersSlideTransition-root css-dhopo2"
+                      >
+                        <div
+                          class="css-i6bazn"
+                          role="grid"
+                        >
+                          <div
+                            class="css-mvmu1r"
+                            role="row"
+                          >
+                            <div
+                              role="cell"
+                            >
+                              <div
+                                class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller css-188yni7-MuiPickersDay-root"
+                              />
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <div
+                                class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller css-188yni7-MuiPickersDay-root"
+                              />
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <div
+                                class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller css-188yni7-MuiPickersDay-root"
+                              />
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <div
+                                class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller css-188yni7-MuiPickersDay-root"
+                              />
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <div
+                                class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller css-188yni7-MuiPickersDay-root"
+                              />
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 1, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                1
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 2, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                2
+                              </button>
+                            </div>
+                          </div>
+                          <div
+                            class="css-mvmu1r"
+                            role="row"
+                          >
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 3, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                3
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 4, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                4
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 5, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                5
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 6, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                6
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 7, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                7
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 8, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                8
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 9, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                9
+                              </button>
+                            </div>
+                          </div>
+                          <div
+                            class="css-mvmu1r"
+                            role="row"
+                          >
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 10, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                10
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 11, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                11
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 12, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                12
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 13, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                13
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 14, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                14
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 15, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                15
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 16, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                16
+                              </button>
+                            </div>
+                          </div>
+                          <div
+                            class="css-mvmu1r"
+                            role="row"
+                          >
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 17, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                17
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 18, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                18
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 19, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                19
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 20, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                20
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 21, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                21
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 22, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                22
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 23, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                23
+                              </button>
+                            </div>
+                          </div>
+                          <div
+                            class="css-mvmu1r"
+                            role="row"
+                          >
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 24, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin MuiPickersDay-today css-195y93z-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                24
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 25, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                25
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 26, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                26
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 27, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                27
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 28, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                28
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 29, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                29
+                              </button>
+                            </div>
+                            <div
+                              role="cell"
+                            >
+                              <button
+                                aria-label="Apr 30, 2022"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                30
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="m-4 mt-0"
+                >
+                  <div
+                    class="flex flex-col"
+                  >
+                    <div
+                      class="my-2"
+                    >
+                      <div
+                        aria-invalid="false"
+                        class="MuiFormControl-root MuiTextField-root w-full css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
+                      >
+                        <label
+                          class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+                          data-shrink="false"
+                          for="mui-1"
+                          id="mui-1-label"
+                        >
+                          Add your notes
+                        </label>
+                        <div
+                          class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-multiline css-dpjnhs-MuiInputBase-root-MuiOutlinedInput-root"
+                        >
+                          <textarea
+                            aria-invalid="false"
+                            class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
+                            id="mui-1"
+                            name="notes"
+                            rows="4"
+                            style="height: 0px; overflow: hidden;"
+                          />
+                          <textarea
+                            aria-hidden="true"
+                            class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
+                            readonly=""
+                            style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); padding: 0px; width: 100%;"
+                            tabindex="-1"
+                          />
+                          <fieldset
+                            aria-hidden="true"
+                            class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                          >
+                            <legend
+                              class="css-173wfxe"
+                            >
+                              <span>
+                                Add your notes
+                              </span>
+                            </legend>
+                          </fieldset>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="mt-8 w-full"
+                    >
+                      <button
+                        class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root w-full css-sghohy-MuiButtonBase-root-MuiButton-root"
+                        tabindex="0"
+                        type="submit"
+                      >
+                        Confirm
+                        <span
+                          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                        />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="relative flex w-full flex-col overflow-auto border-l border-gray-300 p-4 md:w-2/3"
+            >
+              <div
+                data-testid="user-calendar"
+              />
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+`;
