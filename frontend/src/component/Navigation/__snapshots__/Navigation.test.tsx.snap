@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navigation component should match snapshot 1`] = `
+<body>
+  <div>
+    <nav
+      class="flex w-full flex-row items-center justify-center"
+    >
+      <ul
+        class="flex flex-row items-center justify-center space-x-8 pl-0"
+      >
+        <li
+          class="w-full list-none"
+          data-testid="home"
+        >
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-17dcqu8-MuiTypography-root-MuiLink-root"
+            data-testid="home-a"
+            href="/"
+            target="_self"
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-hmx002-MuiTypography-root"
+            >
+              Home
+            </h6>
+          </a>
+        </li>
+        <li
+          class="w-full list-none"
+          data-testid="my-events"
+        >
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-17dcqu8-MuiTypography-root-MuiLink-root"
+            data-testid="my-events-a"
+            href="/my-events"
+            target="_self"
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-hc7mi3-MuiTypography-root"
+            >
+              My Events
+            </h6>
+          </a>
+        </li>
+        <li
+          class="w-full list-none"
+          data-testid="meet"
+        >
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-17dcqu8-MuiTypography-root-MuiLink-root"
+            data-testid="meet-a"
+            href="/meet"
+            target="_self"
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-hc7mi3-MuiTypography-root"
+            >
+              Meet
+            </h6>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</body>
+`;

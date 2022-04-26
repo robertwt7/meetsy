@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { signIn, useSession, signOut } from "next-auth/react";
 import { FunctionComponent } from "react";
-import logo from "public/images/meetsy_logo.png";
 import meetingImage from "public/images/meeting.png";
 
 export const WelcomePanel: FunctionComponent = () => {
@@ -15,17 +14,11 @@ export const WelcomePanel: FunctionComponent = () => {
   const isUnauthenticated = status !== "authenticated";
 
   return (
-    <div className="flex flex-col flex-1 items-center justify-center">
+    <div className="flex flex-1 flex-col items-center justify-center">
       {!isUnauthenticated && (
         <Typography variant="h5">Welcome, {data?.user?.name}</Typography>
       )}
-      {isUnauthenticated && (
-        <div className="w-1/6">
-          <Image src={logo} alt="logo" layout="responsive" />
-        </div>
-      )}
-
-      <div className="md:w-1/3 w-2/3 mt-4">
+      <div className="mt-4 w-2/3 md:w-1/3">
         <Image src={meetingImage} alt="meeting" layout="responsive" />
       </div>
       <h4 className="text-lg font-semibold">

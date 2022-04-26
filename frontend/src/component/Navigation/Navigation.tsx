@@ -9,6 +9,7 @@ import {
   useMediaQuery,
   Button,
 } from "@mui/material";
+import { Variant } from "@mui/material/styles/createTypography";
 import MenuIcon from "@mui/icons-material/Menu";
 import clsx, { ClassValue } from "clsx";
 import { NextRouter, useRouter } from "next/router";
@@ -28,6 +29,7 @@ export interface INavigationItemProps {
   testId: string;
   route: Route;
   target?: HTMLAttributeAnchorTarget;
+  textVariant?: Variant;
 }
 
 interface MenuToggleProps {
@@ -47,6 +49,11 @@ interface Selectable {
 
 interface NavigationMenuProps extends Selectable {
   items: INavigationItemProps[];
+}
+
+interface NavigationListProps extends Selectable {
+  items: INavigationItemProps[];
+  textVariant?: Variant;
 }
 
 export const NavigationMenu: FunctionComponent<NavigationMenuProps> = ({
@@ -79,14 +86,20 @@ export const NavigationMenu: FunctionComponent<NavigationMenuProps> = ({
   );
 };
 
-export const NavigationList: FunctionComponent<NavigationMenuProps> = ({
+export const NavigationList: FunctionComponent<NavigationListProps> = ({
   items,
   onSelect,
+  textVariant = "h6",
 }) => {
   return (
-    <ul className="flex flex-row space-x-8 justify-center items-center">
+    <ul className="flex flex-row items-center justify-center space-x-8 pl-0">
       {items.map((item) => (
-        <NavigationItem key={item.testId} {...item} onSelect={onSelect} />
+        <NavigationItem
+          key={item.testId}
+          {...item}
+          onSelect={onSelect}
+          textVariant={textVariant}
+        />
       ))}
     </ul>
   );
@@ -97,6 +110,7 @@ const NavigationItem: FunctionComponent<INavigationItemProps & Selectable> = ({
   testId,
   route,
   target = "_self",
+  textVariant = "h6",
 }) => {
   const router: NextRouter = useRouter();
   const classNames: ClassValue = clsx("w-full list-none");
@@ -110,7 +124,7 @@ const NavigationItem: FunctionComponent<INavigationItemProps & Selectable> = ({
         underline="hover"
       >
         <Typography
-          variant="h6"
+          variant={textVariant}
           fontWeight={`${router.route === route ? "bold" : "normal"}`}
           noWrap
         >
@@ -181,7 +195,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
 
   return (
     <>
-      <nav className="w-full flex flex-row items-center justify-center">
+      <nav className="flex w-full flex-row items-center justify-center">
         {isBpMediumUp ? (
           <NavigationList items={items} />
         ) : (
