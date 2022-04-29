@@ -20,6 +20,7 @@ export enum Route {
   MY_EVENTS = "/my-events",
   PRIVACY_POLICY = "/privacy-policy",
   TERMS_OF_SERVICE = "/terms-of-service",
+  GITHUB = "https://github.com/robertwt7/meetsy",
 }
 
 export const routePageNames: Partial<Record<Route, PageNames>> = {
