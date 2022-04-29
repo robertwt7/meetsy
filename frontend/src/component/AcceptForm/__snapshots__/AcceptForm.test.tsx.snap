@@ -671,7 +671,7 @@ exports[`AcceptForm Component should match snapshot 1`] = `
                             >
                               <button
                                 aria-label="Apr 28, 2022"
-                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin MuiPickersDay-today css-195y93z-MuiButtonBase-root-MuiPickersDay-root"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
                                 disabled=""
                                 tabindex="-1"
                                 type="button"
@@ -684,7 +684,7 @@ exports[`AcceptForm Component should match snapshot 1`] = `
                             >
                               <button
                                 aria-label="Apr 29, 2022"
-                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                class="MuiButtonBase-root Mui-disabled MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin MuiPickersDay-today css-195y93z-MuiButtonBase-root-MuiPickersDay-root"
                                 disabled=""
                                 tabindex="-1"
                                 type="button"
