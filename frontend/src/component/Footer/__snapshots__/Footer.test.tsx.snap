@@ -43,6 +43,23 @@ exports[`Footer Component should match snapshot 1`] = `
               </p>
             </a>
           </li>
+          <li
+            class="w-full list-none"
+            data-testid="termsOfService"
+          >
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-17dcqu8-MuiTypography-root-MuiLink-root"
+              data-testid="termsOfService-a"
+              href="/terms-of-service"
+              target="_self"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 MuiTypography-noWrap css-10gb19z-MuiTypography-root"
+              >
+                Terms of Service
+              </p>
+            </a>
+          </li>
         </ul>
       </div>
     </div>

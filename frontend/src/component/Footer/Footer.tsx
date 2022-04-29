@@ -10,6 +10,11 @@ export const Footer: FunctionComponent = () => {
       testId: "privacypolicy",
       route: Route.PRIVACY_POLICY,
     },
+    {
+      text: "Terms of Service",
+      testId: "termsOfService",
+      route: Route.TERMS_OF_SERVICE,
+    },
   ];
   return (
     <div className="flex flex-col">
