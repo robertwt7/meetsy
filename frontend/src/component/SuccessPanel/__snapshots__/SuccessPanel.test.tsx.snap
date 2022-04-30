@@ -12,7 +12,7 @@ exports[`SuccessPanel Component should match snapshot 1`] = `
         Events created successfully, please share the link below to your friends
       </h5>
       <div
-        class="bg-gray-200 rounded-lg relative"
+        class="relative rounded-lg bg-gray-200"
       >
         <button
           class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButtonBase-root  css-1k23hlb-MuiButtonBase-root-MuiButton-root"
