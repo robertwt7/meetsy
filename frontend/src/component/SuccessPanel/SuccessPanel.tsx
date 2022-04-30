@@ -20,7 +20,7 @@ export const SuccessPanel: FunctionComponent<SuccessPanelProps> = ({ url }) => {
       <Typography align="center" variant="h5" color={blue[500]}>
         Events created successfully, please share the link below to your friends
       </Typography>
-      <div className="bg-gray-200 rounded-lg relative">
+      <div className="relative rounded-lg bg-gray-200">
         <Button
           variant="outlined"
           size="small"

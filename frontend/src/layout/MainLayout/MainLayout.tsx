@@ -1,5 +1,12 @@
-import { FunctionComponent, useState } from "react";
-import { Button, useMediaQuery, useTheme } from "@mui/material";
+import { FunctionComponent, MouseEvent, useState } from "react";
+import {
+  useMediaQuery,
+  useTheme,
+  Popover,
+  List,
+  ListItemButton,
+  Typography,
+} from "@mui/material";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import logo from "public/images/meetsy_logo.png";
@@ -10,7 +17,7 @@ import { Link, Navigation } from "../../component";
 const hiddenNavigation = ["/invite"];
 
 export const MainLayout: FunctionComponent = ({ children }) => {
-  const { status } = useSession();
+  const { data, status } = useSession();
   const isUnauthenticated = status !== "authenticated";
   const router = useRouter();
   const shouldHideNavigation = hiddenNavigation.includes(router.route);
@@ -21,6 +28,18 @@ export const MainLayout: FunctionComponent = ({ children }) => {
   const theme = useTheme();
   const isBpMediumUp: boolean = useMediaQuery(theme.breakpoints.up("md"));
   const [menuActive, setMenuActive] = useState(false);
+  const [profilePopover, setProfilePopover] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+  const handleClose = (): void => {
+    setProfilePopover(false);
+    setAnchorEl(null);
+  };
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>): void => {
+    setAnchorEl(event.currentTarget);
+    setProfilePopover(true);
+  };
 
   const handleMenuToggle = (): void => {
     setMenuActive(!menuActive);
@@ -33,14 +52,14 @@ export const MainLayout: FunctionComponent = ({ children }) => {
     <div className="flex min-h-screen w-full flex-col items-center">
       <div className="ml-auto mr-auto flex min-h-screen w-full flex-col px-8 md:w-3/5">
         {isUnauthenticated ? (
-          <div className="mt-8 w-1/6 self-center">
+          <div className="mt-8 w-1/2 self-center md:w-1/6">
             <Link href="/">
               <Image src={logo} alt="logo" layout="responsive" />
             </Link>
           </div>
         ) : (
           <div className={navigationClassName}>
-            <div className="w-1/6">
+            <div className="w-1/3 md:w-1/6">
               <Link href="/">
                 <Image src={logo} alt="logo" layout="responsive" />
               </Link>
@@ -53,13 +72,31 @@ export const MainLayout: FunctionComponent = ({ children }) => {
               />
               {isBpMediumUp && (
                 <div className="flex w-full items-center">
-                  <Button
-                    variant="outlined"
-                    // eslint-disable-next-line @typescript-eslint/promise-function-async
-                    onClick={() => signOut()}
+                  <Typography
+                    variant="h6"
+                    className="cursor-pointer text-primary hover:underline"
+                    onClick={handleClick}
                   >
-                    Sign out
-                  </Button>
+                    {data?.user?.name}
+                  </Typography>
+
+                  <Popover
+                    open={profilePopover}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                  >
+                    <List>
+                      <ListItemButton
+                        onClick={
+                          // eslint-disable-next-line @typescript-eslint/promise-function-async
+                          () => signOut()
+                        }
+                      >
+                        Sign out
+                      </ListItemButton>
+                    </List>
+                  </Popover>
                 </div>
               )}
             </div>

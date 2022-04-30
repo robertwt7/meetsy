@@ -8,6 +8,7 @@ import {
   useTheme,
   useMediaQuery,
   Button,
+  ListItemButton,
 } from "@mui/material";
 import { Variant } from "@mui/material/styles/createTypography";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -72,7 +73,7 @@ export const NavigationMenu: FunctionComponent<NavigationMenuProps> = ({
             />
           </ListItem>
         ))}
-        <ListItem button key="signOut" onClick={onSelect}>
+        <ListItemButton key="signOut" onClick={onSelect}>
           <Button
             variant="outlined"
             // eslint-disable-next-line @typescript-eslint/promise-function-async
@@ -80,7 +81,7 @@ export const NavigationMenu: FunctionComponent<NavigationMenuProps> = ({
           >
             Sign out
           </Button>
-        </ListItem>
+        </ListItemButton>
       </List>
     </Box>
   );
