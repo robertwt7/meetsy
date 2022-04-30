@@ -1,13 +1,7 @@
 import { Button, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import {
-  useRef,
-  useEffect,
-  useState,
-  FunctionComponent,
-  ReactNode,
-} from "react";
+import { useEffect, useState, FunctionComponent, ReactNode } from "react";
 import { signIn, useSession, signOut } from "next-auth/react";
 import meetingImage from "public/images/meeting.png";
 
@@ -24,7 +18,6 @@ export const WelcomePanel: FunctionComponent = () => {
     "Scheduling System",
     "Meeting Scheduler",
   ];
-  const containerRef = useRef(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -42,23 +35,25 @@ export const WelcomePanel: FunctionComponent = () => {
 
   const renderWord = (i: number): ReactNode => {
     return words.map((word, index) => (
-      <span
-        className={`absolute text-primary transition-all duration-300 ${
-          index !== i ? "opacity-0" : ""
+      <div
+        className={`absolute block text-primary transition duration-500 ${
+          index !== i ? "-translate-y-6 opacity-0" : "opacity-100"
         }`}
       >
-        {word}
-      </span>
+        <Typography variant="h3" fontWeight="800">
+          {word}
+        </Typography>
+      </div>
     ));
   };
 
   return (
     <div className="flex flex-1 flex-col items-center">
-      <div className="relative my-8">
-        <Typography variant="h3" fontWeight="800" ref={containerRef}>
+      <div className="my-8">
+        <Typography variant="h3" fontWeight="800">
           Simple and open source <br />
-          {renderWord(iWord)}
         </Typography>
+        {renderWord(iWord)}
       </div>
 
       <div className="mt-8 flex w-2/3 flex-1 flex-col items-center justify-center md:w-1/3">
@@ -73,7 +68,7 @@ export const WelcomePanel: FunctionComponent = () => {
           </div>
         )}
 
-        <div className="mt-8">
+        <div className="mt-8 transition hover:-translate-y-12">
           {isUnauthenticated ? (
             <Button
               variant="contained"
