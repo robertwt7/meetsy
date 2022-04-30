@@ -68,7 +68,7 @@ export const WelcomePanel: FunctionComponent = () => {
           </div>
         )}
 
-        <div className="mt-8 transition hover:-translate-y-12">
+        <div className="mt-8">
           {isUnauthenticated ? (
             <Button
               variant="contained"
