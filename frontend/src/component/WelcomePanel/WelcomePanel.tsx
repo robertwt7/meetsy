@@ -1,8 +1,8 @@
-import { Button, Typography, Stack } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { useEffect, useState, FunctionComponent, ReactNode } from "react";
 import { signIn, useSession, signOut } from "next-auth/react";
-import { FunctionComponent } from "react";
 import meetingImage from "public/images/meeting.png";
 
 export const WelcomePanel: FunctionComponent = () => {
@@ -10,39 +10,74 @@ export const WelcomePanel: FunctionComponent = () => {
   const handleMeet = (): void => {
     void router.push("/meet");
   };
-  const { data, status } = useSession();
+  const { status } = useSession();
   const isUnauthenticated = status !== "authenticated";
+  const [iWord, setIWord] = useState(0);
+  const words = [
+    "Calendly Alternative",
+    "Scheduling System",
+    "Meeting Scheduler",
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (iWord === words.length - 1) {
+        setIWord(0);
+      } else {
+        setIWord(iWord + 1);
+      }
+    }, 3000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [iWord]);
+
+  const renderWord = (i: number): ReactNode => {
+    return words.map((word, index) => (
+      <div
+        className={`absolute block text-primary transition duration-500 ${
+          index !== i ? "-translate-y-6 opacity-0" : "opacity-100"
+        }`}
+      >
+        <Typography variant="h3" fontWeight="800">
+          {word}
+        </Typography>
+      </div>
+    ));
+  };
 
   return (
-    <div className="flex flex-1 flex-col items-center justify-center">
-      {!isUnauthenticated && (
-        <Typography variant="h5">Welcome, {data?.user?.name}</Typography>
-      )}
-      <div className="mt-4 w-2/3 md:w-1/3">
-        <Image src={meetingImage} alt="meeting" layout="responsive" />
+    <div className="flex flex-1 flex-col items-center">
+      <div className="my-8">
+        <Typography variant="h3" fontWeight="800">
+          Simple and open source <br />
+        </Typography>
+        {renderWord(iWord)}
       </div>
-      <h4 className="text-lg font-semibold">
-        Simple, fast, and open source online booking system
-      </h4>
-      {status === "authenticated" && (
-        <div className="mt-8">
-          <Button variant="contained" onClick={handleMeet}>
-            Create a meet
-          </Button>
-        </div>
-      )}
 
-      <div className="mt-8">
-        {isUnauthenticated ? (
-          <Button
-            variant="contained"
-            // eslint-disable-next-line @typescript-eslint/promise-function-async
-            onClick={() => signIn("google")}
-          >
-            Sign in with Google
-          </Button>
-        ) : (
-          <Stack alignContent="center">
+      <div className="mt-8 flex w-2/3 flex-1 flex-col items-center justify-center md:w-1/3">
+        <div className="w-full">
+          <Image src={meetingImage} alt="meeting" layout="responsive" />
+        </div>
+        {status === "authenticated" && (
+          <div className="mt-8">
+            <Button variant="contained" onClick={handleMeet}>
+              Create a meet
+            </Button>
+          </div>
+        )}
+
+        <div className="mt-8">
+          {isUnauthenticated ? (
+            <Button
+              variant="contained"
+              // eslint-disable-next-line @typescript-eslint/promise-function-async
+              onClick={() => signIn("google")}
+            >
+              Sign in with Google
+            </Button>
+          ) : (
             <Button
               variant="outlined"
               // eslint-disable-next-line @typescript-eslint/promise-function-async
@@ -50,8 +85,8 @@ export const WelcomePanel: FunctionComponent = () => {
             >
               Sign out
             </Button>
-          </Stack>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
