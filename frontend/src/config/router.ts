@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 
 export enum PageNames {
   INDEX = "Home",
+  ABOUT = "About",
   INVITE = "Invitation",
   MEET = "Meet",
   SUCCESS = "Success",
@@ -13,6 +14,7 @@ export enum PageNames {
 
 export enum Route {
   INDEX = "/",
+  ABOUT = "/about",
   INVITE = "/invite",
   MEET = "/meet",
   SUCCESS = "/success",
@@ -25,6 +27,7 @@ export enum Route {
 
 export const routePageNames: Partial<Record<Route, PageNames>> = {
   [Route.INDEX]: PageNames.INDEX,
+  [Route.ABOUT]: PageNames.ABOUT,
   [Route.INVITE]: PageNames.INVITE,
   [Route.MEET]: PageNames.MEET,
   [Route.SUCCESS]: PageNames.SUCCESS,
