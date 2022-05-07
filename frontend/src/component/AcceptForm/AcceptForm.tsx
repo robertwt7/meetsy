@@ -16,6 +16,8 @@ import { signIn, useSession } from "next-auth/react";
 import { isMeetsyBackendError } from "src/services/backend/utils";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import Image from "next/image";
+import googleLogo from "src/assets/google_dark.svg";
 import { DateRange, UserCalendar } from "../UserCalendar";
 import { useSnackBar } from "../SnackBar";
 import { mapDatesToCalendarObject } from "./utils";
@@ -187,7 +189,10 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
           variant="contained"
           // eslint-disable-next-line @typescript-eslint/promise-function-async
           onClick={() => signIn("google")}
-          data-testid="sign-in-button"
+          className="bg-[#4285F4] py-1 pl-1 font-roboto capitalize"
+          startIcon={
+            <Image src={googleLogo} alt="google" width={38} height={38} />
+          }
         >
           Sign in With Google to see Invite
         </Button>

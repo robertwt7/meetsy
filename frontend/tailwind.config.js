@@ -349,7 +349,11 @@ module.exports = {
         A700: "#00B8D4",
       },
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        roboto: ["Roboto"],
+      },
+    },
   },
   corePlugins: {
     preflight: false,
