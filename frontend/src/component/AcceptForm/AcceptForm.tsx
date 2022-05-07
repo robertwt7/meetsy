@@ -190,6 +190,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
           // eslint-disable-next-line @typescript-eslint/promise-function-async
           onClick={() => signIn("google")}
           className="bg-[#4285F4] py-1 pl-1 font-roboto capitalize"
+          data-testid="sign-in-button"
           startIcon={
             <Image src={googleLogo} alt="google" width={38} height={38} />
           }
