@@ -75,7 +75,7 @@ export const WelcomePanel: FunctionComponent = () => {
               variant="contained"
               // eslint-disable-next-line @typescript-eslint/promise-function-async
               onClick={() => signIn("google")}
-              className="bg-[#4285F4] py-1 pl-1 capitalize"
+              className="bg-[#4285F4] py-1 pl-1 font-roboto capitalize"
               startIcon={
                 <Image src={googleLogo} alt="google" width={38} height={38} />
               }
