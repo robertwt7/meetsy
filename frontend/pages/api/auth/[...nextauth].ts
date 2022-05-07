@@ -33,7 +33,7 @@ export default NextAuth({
       authorization: {
         params: {
           scope:
-            "https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/calendar openid email profile",
+            "https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/calendar.readonly openid email profile",
           prompt: "consent",
           access_type: "offline",
           response_type: "code",

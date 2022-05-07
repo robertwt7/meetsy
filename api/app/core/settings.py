@@ -89,9 +89,16 @@ REST_FRAMEWORK = {
     ],
 }
 
+# We are not requesting scope here, token is brought from Client
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
-        "SCOPE": ["profile", "email", "calendar", "openid"],
+        "SCOPE": [
+            "profile",
+            "email",
+            "https://www.googleapis.com/auth/calendar.events",
+            "https://www.googleapis.com/auth/calendar.readonly",
+            "openid",
+        ],
         "AUTH_PARAMS": {
             "access_type": "offline",
         },
@@ -229,9 +236,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # [CHANGE BEFORE DEPLOYING]
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = [".meetsy.xyz", "localhost"]
+ALLOWED_HOSTS = [".meetsy.xyz"]
 
 # This can be off because our app is sitting behind nginx
 # https://www.reddit.com/r/django/comments/gaf0iq/secure_ssl_redirect_with_nginx_reverse_proxy/

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState, FunctionComponent, ReactNode } from "react";
 import { signIn, useSession, signOut } from "next-auth/react";
 import meetingImage from "public/images/meeting.png";
+import googleLogo from "src/assets/google_dark.svg";
 
 export const WelcomePanel: FunctionComponent = () => {
   const router = useRouter();
@@ -74,6 +75,10 @@ export const WelcomePanel: FunctionComponent = () => {
               variant="contained"
               // eslint-disable-next-line @typescript-eslint/promise-function-async
               onClick={() => signIn("google")}
+              className="bg-[#4285F4] py-1 pl-1 capitalize"
+              startIcon={
+                <Image src={googleLogo} alt="google" width={38} height={38} />
+              }
             >
               Sign in with Google
             </Button>
