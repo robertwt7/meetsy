@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { useEffect, useState, FunctionComponent, ReactNode } from "react";
 import { signIn, useSession, signOut } from "next-auth/react";
-import meetingImage from "public/images/meeting.png";
+import telecommuting from "src/assets/telecommuting.svg";
 import googleLogo from "src/assets/google_dark.svg";
 
 export const WelcomePanel: FunctionComponent = () => {
@@ -37,7 +37,7 @@ export const WelcomePanel: FunctionComponent = () => {
   const renderWord = (i: number): ReactNode => {
     return words.map((word, index) => (
       <div
-        className={`absolute block text-primary transition duration-500 ${
+        className={`absolute text-primary transition duration-500 ${
           index !== i ? "-translate-y-6 opacity-0" : "opacity-100"
         }`}
       >
@@ -50,16 +50,27 @@ export const WelcomePanel: FunctionComponent = () => {
 
   return (
     <div className="flex flex-1 flex-col items-center">
-      <div className="my-8">
-        <Typography variant="h3" fontWeight="800">
-          Simple and open source <br />
-        </Typography>
-        {renderWord(iWord)}
-      </div>
-
-      <div className="mt-8 flex w-2/3 flex-1 flex-col items-center justify-center md:w-1/3">
-        <div className="w-full">
-          <Image src={meetingImage} alt="meeting" layout="responsive" />
+      <div className="mt-8 flex w-full flex-1 flex-col items-center justify-center">
+        <div className="flex w-full flex-col-reverse flex-wrap items-center justify-center md:flex-row">
+          <div className="my-8 w-full md:w-1/2">
+            <div className="flex flex-col">
+              <div>
+                <Typography variant="h3" fontWeight="800">
+                  Simple and open source <br />
+                </Typography>
+                {renderWord(iWord)}
+              </div>
+              <div className="mt-16">
+                <Typography variant="h6">
+                  Finding meeting times are painful. Meetsy simplifies finding a
+                  time that works for you and your friend!
+                </Typography>
+              </div>
+            </div>
+          </div>
+          <div className="w-full md:w-1/2">
+            <Image src={telecommuting} alt="meeting" layout="responsive" />
+          </div>
         </div>
         {status === "authenticated" && (
           <div className="mt-8">
