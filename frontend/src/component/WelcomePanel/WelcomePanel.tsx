@@ -60,7 +60,7 @@ export const WelcomePanel: FunctionComponent = () => {
                 </Typography>
                 {renderWord(iWord)}
               </div>
-              <div className="mt-16">
+              <div className="mt-32 md:mt-16">
                 <Typography variant="h6">
                   Finding meeting times are painful. Meetsy simplifies finding a
                   time that works for you and your friend!
