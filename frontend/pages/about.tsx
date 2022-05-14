@@ -10,7 +10,7 @@ interface AboutProps {
 
 const About: NextPage<AboutProps> = ({ mdFile }) => {
   return (
-    <div className="flex flex-row justify-center py-8">
+    <div className="flex flex-row justify-center py-8 px-4 md:px-0">
       <article
         className="prose lg:prose-xl"
         dangerouslySetInnerHTML={{ __html: mdFile }}

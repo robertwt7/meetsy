@@ -90,10 +90,10 @@ export const MyEventsPanel: FunctionComponent = () => {
   }, [isDeleteError, isDeleteSuccess]);
 
   return !isGetEventsLoading && !isGetEventsError ? (
-    <div className="grid md:grid-cols-4 grid-cols-2 gap-4">
+    <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
       {data?.results.map((event) => (
         <div className="h-full">
-          <Card className="h-full flex flex-col">
+          <Card className="flex h-full flex-col">
             <CardContent className="flex-1">
               <Typography variant="h5" component="div">
                 {event?.name}

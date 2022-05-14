@@ -15,7 +15,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import clsx, { ClassValue } from "clsx";
 import { NextRouter, useRouter } from "next/router";
 import { FunctionComponent, HTMLAttributeAnchorTarget } from "react";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { Link } from "..";
 import { Route } from "../../config/router";
 
@@ -175,24 +175,42 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
 }) => {
   const theme = useTheme();
   const isBpMediumUp: boolean = useMediaQuery(theme.breakpoints.up("md"));
+  const { status } = useSession();
+  const isAuthenticated = status === "authenticated";
 
-  const items: INavigationItemProps[] = [
+  let items: INavigationItemProps[] = [
     {
       text: "Home",
       testId: "home",
       route: Route.INDEX,
     },
     {
-      text: "My Events",
-      testId: "my-events",
-      route: Route.MY_EVENTS,
+      text: "About",
+      testId: "about",
+      route: Route.ABOUT,
     },
     {
-      text: "Meet",
-      testId: "meet",
-      route: Route.MEET,
+      text: "Github",
+      testId: "github",
+      route: Route.GITHUB,
     },
   ];
+
+  if (isAuthenticated) {
+    items = [
+      ...items,
+      {
+        text: "My Events",
+        testId: "my-events",
+        route: Route.MY_EVENTS,
+      },
+      {
+        text: "Create a Meet",
+        testId: "meet",
+        route: Route.MEET,
+      },
+    ];
+  }
 
   return (
     <>

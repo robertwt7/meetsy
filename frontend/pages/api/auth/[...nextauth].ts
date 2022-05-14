@@ -17,6 +17,9 @@ const {
 
 export default NextAuth({
   secret: SESSION_SECRET,
+  pages: {
+    signIn: "/signin",
+  },
   session: {
     strategy: "jwt",
     maxAge: 24 * 60 * 60, // 24 hours

@@ -15,16 +15,6 @@ export const Footer: FunctionComponent = () => {
       testId: "termsOfService",
       route: Route.TERMS_OF_SERVICE,
     },
-    {
-      text: "Github",
-      testId: "github",
-      route: Route.GITHUB,
-    },
-    {
-      text: "About",
-      testId: "about",
-      route: Route.ABOUT,
-    },
   ];
   return (
     <div className="flex flex-col">

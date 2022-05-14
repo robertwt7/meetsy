@@ -4,13 +4,13 @@ exports[`MyEventsPanel Component should match snapshot 1`] = `
 <body>
   <div>
     <div
-      class="grid md:grid-cols-4 grid-cols-2 gap-4"
+      class="grid grid-cols-2 gap-4 md:grid-cols-4"
     >
       <div
         class="h-full"
       >
         <div
-          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root h-full flex flex-col css-bhp9pd-MuiPaper-root-MuiCard-root"
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root flex h-full flex-col css-bhp9pd-MuiPaper-root-MuiCard-root"
         >
           <div
             class="MuiCardContent-root flex-1 css-46bh2p-MuiCardContent-root"
