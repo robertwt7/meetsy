@@ -24,7 +24,7 @@ export const MainLayout: FunctionComponent = ({ children }) => {
   const navigationClassName =
     isUnauthenticated || shouldHideNavigation
       ? "hidden"
-      : "w-full flex flex-row justify-between my-8 items-center";
+      : "w-full flex flex-row justify-between my-8 items-center px-8";
   const theme = useTheme();
   const isBpMediumUp: boolean = useMediaQuery(theme.breakpoints.up("md"));
   const [menuActive, setMenuActive] = useState(false);
@@ -50,7 +50,7 @@ export const MainLayout: FunctionComponent = ({ children }) => {
   };
   return (
     <div className="flex min-h-screen w-full flex-col items-center">
-      <div className="ml-auto mr-auto flex min-h-screen w-full flex-col px-8 md:w-3/5">
+      <div className="ml-auto mr-auto flex min-h-screen w-full flex-col">
         {isUnauthenticated ? (
           <div className="mt-8 w-1/2 self-center md:w-1/6">
             <Link href="/">
@@ -59,7 +59,7 @@ export const MainLayout: FunctionComponent = ({ children }) => {
           </div>
         ) : (
           <div className={navigationClassName}>
-            <div className="w-1/3 md:w-1/6">
+            <div className="w-1/3 md:w-[10%]">
               <Link href="/">
                 <Image src={logo} alt="logo" layout="responsive" />
               </Link>

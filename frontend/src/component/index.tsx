@@ -7,3 +7,5 @@ export * from "./SnackBar";
 export * from "./SuccessPanel";
 export * from "./Navigation";
 export * from "./Footer";
+export * from "./HowItWorksPanel";
+export * from "./InfoPanel";

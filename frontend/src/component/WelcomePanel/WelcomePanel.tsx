@@ -49,7 +49,7 @@ export const WelcomePanel: FunctionComponent = () => {
   };
 
   return (
-    <div className="flex flex-1 flex-col items-center">
+    <div className="flex w-3/5 flex-1 flex-col self-center">
       <div className="mt-8 flex w-full flex-1 flex-col items-center justify-center">
         <div className="flex w-full flex-col-reverse flex-wrap items-center justify-center md:flex-row">
           <div className="my-8 w-full md:w-1/2">
