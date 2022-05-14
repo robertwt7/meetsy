@@ -28,6 +28,40 @@ exports[`Navigation component should match snapshot 1`] = `
         </li>
         <li
           class="w-full list-none"
+          data-testid="about"
+        >
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-17dcqu8-MuiTypography-root-MuiLink-root"
+            data-testid="about-a"
+            href="/about"
+            target="_self"
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-hc7mi3-MuiTypography-root"
+            >
+              About
+            </h6>
+          </a>
+        </li>
+        <li
+          class="w-full list-none"
+          data-testid="github"
+        >
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-zr39bh-MuiTypography-root-MuiLink-root"
+            data-testid="github-a"
+            href="https://github.com/robertwt7/meetsy"
+            target="_self"
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-hc7mi3-MuiTypography-root"
+            >
+              Github
+            </h6>
+          </a>
+        </li>
+        <li
+          class="w-full list-none"
           data-testid="my-events"
         >
           <a
@@ -56,7 +90,7 @@ exports[`Navigation component should match snapshot 1`] = `
             <h6
               class="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-hc7mi3-MuiTypography-root"
             >
-              Meet
+              Create a Meet
             </h6>
           </a>
         </li>
