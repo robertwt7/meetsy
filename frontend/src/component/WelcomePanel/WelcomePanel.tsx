@@ -2,14 +2,17 @@ import { Button, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { useEffect, useState, FunctionComponent, ReactNode } from "react";
-import { signIn, useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import telecommuting from "src/assets/telecommuting.svg";
-import googleLogo from "src/assets/google_dark.svg";
 
 export const WelcomePanel: FunctionComponent = () => {
   const router = useRouter();
   const handleMeet = (): void => {
-    void router.push("/meet");
+    if (isUnauthenticated) {
+      router.push("/signin");
+    } else {
+      void router.push("/meet");
+    }
   };
   const { status } = useSession();
   const isUnauthenticated = status !== "authenticated";
@@ -49,7 +52,7 @@ export const WelcomePanel: FunctionComponent = () => {
   };
 
   return (
-    <div className="flex w-3/5 flex-1 flex-col self-center">
+    <div className="flex w-full flex-1 flex-col">
       <div className="mt-8 flex w-full flex-1 flex-col items-center justify-center">
         <div className="flex w-full flex-col-reverse flex-wrap items-center justify-center md:flex-row">
           <div className="my-8 w-full md:w-1/2">
@@ -66,42 +69,16 @@ export const WelcomePanel: FunctionComponent = () => {
                   time that works for you and your friend!
                 </Typography>
               </div>
+              <div className="mt-8">
+                <Button variant="contained" onClick={handleMeet}>
+                  Let&apos;s Meetsy
+                </Button>
+              </div>
             </div>
           </div>
           <div className="w-full md:w-1/2">
             <Image src={telecommuting} alt="meeting" layout="responsive" />
           </div>
-        </div>
-        {status === "authenticated" && (
-          <div className="mt-8">
-            <Button variant="contained" onClick={handleMeet}>
-              Create a meet
-            </Button>
-          </div>
-        )}
-
-        <div className="mt-8">
-          {isUnauthenticated ? (
-            <Button
-              variant="contained"
-              // eslint-disable-next-line @typescript-eslint/promise-function-async
-              onClick={() => signIn("google")}
-              className="bg-[#4285F4] py-1 pl-1 font-roboto capitalize"
-              startIcon={
-                <Image src={googleLogo} alt="google" width={38} height={38} />
-              }
-            >
-              Sign in with Google
-            </Button>
-          ) : (
-            <Button
-              variant="outlined"
-              // eslint-disable-next-line @typescript-eslint/promise-function-async
-              onClick={() => signOut()}
-            >
-              Sign out
-            </Button>
-          )}
         </div>
       </div>
     </div>

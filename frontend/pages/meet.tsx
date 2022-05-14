@@ -15,8 +15,10 @@ const Meet: NextPage = () => {
   }, [status, router]);
 
   return (
-    <div className="flex w-full flex-col items-center">
-      <MeetupForm />
+    <div className="flex w-full flex-col items-center justify-center">
+      <div className="w-full p-4 md:w-2/3">
+        <MeetupForm />
+      </div>
     </div>
   );
 };
