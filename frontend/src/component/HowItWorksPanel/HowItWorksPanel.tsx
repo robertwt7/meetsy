@@ -9,7 +9,9 @@ export const HowItWorksPanel: FunctionComponent = () => {
   return (
     <div className="flex flex-1 flex-col items-center">
       <div>
-        <Typography variant="h6">How Meetsy Works</Typography>
+        <Typography variant="h4" fontWeight="700">
+          How Meetsy Works
+        </Typography>
       </div>
       <div className="flex flex-col md:flex-row">
         <div className="flex w-full flex-col items-center p-4 md:w-1/3">

@@ -61,6 +61,9 @@ export const NavigationMenu: FunctionComponent<NavigationMenuProps> = ({
   items,
   onSelect,
 }) => {
+  const { status } = useSession();
+  const isAuthenticated = status === "authenticated";
+
   return (
     <Box sx={{ width: 250 }} role="presentation">
       <List>
@@ -73,15 +76,17 @@ export const NavigationMenu: FunctionComponent<NavigationMenuProps> = ({
             />
           </ListItem>
         ))}
-        <ListItemButton key="signOut" onClick={onSelect}>
-          <Button
-            variant="outlined"
-            // eslint-disable-next-line @typescript-eslint/promise-function-async
-            onClick={() => signOut()}
-          >
-            Sign out
-          </Button>
-        </ListItemButton>
+        {isAuthenticated && (
+          <ListItemButton key="signOut" onClick={onSelect}>
+            <Button
+              variant="outlined"
+              // eslint-disable-next-line @typescript-eslint/promise-function-async
+              onClick={() => signOut()}
+            >
+              Sign out
+            </Button>
+          </ListItemButton>
+        )}
       </List>
     </Box>
   );
