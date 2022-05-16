@@ -238,7 +238,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [".meetsy.xyz"]
+ALLOWED_HOSTS = [".meetsy.xyz", "localhost"]
 
 # This can be off because our app is sitting behind nginx
 # https://www.reddit.com/r/django/comments/gaf0iq/secure_ssl_redirect_with_nginx_reverse_proxy/
