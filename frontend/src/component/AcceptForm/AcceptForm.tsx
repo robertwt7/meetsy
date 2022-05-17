@@ -59,6 +59,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
           ...Object.values(eventData.spots).map((e) => e)
         )
       : [];
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [options, setOptions] = useState<AvailableSpot[]>([]);
   const [confirmEvent] = useConfirmEventMutation();
   const setSnackBar = useSnackBar();
@@ -137,7 +138,7 @@ export const AcceptForm: FunctionComponent<AcceptFormProps> = ({ url }) => {
         },
       };
 
-      const response = await confirmEvent(payload).unwrap();
+      await confirmEvent(payload).unwrap();
 
       setSnackBar({ message: "Event confirmed, please check your calendar" });
       setTimeout((): void => {

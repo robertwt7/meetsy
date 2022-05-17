@@ -13,7 +13,7 @@ export interface EventsRequest {
 
 export interface EventsResponse extends Schema$Events {}
 
-interface availableDates {
+interface AvailableDate {
   start: string;
   end: string;
 }
@@ -21,7 +21,7 @@ export interface CreateMeetsyEventsRequest {
   name: string;
   location: string;
   notes: string;
-  available_dates: availableDates[];
+  available_dates: AvailableDate[];
 }
 
 export interface UserDetails {
@@ -32,7 +32,7 @@ export interface UserDetails {
 }
 
 export type AvailableDates = Array<
-  availableDates & { id: number; event: number }
+  AvailableDate & { id: number; event: number }
 >;
 
 export interface AvailableSpot {

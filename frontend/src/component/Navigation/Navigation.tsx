@@ -57,6 +57,36 @@ interface NavigationListProps extends Selectable {
   textVariant?: Variant;
 }
 
+const NavigationItem: FunctionComponent<INavigationItemProps & Selectable> = ({
+  text,
+  testId,
+  route,
+  target = "_self",
+  textVariant = "h6",
+}) => {
+  const router: NextRouter = useRouter();
+  const classNames: ClassValue = clsx("w-full list-none");
+
+  return (
+    <li data-testid={testId} className={classNames}>
+      <Link
+        href={route}
+        target={target}
+        data-testid={`${testId}-a`}
+        underline="hover"
+      >
+        <Typography
+          variant={textVariant}
+          fontWeight={`${router.route === route ? "bold" : "normal"}`}
+          noWrap
+        >
+          {text}
+        </Typography>
+      </Link>
+    </li>
+  );
+};
+
 export const NavigationMenu: FunctionComponent<NavigationMenuProps> = ({
   items,
   onSelect,
@@ -108,36 +138,6 @@ export const NavigationList: FunctionComponent<NavigationListProps> = ({
         />
       ))}
     </ul>
-  );
-};
-
-const NavigationItem: FunctionComponent<INavigationItemProps & Selectable> = ({
-  text,
-  testId,
-  route,
-  target = "_self",
-  textVariant = "h6",
-}) => {
-  const router: NextRouter = useRouter();
-  const classNames: ClassValue = clsx("w-full list-none");
-
-  return (
-    <li data-testid={testId} className={classNames}>
-      <Link
-        href={route}
-        target={target}
-        data-testid={`${testId}-a`}
-        underline="hover"
-      >
-        <Typography
-          variant={textVariant}
-          fontWeight={`${router.route === route ? "bold" : "normal"}`}
-          noWrap
-        >
-          {text}
-        </Typography>
-      </Link>
-    </li>
   );
 };
 
