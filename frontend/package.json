@@ -42,7 +42,8 @@
     "test-watch": "jest --watch",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
     "eslint": "eslint \"{pages,src}/**/*.{js,ts,tsx,json}\"",
-    "format-check": "./node_modules/.bin/prettier --check ."
+    "format-check": "./node_modules/.bin/prettier --check .",
+    "format": "./node_modules/.bin/prettier --write ."
   },
   "devDependencies": {
     "@babel/core": "^7.14.5",
