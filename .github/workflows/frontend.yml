@@ -27,8 +27,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-:
 
-      - run: yarn install
-      - run: yarn eslint
-      - run: yarn format-check
-      - run: yarn tsc
-      - run: yarn test
+      - name: Install Dependencies
+        working-directory: ./frontend
+        run: yarn install
+
+      - name: Run build, test, and lint
+        working-directory: ./frontend
+        run: |
+          yarn eslint
+          yarn format-check
+          yarn tsc
+          yarn test
+          yarn build
