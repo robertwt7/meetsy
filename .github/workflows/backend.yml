@@ -1,0 +1,27 @@
+name: frontend
+
+on:
+  pull_request:
+
+jobs:
+  build-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v3
+        with:
+          python-version: "3.x"
+
+      - name: Install Dependencies
+        working-directory: ./api
+        run: |
+          pip install --user pipenv
+          python -m pipenv install --system --deploy --ignore-pipfile
+          pipenv shell
+
+      - name: Run test
+        working-directory: ./api/app
+        run: |
+          python manage.py test
