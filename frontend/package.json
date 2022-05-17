@@ -38,8 +38,11 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "test": "jest --watch",
-    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
+    "test": "jest",
+    "test-watch": "jest --watch",
+    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
+    "eslint": "eslint \"{pages,src}/**/*.{js,ts,tsx,json}\" --max-warnings 0",
+    "format-check": "./node_modules/.bin/prettier --check ."
   },
   "devDependencies": {
     "@babel/core": "^7.14.5",
