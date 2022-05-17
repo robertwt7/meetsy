@@ -18,7 +18,7 @@ jobs:
         working-directory: ./api
         run: |
           pip install --user pipenv
-          python -m pipenv install --system --deploy --ignore-pipfile
+          python -m pipenv install
 
       - name: Run test
         working-directory: ./api/app
