@@ -12,7 +12,6 @@ npm install
 npm run dev
 ```
 
-
 You also need to generate secret for JWT and Session as mentioned in [next-auth](https://next-auth.js.org/configuration/options#secret)
 
 To get started you can generate a random string
@@ -20,6 +19,7 @@ To get started you can generate a random string
 ```sh
 openssl rand -base64 32
 ```
+
 ## The idea behind the example
 
 The project uses [Next.js](https://github.com/zeit/next.js), which is a framework for server-rendered React apps.

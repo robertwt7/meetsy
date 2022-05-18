@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 module.exports = {
   content: ["./pages/**/*.{js,ts,jsx,tsx}", "./src/**/*.{js,ts,jsx,tsx}"],
   important: "#__next",
@@ -358,5 +359,6 @@ module.exports = {
   corePlugins: {
     preflight: false,
   },
+  // eslint-disable-next-line import/no-extraneous-dependencies
   plugins: [require("@tailwindcss/typography")],
 };

@@ -3,6 +3,7 @@ import type {} from "@mui/lab/themeAugmentation";
 import { red, green } from "@mui/material/colors";
 
 declare module "@mui/material/styles" {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface BreakpointOverrides {
     xs: true;
     sm: true;
