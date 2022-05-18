@@ -54,6 +54,4 @@ jobs:
           MEETSY_POSTGRES_DB: ${{ env.POSTGRES_DB }}
 
         working-directory: ./api/app
-        run: |
-          cp env.example .env
-          pipenv run python manage.py test
+        run: pipenv run python manage.py test
