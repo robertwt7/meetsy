@@ -1,0 +1,57 @@
+name: backend
+
+on:
+  pull_request:
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-latest
+
+    env:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST: localhost # default host value for the database
+      POSTGRES_DB: djtesting
+      POSTGRES_PORT: 5432
+      DJANGO_SECRET_KEY: test-key-not-good
+
+
+    services:
+      postgres_main:
+        image: postgres
+        env:
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v3
+        with:
+          python-version: "3.x"
+
+      - name: Install Dependencies
+        working-directory: ./api
+        run: |
+          pip install --user pipenv
+          python -m pipenv install
+
+      - name: Run test
+        env:
+          JWT_SECRET_KEY: "0"
+          DJANGO_SECRET_KEY: ${{ env.DJANGO_SECRET_KEY }}
+          MEETSY_POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          MEETSY_POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          MEETSY_POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
+          MEETSY_POSTGRES_DB: ${{ env.POSTGRES_DB }}
+
+        working-directory: ./api/app
+        run: pipenv run python manage.py test
