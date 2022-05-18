@@ -3,8 +3,11 @@ import "@testing-library/jest-dom";
 import { LocalizationProvider } from "@mui/lab";
 import DateAdapter from "@mui/lab/AdapterDayjs";
 import { FunctionComponent } from "react";
+import MockDate from "mockdate";
 import { AcceptForm } from "./AcceptForm";
 import { render } from "../../testutils/test-utils";
+
+MockDate.set("2020-01-01");
 
 const mocks = {
   useSession: jest.fn().mockReturnValue({
@@ -56,6 +59,10 @@ const Component: FunctionComponent = () => (
 );
 
 describe("AcceptForm Component", () => {
+  afterAll(() => {
+    MockDate.reset();
+  });
+
   test("should match snapshot", () => {
     const { baseElement } = render(<Component />);
     expect(baseElement).toMatchSnapshot();
