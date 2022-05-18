@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import dayjs from "dayjs";
 import { FunctionComponent, ReactNode, useEffect, useState } from "react";
+import { ComponentLoader } from "../ComponentLoader";
 import { useSnackBar } from "../SnackBar";
 
 export const MyEventsPanel: FunctionComponent = () => {
@@ -172,5 +173,7 @@ export const MyEventsPanel: FunctionComponent = () => {
         </DialogActions>
       </Dialog>
     </div>
-  ) : null;
+  ) : (
+    <ComponentLoader />
+  );
 };
