@@ -54,7 +54,7 @@ export const MyEventsPanel: FunctionComponent = () => {
     return (
       <Typography className="mb-2">
         Status:{" "}
-        <Typography display="inline" color={color}>
+        <Typography component="span" color={color}>
           {text}
         </Typography>
       </Typography>
