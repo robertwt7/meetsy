@@ -30,11 +30,11 @@ exports[`MyEventsPanel Component should match snapshot 1`] = `
             >
               Status:
                
-              <p
-                class="MuiTypography-root MuiTypography-body1 css-utzz23-MuiTypography-root"
+              <span
+                class="MuiTypography-root MuiTypography-body1 css-4peds9-MuiTypography-root"
               >
                 Accepted
-              </p>
+              </span>
             </p>
             <p
               class="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
