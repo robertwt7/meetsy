@@ -93,7 +93,7 @@ export const MyEventsPanel: FunctionComponent = () => {
   return !isGetEventsLoading && !isGetEventsError ? (
     <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
       {data?.results.map((event) => (
-        <div className="h-full">
+        <div className="h-full" key={event.id}>
           <Card className="flex h-full flex-col">
             <CardContent className="flex-1">
               <Typography variant="h5" component="div">
