@@ -4,7 +4,7 @@ import { CircularProgress } from "@mui/material";
 export const ComponentLoader: FunctionComponent = () => {
   return (
     <div className="mt-20 text-center">
-      <CircularProgress size="15%" />
+      <CircularProgress size="10%" />
     </div>
   );
 };
