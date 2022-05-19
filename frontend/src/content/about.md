@@ -7,12 +7,15 @@ We are [open source](https://github.com/robertwt7/meetsy), and can be seen as a 
 ## Google OAuth2 Details
 
 ### What will this app do with user data?
+
 The only user data received is: name, email, and events data from calendar. User email and name will be saved in our DB and used for authentication. The events data will be used to show the user the events in the calendar.
 
 ### How does this app enhance user functionality?
+
 This app will help user to extend create events based on their free time selected in Meetsy to their google calendar (for both inviter and invitee).
 
 ### Describe the content, context, or connection to the app
+
 Meetsy, as a scheduling system will use Google API to enhance the users experience, help users in creating the accepted invites in their calendar, and show the user the events in their calendar.
 
 ## Limited Use Disclosure
