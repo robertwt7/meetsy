@@ -120,7 +120,11 @@ export const MeetupForm: FunctionComponent = () => {
                   type="submit"
                   disabled={isSubmitting || isLoading || isSuccess}
                 >
-                  {(isSubmitting || isLoading || isSuccess) ? <CircularProgress size='24px' color='inherit'/> : 'Next'}
+                  {isSubmitting || isLoading || isSuccess ? (
+                    <CircularProgress size="24px" color="inherit" />
+                  ) : (
+                    "Next"
+                  )}
                 </Button>
               </Stack>
               <Stack
