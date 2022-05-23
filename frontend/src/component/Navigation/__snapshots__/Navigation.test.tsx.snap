@@ -51,7 +51,7 @@ exports[`Navigation component should match snapshot 1`] = `
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-zr39bh-MuiTypography-root-MuiLink-root"
             data-testid="github-a"
             href="https://github.com/robertwt7/meetsy"
-            target="_self"
+            target="_blank"
           >
             <h6
               class="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-hc7mi3-MuiTypography-root"

@@ -198,6 +198,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
       text: "Github",
       testId: "github",
       route: Route.GITHUB,
+      target: "_blank",
     },
   ];
 
