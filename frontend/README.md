@@ -1,15 +1,25 @@
-# Next.js with MUI
+# Meetsy Front End
 
+Created with Next.js with MUI
+
+## Requirements
+
+- Node >= 16.0.0
+- Google OAuth credentials (ID and secret) in .env file
 ## How to use
 
 Clone this repo
 
-Install it and run:
-
+Run:
 ```sh
 cp .env.example .env.local
-npm install
-npm run dev
+```
+
+Add your google OAuth credentials to .env.local
+Then run:
+```sh
+yarn
+yarn dev
 ```
 
 You also need to generate secret for JWT and Session as mentioned in [next-auth](https://next-auth.js.org/configuration/options#secret)
@@ -31,10 +41,3 @@ If you prefer, you can [use styled-components instead](https://mui.com/guides/in
 Next.js has [a custom Link component](https://nextjs.org/docs/api-reference/next/link).
 The example folder provides adapters for usage with MUI.
 More information [in the documentation](https://mui.com/guides/routing/#next-js).
-
-## What's next?
-
-<!-- #default-branch-switch -->
-
-You now have a working example project.
-You can head back to the documentation, continuing browsing it from the [templates](https://mui.com/getting-started/templates/) section.
