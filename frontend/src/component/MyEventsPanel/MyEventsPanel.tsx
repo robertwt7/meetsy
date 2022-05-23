@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import dayjs from "dayjs";
 import { FunctionComponent, ReactNode, useEffect, useState } from "react";
+import { ComponentLoader } from "../ComponentLoader";
 import { useSnackBar } from "../SnackBar";
 
 export const MyEventsPanel: FunctionComponent = () => {
@@ -53,7 +54,7 @@ export const MyEventsPanel: FunctionComponent = () => {
     return (
       <Typography className="mb-2">
         Status:{" "}
-        <Typography display="inline" color={color}>
+        <Typography component="span" color={color}>
           {text}
         </Typography>
       </Typography>
@@ -92,7 +93,7 @@ export const MyEventsPanel: FunctionComponent = () => {
   return !isGetEventsLoading && !isGetEventsError ? (
     <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
       {data?.results.map((event) => (
-        <div className="h-full">
+        <div className="h-full" key={event.id}>
           <Card className="flex h-full flex-col">
             <CardContent className="flex-1">
               <Typography variant="h5" component="div">
@@ -172,5 +173,7 @@ export const MyEventsPanel: FunctionComponent = () => {
         </DialogActions>
       </Dialog>
     </div>
-  ) : null;
+  ) : (
+    <ComponentLoader />
+  );
 };

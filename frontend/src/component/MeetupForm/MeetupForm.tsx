@@ -3,7 +3,7 @@ import { FunctionComponent } from "react";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
 import { FormikTextField, FormikSelect } from "src/form";
-import { Stack, Button, Typography } from "@mui/material";
+import { Stack, Button, Typography, CircularProgress } from "@mui/material";
 import { formatISO } from "date-fns";
 import { useCreateMeetsyEventsMutation } from "src/services/backend";
 import { app } from "src/env";
@@ -120,7 +120,11 @@ export const MeetupForm: FunctionComponent = () => {
                   type="submit"
                   disabled={isSubmitting || isLoading || isSuccess}
                 >
-                  Next
+                  {isSubmitting || isLoading ? (
+                    <CircularProgress size="24px" color="inherit" />
+                  ) : (
+                    "Next"
+                  )}
                 </Button>
               </Stack>
               <Stack
