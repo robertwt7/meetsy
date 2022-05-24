@@ -20,6 +20,10 @@
 
 We're an open source calendly alternative. We allow you to select your free time so you can send it to your friends or colleagues to book it.
 
+## How to setup?
+
+1. Setup [backend](./api/README.md)
+2. Setup [frontend](./frontend/README.md)
 
 ## Front end
 Front end is created with Next.js
