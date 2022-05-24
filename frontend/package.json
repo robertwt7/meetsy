@@ -2,8 +2,8 @@
   "name": "meetsy",
   "version": "1.0.0",
   "private": true,
-  "engines" : {
-    "node" : ">=16.0.0"
+  "engines": {
+    "node": ">=16.0.0"
   },
   "dependencies": {
     "@date-io/dayjs": "^2.11.0",

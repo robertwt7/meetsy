@@ -6,17 +6,20 @@ Created with Next.js with MUI
 
 - Node >= 16.0.0
 - Google OAuth credentials (ID and secret) in .env file
+
 ## How to use
 
 Clone this repo
 
 Run:
+
 ```sh
 cp .env.example .env.local
 ```
 
 Add your google OAuth credentials to .env.local
 Then run:
+
 ```sh
 yarn
 yarn dev
