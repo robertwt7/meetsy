@@ -12,7 +12,7 @@ const Error: NextPage = () => {
         variant="h4"
         align="center"
         color={common.black}
-        font-weight="bold"
+        fontWeight="bold"
       >
         Page Not Found!
       </Typography>
