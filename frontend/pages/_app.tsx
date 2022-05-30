@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import { Auth } from "src/component/Auth";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider } from "@emotion/react";
@@ -69,13 +70,15 @@ function MeetsyApp(
       <LocalizationProvider dateAdapter={DateAdapter}>
         <SessionProvider session={props.pageProps?.session}>
           <ThemeProvider theme={theme}>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-            <CssBaseline />
-            <SnackBarProvider>
-              <MainLayout>
-                <Component {...pageProps} />
-              </MainLayout>
-            </SnackBarProvider>
+            <Auth>
+              {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+              <CssBaseline />
+              <SnackBarProvider>
+                <MainLayout>
+                  <Component {...pageProps} />
+                </MainLayout>
+              </SnackBarProvider>
+            </Auth>
           </ThemeProvider>
         </SessionProvider>
       </LocalizationProvider>

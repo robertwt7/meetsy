@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { protectedRoute } from "src/config/router";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { useSession } from "next-auth/react";
 
 export const Auth: FunctionComponent = ({ children }) => {
@@ -8,9 +8,11 @@ export const Auth: FunctionComponent = ({ children }) => {
   const isAuthenticated = status === "authenticated";
   const router = useRouter();
 
-  if (!isAuthenticated && protectedRoute.includes(router.pathname)) {
-    void router.push("/signin");
-  }
+  useEffect(() => {
+    if (!isAuthenticated && protectedRoute.includes(router.pathname)) {
+      void router.push("/signin");
+    }
+  }, [isAuthenticated, router]);
 
   return <>{children}</>;
 };
