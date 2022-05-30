@@ -25,6 +25,12 @@ export enum Route {
   GITHUB = "https://github.com/robertwt7/meetsy",
 }
 
+export const protectedRoute: string[] = [
+  Route.MY_EVENTS,
+  Route.MEET,
+  Route.INVITE,
+];
+
 export const routePageNames: Partial<Record<Route, PageNames>> = {
   [Route.INDEX]: PageNames.INDEX,
   [Route.ABOUT]: PageNames.ABOUT,
