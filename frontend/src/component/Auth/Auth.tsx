@@ -5,14 +5,14 @@ import { useSession } from "next-auth/react";
 
 export const Auth: FunctionComponent = ({ children }) => {
   const { status } = useSession();
-  const isAuthenticated = status === "authenticated";
+  const isNotAuthenticated = status === "unauthenticated";
   const router = useRouter();
 
   useEffect(() => {
-    if (!isAuthenticated && protectedRoute.includes(router.pathname)) {
+    if (isNotAuthenticated && protectedRoute.includes(router.pathname)) {
       void router.push("/signin");
     }
-  }, [isAuthenticated, router]);
+  }, [isNotAuthenticated, router, status]);
 
   return <>{children}</>;
 };
