@@ -13,6 +13,8 @@ WORKDIR /app/
 
 ENV PYTHONPATH=/app
 
+# RUN python manage.py collectstatic --noinput
+
 EXPOSE 8080
 
 # Run the start script, it will check for an /app/prestart.sh script (e.g. for migrations)

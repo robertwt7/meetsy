@@ -36,6 +36,31 @@ Note: to develop locally you might need to change `./app/core/settings.py` from 
 11. Click **Social applications** -> add new at the top right
 12. Choose google -> enter secrets and api key -> save
 
+## Deployment
+
+### Using Fly.io
+
+1. Clear up all the `.env` locally in both root and `./app`
+2. Create [postgres db](https://fly.io/docs/reference/postgres/) in fly
+3. Setup all these envs by running `flyctl secrets set` or `flyctl secrets import`
+```
+DJANGO_SECRET_KEY=test
+JWT_SECRET_KEY=test
+MEETSY_POSTGRES_DB=test
+MEETSY_POSTGRES_USER=test
+MEETSY_POSTGRES_PASSWORD=asdfasdf
+MEETSY_POSTGRES_HOST=localhost
+```
+4. Run `make deploy-fly`
+
+### Using your own VPS
+
+1. Clone the repo to your VPS
+2. Setup `.env` file in root and `./app`
+3. Run `docker-compose up -d postgres certbot`
+4. After certbot has successfully create the cert, you can run `docker-compose up -d nginx core`
+
+Note: don't forget to point your A record to the IP address of your VPS
 ## Setup Postgres Docker<a name="docker"></a>
 
 1. copy `env.example` to `.env`
