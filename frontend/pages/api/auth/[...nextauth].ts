@@ -63,7 +63,7 @@ export default NextAuth({
       // user just signed in
       if (user !== null && user !== undefined && account !== undefined) {
         // may have to switch it up a bit for other providers
-        if (account.provider === "google") {
+        if (account?.provider === "google") {
           // extract these two tokens
           const {
             access_token: accessToken,
