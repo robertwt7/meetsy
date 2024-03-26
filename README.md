@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <video src="./docs/Meetsy.mp4" width="640" height="360">
+  <video src="./docs/Meetsy.mp4" width="640" height="360" />
 </p>
 
 
