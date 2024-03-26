@@ -10,6 +10,11 @@
 </p>
 
 <p align="center">
+  <video src="./docs/Meetsy.mp4" width="640" height="360">
+</p>
+
+
+<p align="center">
   <img src="https://github.com/robertwt7/meetsy/raw/master/docs/screenshots/screenshot1.png" width="270" height="150">
   <img src="https://github.com/robertwt7/meetsy/raw/master/docs/screenshots/screenshot2.png" width="270" height="150">
   <img src="https://github.com/robertwt7/meetsy/raw/master/docs/screenshots/screenshot3.png" width="270" height="150">
