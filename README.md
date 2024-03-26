@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <video src="./docs/Meetsy.mp4" width="640" height="360" />
+![demo-optimized](https://github.com/robertwt7/meetsy/assets/15647967/8f8a849f-a575-48e3-8676-09e98c4d963d)
 </p>
 
 
